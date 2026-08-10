@@ -276,7 +276,53 @@ async def on_startup():
     logger.info("Startup complete")
 
 
+def _ensure_hpcl_ceg_model():
+    """
+    The generated hpcl_ceg_model.py is large and occasionally ends up empty or
+    partially imported in the deployed image (stale cache, truncated copy, etc.).
+    This helper guarantees a fresh import and replaces any broken module in
+    sys.modules before the API routers are loaded.
+    """
+    required = ("Users", "Users_LoginParams", "Users_Fetch_UsersParams")
+    try:
+        import hpcl_ceg_model
+
+        missing = [name for name in required if not hasattr(hpcl_ceg_model, name)]
+        if not missing:
+            logger.info("hpcl_ceg_model loaded successfully")
+            return
+
+        logger.warning(
+            f"hpcl_ceg_model is missing attributes: {missing}; forcing re-import from file"
+        )
+    except Exception as exc:
+        logger.warning(f"hpcl_ceg_model initial import failed: {exc}; forcing re-import")
+
+    # Remove any cached partial/empty module and load directly from disk.
+    sys.modules.pop("hpcl_ceg_model", None)
+    model_path = os.path.join(os.getcwd(), "hpcl_ceg_model.py")
+    if not os.path.exists(model_path):
+        logger.error(f"hpcl_ceg_model.py not found at {model_path}")
+        return
+
+    try:
+        spec = importlib.util.spec_from_file_location("hpcl_ceg_model", model_path)
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules["hpcl_ceg_model"] = mod
+        spec.loader.exec_module(mod)
+        missing = [name for name in required if not hasattr(mod, name)]
+        if missing:
+            logger.error(
+                f"Re-imported hpcl_ceg_model is still missing: {missing}"
+            )
+        else:
+            logger.info("hpcl_ceg_model re-imported successfully from file")
+    except Exception as exc:
+        logger.exception(f"Failed to re-import hpcl_ceg_model from {model_path}")
+
+
 # ── Load routers at import time ───────────────────────────────────────────────
 # (Runs when uvicorn imports this module, which is after sys.path is set.)
+_ensure_hpcl_ceg_model()
 _load_routers(app)
 _log_registered_routes()
