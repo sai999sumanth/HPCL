@@ -10,8 +10,6 @@
 #   http://localhost:8002/docs — FastAPI direct
 ##############################################################################
 
-version: "3.9"
-
 services:
   novex:
     build:

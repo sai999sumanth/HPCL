@@ -72,7 +72,7 @@ jobs:
       packages: read
     steps:
       - name: Deploy
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1
         env:
           ALG_ENV_CONTENTS: ${{ secrets.ALG_ENV_CONTENTS }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -120,16 +120,17 @@ jobs:
               -v /opt/digitaltwin_images:/opt/digitaltwin_images \
               ${IMAGE}:latest
 
-            echo "Waiting for application..."
-            for i in $(seq 1 15); do
+            # ── Phase 1: wait for nginx/frontend (quick — nginx starts in ~5s) ──
+            echo "Waiting for nginx/frontend to start..."
+            for i in $(seq 1 10); do
               STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/ || echo "000")
               if [ "$STATUS" = "200" ]; then
                 echo "Frontend is up (HTTP $STATUS)"
                 break
               fi
-              echo "Not ready yet (HTTP $STATUS), retrying ($i/15)..."
-              sleep 5
-              if [ "$i" -eq 15 ]; then
+              echo "Frontend not ready yet (HTTP $STATUS), retrying ($i/10)..."
+              sleep 3
+              if [ "$i" -eq 10 ]; then
                 echo "Frontend failed to start (last HTTP status: $STATUS)."
                 echo "--- Checking if frontend files exist in container ---"
                 sudo docker exec app-container ls -la /usr/share/nginx/html || echo "Path /usr/share/nginx/html not found in container"
@@ -137,15 +138,41 @@ jobs:
                 sudo docker exec app-container nginx -t || true
                 echo "--- supervisord process status ---"
                 sudo docker exec app-container supervisorctl status || true
-                echo "--- api process log tail ---"
-                sudo docker exec app-container tail -n 100 /var/log/api.log || true
                 echo "--- Full container logs ---"
                 sudo docker logs app-container
                 exit 1
               fi
             done
 
-            echo "Checking Swagger..."
+            # ── Phase 2: wait for FastAPI backend (cold start can take 2+ minutes) ──
+            # The old loop checked only the frontend (/), which returns 200 the
+            # moment nginx is up — long before uvicorn finishes importing ~80
+            # modules. It then immediately checked /docs and failed because the
+            # API wasn't ready yet. Now we poll /api/health with 40 retries (200s).
+            echo "Waiting for FastAPI backend (cold start can take 2+ minutes)..."
+            for i in $(seq 1 40); do
+              STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/api/health || echo "000")
+              if [ "$STATUS" = "200" ]; then
+                echo "API is up (HTTP $STATUS)"
+                break
+              fi
+              echo "API not ready yet (HTTP $STATUS), retrying ($i/40)..."
+              sleep 5
+              if [ "$i" -eq 40 ]; then
+                echo "API failed to start (last HTTP status: $STATUS)."
+                echo "--- supervisord process status ---"
+                sudo docker exec app-container supervisorctl status || true
+                echo "--- api process log tail ---"
+                sudo docker exec app-container tail -n 150 /var/log/api.log || true
+                echo "--- nginx error log tail ---"
+                sudo docker exec app-container tail -n 50 /var/log/nginx_error.log || true
+                echo "--- Full container logs ---"
+                sudo docker logs app-container
+                exit 1
+              fi
+            done
+
+            echo "Checking Swagger UI (proxied through nginx)…"
             DOCS_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/docs || echo "000")
             if [ "$DOCS_STATUS" = "000" ] || [ "$DOCS_STATUS" = "404" ]; then
               echo "Swagger endpoint unreachable or missing (HTTP $DOCS_STATUS)."
@@ -157,18 +184,24 @@ jobs:
               echo "Swagger endpoint reachable (HTTP $DOCS_STATUS)"
             fi
 
-            echo "Checking API proxy..."
+            echo "Checking API proxy…"
             API_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/api/ || echo "000")
             echo "API endpoint responded with HTTP $API_STATUS"
 
-            echo "Checking direct :8002 access..."
+            echo "Checking direct :8002 access…"
             DIRECT_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8002/docs || echo "000")
             if [ "$DIRECT_STATUS" != "200" ]; then
               echo "Direct :8002 access failed (HTTP $DIRECT_STATUS)."
+              echo "This confirms uvicorn is not bound to 0.0.0.0 — check __main__.py host parameter."
+              sudo docker exec app-container supervisorctl status || true
               sudo docker exec app-container tail -n 100 /var/log/api.log || true
               exit 1
             else
               echo "Direct :8002 access OK (HTTP $DIRECT_STATUS)"
             fi
+
+            echo "Checking direct :8002 health…"
+            DIRECT_HEALTH=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8002/api/health || echo "000")
+            echo "Direct :8002 health responded with HTTP $DIRECT_HEALTH"
 
             sudo docker image prune -f
