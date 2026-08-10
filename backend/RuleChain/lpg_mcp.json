@@ -1,0 +1,204 @@
+{
+  "ruleChain": {
+    "name": "LPG_MCP",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null,
+    "additionalInfo": {
+      "description": "MCP Health Check"
+    }
+  },
+  "metadata": {
+    "version": 2,
+    "firstNodeIndex": 3,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check IS MCP",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"MCP\") {\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 335,
+          "layoutY": 197
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "localhost",
+          "port": 5672,
+          "virtualHost": "/hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 758,
+          "layoutY": 396
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check MCP Status",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"Status Tag\"] == \"False\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 44,
+          "layoutY": 387
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Add",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "tenantid": "tenantid",
+            "additionalinfo": "additionalinfo",
+            "id": "deviceId"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 354,
+          "layoutY": 99
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = {};\nif (metadata.additionalInfo){\n  additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of MCP Interlock Loop\";\n    details[\"additionalInfo\"][\"unit_name\"] = additionalinfo[\"MCP Name\"];\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"raw_data\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP003\";\n}\nreturn details;",
+          "alarmType": "Healthiness of MCP Interlock Loop"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 422,
+          "layoutY": 472
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nvar msg_data = msg;\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nif (metadata[\"additionalInfo\"] != undefined) {\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of MCP Interlock Loop\";\ndetails[\"additionalInfo\"][\"message\"] = \"Healthiness of MCP Interlock Loop For \" + metadata[\"device_name\"];\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"raw_data\"] = {\"alertingModel\": \"MCP\"};\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP003\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Healthiness of MCP Interlock Loop",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 421,
+          "layoutY": 317
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Adding Server Scope Attributes",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "sapid"
+          ],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false,
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 678,
+          "layoutY": 98
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 4,
+        "type": "False"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 1,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 1,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 0,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

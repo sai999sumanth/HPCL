@@ -1,0 +1,15 @@
+{% extends "basedatatype" %}
+
+{% block datatype%}int{% endblock %}
+{% set kwargs = {} %}
+{% if input.min %}
+{% set _ = kwargs.update({'ge': input.min}) %}
+{% endif %}
+{% if input.max %}
+{% set _ = kwargs.update({'le': input.max}) %}
+{% endif %}
+{% if input.multiple %}
+{% set _ = kwargs.update({'multiple_of': input.multiple}) %}
+{% endif %}
+{%- block constraints -%}**{{kwargs}}{%- endblock -%}
+{# {%- block constraints -%}{% for k,v in args.items() %}{{k}}={{v}}{% endfor %}{%- endblock -%} #}

@@ -1,0 +1,250 @@
+{
+    "oracle": {
+        "host": "10.1.83.130",
+        "port": 1521,
+        "sid": "ORCL",
+        "user_name": "hostdncinterface",
+        "password": "dnc#25hpcl"
+    },
+    "oracle_tables": [
+        "HOST_SICKTTS",
+        "HOST_CANCELLEDTTS",
+        "HOST_KFACTORCHANGES",
+        "HOST_LOCALLOADEDTTS",
+        "HOST_BAYREASSIGNMENT",
+        "HOST_MANUALBAYASSIGNED",
+        "HOST_MANUALFANPRINTED",
+        "HOST_UNAUTHORIZEDFLOW",
+        "HOST_OVERLOADEDTTS",
+        "HOST_MFMKFACTOR",
+        "HOST_MASTERSTATUS",
+        "HOST_StandaloneTTs",
+        "HOST_TASUserDetails",
+        "HOST_LiveTankDetails",
+        "HOST_SuspectedLoads",
+        "HOST_PLTDetails",
+        "HOST_DayEndDetails",
+        "HOST_DayEndSummary"
+
+    ],
+    "conn_host": "10.90.38.167",
+    "conn_port": "5672",
+    "conn_user": "hpcl_ceg",
+    "conn_secret": "algo#ceg@4321",
+    "conn_channel": "test_sync",
+    "conn_vhost": "hpcl_ceg",
+    
+    "postgresql": {
+        "host": "10.90.38.162",
+        "port": 5432,
+        "user_name": "ceg_user",
+        "password": "TTNqetkiJLPM50jC",
+        "database_name": "hpcl_ceg"
+    },
+    "rename_tables": {
+        "HOST_UNAUTHORIZEDFLOW": "HostUnauthorisedFlow",
+        "HOST_CANCELLEDTTS": "HostCancelledTts",
+        "HOST_MANUALFANPRINTED": "HostManualFanPrinted",
+        "HOST_OVERLOADEDTTS": "HostOverLoadedTts",
+        "HOST_KFACTORCHANGES": "HostKFactorChanges",
+        "HOST_LOCALLOADEDTTS": "HostLocalLoadedTts",
+        "HOST_BAYREASSIGNMENT": "HostBayReAssignment",
+        "HOST_MANUALBAYASSIGNED": "HostManualBayAssigned",
+        "HOST_SICKTTS": "HostSickTts",
+        "HOST_MFMKFACTOR": "HostMFMFactor",
+        "HOST_MASTERSTATUS": "MasterStatus",
+        "HOST_StandaloneTTs": "HostStandaloneTts",
+        "HOST_TASUserDetails":"HostTasUserDetails",
+        "HOST_LiveTankDetails": "HostLiveTankDetails",
+        "HOST_SuspectedLoads": "HostSuspectedLoads",
+        "HOST_PLTDetails": "HostPltDetails",
+        "HOST_DayEndDetails": "HostDayEndDetails",
+        "HOST_DayEndSummary": "HostDayEndSummary"
+    },
+
+    "interlock_name": {
+      "HostUnauthorisedFlow":"Unauthorized flow_BCU",
+      "HostCancelledTts":"Cancel TT Reported",
+      "HostManualFanPrinted":"Manual FAN printed more than 5% of total TT loaded",
+      "HostOverLoadedTts":"TT Overloaded",
+      "HostKFactorChanges":"BCU K- Factor Change",
+      "HostLocalLoadedTts":"BCU Local Loading",
+      "HostBayReAssignment":"Bay reassignment",
+      "HostManualBayAssigned":"Manual - bay assignment of more than 5% of total TT loaded",
+      "HostSickTts":"SickTT Reported",
+      "HostMFMFactor": "MFM K Factor Change"
+    },
+
+    "severity": {
+        "HostUnauthorisedFlow":"Medium",
+        "HostCancelledTts":"Medium",
+        "HostManualFanPrinted":"Medium",
+        "HostOverLoadedTts":"Medium",
+        "HostKFactorChanges":"Critical",
+        "HostLocalLoadedTts":"Medium",
+        "HostBayReAssignment":"Medium",
+        "HostManualBayAssigned":"Medium",
+        "HostSickTts":"Medium",
+        "HostMFMFactor": "Medium"
+
+    },
+    "sop_id":{
+        "HostUnauthorisedFlow":"SOP061",
+        "HostCancelledTts":"SOP062",
+        "HostManualFanPrinted":"SOP063",
+        "HostOverLoadedTts":"SOP064",
+        "HostKFactorChanges":"SOP065",
+        "HostLocalLoadedTts":"SOP025",
+        "HostBayReAssignment":"SOP066",
+        "HostManualBayAssigned":"SOP067",
+        "HostSickTts":"SOP068",
+        "HostMFMFactor": "SOP069"
+    },
+
+    "column_rename": {
+        "LOAD_NUMBER": "load_number",
+        "TRUCK_NUMBER": "truck_number",
+        "CREATED_DATE": "created_date",
+        "CUSTOMER_NAME": "customer_name",
+        "COMPONENT_NUMBER": "compartment_number",
+        "COMPARTMENT_NUMBER": "compartment_number",
+        "PRODUCT_NAME": "product_name",
+        "REQUIRED_QTY": "required_qty",
+        "LOADED_QTY": "loaded_qty",
+        "SICK_DECLARED_BY": "sick_declared_by",
+        "SICK_DATE": "sick_date",
+        "REMARKS": "remarks",
+        "CANCELLED_BY": "cancelled_by",
+        "CANCELLED_DATE": "cancelled_date",
+        "BAY_NUMBER": "bay_number",
+        "BCU_NUMBER": "bcu_number",
+        "TIMESTAMP": "timestamp",
+        "BCU_PARAMETER": "bcu_parameter",
+        "INITIAL_SETTING": "initial_setting",
+        "FINAL_SETTING": "final_setting",
+        "RECIPE_NAME": "recipe_name",
+        "CARD_NUMBER": "card_number",
+        "START_TOTALIZER": "start_totalizer",
+        "END_TOTALIZER": "end_totalizer",
+        "TRANSACTION_END_TIME": "transaction_end_time",
+        "FAN_NUMBER": "fan_number",
+        "REASSIGNED_BAY": "reassigned_bay",
+        "BAY_REASSIGNMENT_TIME": "bay_reassignment_time",
+        "USER_NAME": "user_name",
+        "TEXT": "text",
+        "MANUAL_FAN_COUNT": "manual_fan_count",
+        "AUTO_FAN_COUNT": "auto_fan_count",
+        "TOTAL_COUNT": "total_count",
+        "METER_NUMBER": "meter_number",
+        "NET_TOTALIZER": "net_totalizer",
+        "BLEND_NAME": "blend_name",
+        "PRESET_NUMBER": "bcu_number",
+        "MFM_NUMBER": "mfm_number",
+        "ASSOCIATED_DEVICE_NUMBER": "bcu_number",
+        "STOCK_CODE": "stock_code",
+        "CURRENT_K_FACTOR": "current_k_factor",
+        "LAST_K_FACTOR": "last_k_factor",
+        "LAST_K_FACTOR_CHANGE_DATE": "last_k_factor_change_date",
+        "CURRENT_METER_FACTOR": "current_meter_factor",
+        "LAST_METER_FACTOR": "last_meter_factor",
+        "LAST_METER_FACTOR_CHANGE_DATE": "last_meter_factor_change_date",
+        "ASSIGNED_BAY": "assigned_bay",
+        "REASSIGN_LOADED_QTY": "reassign_loaded_qty",
+        "STATUS": "status",
+        "LOCATION_CODE": "location_code",
+        "ACTIVE_SERVER_NAME": "active_server_name",
+        "ENTRY_TIME": "entry_time",
+        "EXIT_TIME": "exit_time",
+        "PASSWORD_EXPIRY_DATE": "password_expiry_date",
+        "USERNAME":"user_name",
+        "USERGROUP": "user_group",
+        "TANK_NAME": "tank_name",
+        "TANK_MODE": "tank_mode",
+        "CURR_LEVEL": "curr_level",
+        "WATER_LEVEL": "water_level",
+        "EVENT_TIME": "event_time",
+        "TRANSACTION_NUMBER": "transaction_number",
+        "STOCK": "stock",
+        "TRANS_START_TIME": "trans_start_time",
+        "TRANS_END_TIME": "trans_end_time",
+        "CUM_START_GROSS_VOL_KL": "cum_start_gross_vol_kl",
+        "CUM_END_GROSS_VOL_KL" : "cum_end_gross_vol_kl",
+        "CUM_START_MASS_MT": "cum_start_mass_mt",
+        "CUM_END_MASS_MT": "cum_end_mass_mt",
+        "UNCORR_VOL_KL": "uncorr_vol_kl",
+        "MASS_MT": "mass_mt",
+        "BCU_START_TOTALIZER": "bcu_start_totalizer",
+        "BCU_END_TOTALIZER": "bcu_end_totalizer",
+        "BCU_NET_TOTALIZER": "bcu_net_totalizer",
+        "MFM_START_TOTALIZER": "mfm_start_totalizer",
+        "MFM_END_TOTALIZER": "mfm_end_totalizer",
+        "MFM_NET_TOTALIZER": "mfm_net_totalizer",
+        "INVOICED_QTY": "invoiced_qty",
+        "TOTAL_TL_QTY_LOADED": "total_tl_qty_loaded",
+        "BCU_MFM_NET_TOTALIZER_DIFF": "bcu_mfm_net_totalizer_diff",
+        "INVOICED_TOTAL_TL_QTY_DIFF": "invoiced_total_tl_qty_diff",
+        "INVOICED_BCU_NET_QTY_DIFF": "invoiced_bcu_net_qty_diff",
+        "TOPUP_QTY_LOCAL_MODE": "topup_qty_local_mode",
+        "SAMPLING_QTY": "sampling_qty",
+        "TOTAL_LOADED_TTS": "total_loaded_tts",
+        "TOTAL_SICK_TTS": "total_sick_tts",
+        "TOTAL_CANCELLED_TTS": "total_cancelled_tts",
+        "MFM_DESCRIPTION": "mfm_description",
+        "TANK_CODE": "tank_code"
+    },
+
+    "alert_logic": {
+        "HostManualFanPrinted": {
+            "name": "Manual FAN printed more than 5% of total TT loaded",
+            "severity": "Medium",
+            "escalations": {
+                "level - 1": {
+                    "condition": "<",
+                    "value": 5,
+                    "assign_role": "",
+                    "escalation_role": "",
+                    "escalation_time": "",
+                    "is_close_alert": true
+                },
+                "level - 2": {
+                    "condition": "<>",
+                    "value": 5,
+                    "assign_role": "TAS Officer SOD",
+                    "escalation_role": "Location In-Charge SOD",
+                    "escalation_time": "PT15M",
+                    "is_close_alert": false
+                }
+            } 
+        },
+
+        "HostUnauthorisedFlow": {
+            "name": "Unauthorized flow_BCU",
+            "severity": "Medium",
+            "escalations": {
+                "level - 1": {
+                    "condition": "<",
+                    "value": 5,
+                    "assign_role": "",
+                    "escalation_role": "",
+                    "escalation_time": "",
+                    "is_close_alert": true
+                },
+                "level - 2": {
+                    "condition": "<>",
+                    "value": 5,
+                    "assign_role": "TAS Officer SOD",
+                    "escalation_role": "Location In-Charge SOD",
+                    "escalation_time": "PT15M",
+                    "is_close_alert": false
+                }
+            } 
+        },
+
+        "HostCancelledTts": {
+            "name": "Cancel TT Reported",
+            "severity": "Medium",
+            "escalations": {
+            } 
+        }
+    }
+}

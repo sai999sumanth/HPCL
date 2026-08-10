@@ -1,0 +1,13 @@
+{
+  "location_id": "1999",
+  "conn_host": "140.245.238.142",
+  "conn_port": "5672",
+  "conn_channel": "ceg_tb_listener",
+  "conn_exchange": "",
+  "conn_user": "hpcl_ceg",
+  "conn_vhost": "hpcl_ceg",
+  "conn_secret": "algo@4321",
+  "things_board_url": "http://140.245.238.142:8080",
+  "things_board_username": "tenant@thingsboard.org",
+  "things_board_password": "Algo#@70"
+}

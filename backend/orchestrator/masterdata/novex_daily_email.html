@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/astha/Downloads/novex_daily_email%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Today - Sales Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #003366;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+            /* width: 500px; */
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+        .sbuSales th{
+            /* width: 300px; */
+        }
+        .openAlert th{
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Novex Today - Sales Report</h2>
+    <p><strong>Date:</strong> {{today_date}} | <strong>Day:</strong> {{today_week}}</p>
+    <hr>
+    <h3>Sales at a Glance:</h3>
+    <table>
+        <tbody><tr>
+            <th style="background-color: white; color: black;">{{current_sales}} TMT <br>
+                <div>Current Sales (YTD)</div>
+            </th>
+            <th style="background-color: white; color: black;">{{pro_rate_sales}} TMT<br>
+                <div>Pro-rate Target Sales</div>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div class="growth"> {{sales_data['yesterday_growth_loss']}} TMT <div class="growth">{{sales_data['yesterday_growth_loss_percentage']}}%</div>
+                </div>Yesterday’s Gain/Loss
+            </td>
+            <td>
+                <div class="growth"> {{sales_data['total_growth_loss']}} TMT <div class="growth">{{sales_data['total_growth_loss_percentage']}}%</div>
+                </div>Total Gain/Loss
+            </td>
+        </tr>
+    </tbody></table>
+
+    <h3>Catch up on Today's Marketing Sales</h3>
+    <h4>1. Marketing summary:</h4>
+    <table>
+        <tbody><tr>
+            <th style="width: 400px;"> </th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td>Volume on {{today}}</td>
+            <td>{{sales_data['today_current']}}</td>
+            <td>{{sales_data['today_historical']}}</td>
+            <td class="growth">{{sales_data['today_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data['present_month_current']}}</td>
+            <td>{{sales_data['present_month_historical']}}</td>
+            <td class="growth">{{sales_data['present_month_growth']}}</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data['ytpm_current']}}</td>
+            <td>{{sales_data['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data['ytpm_growth']}}</td>
+        </tr>
+    </tbody></table>
+
+    <h4>2. Carried Forward Indent Details</h4>
+    <table>
+        <tbody><tr>
+            <th>Date</th>
+            <th>Cat A</th>
+            <th>Dry-out</th>
+            <th>Others</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>{{today}}</td>
+            <td>{{dry_out_cf['cat_a']}}</td>
+            <td>{{dry_out_cf['dry_out']}}</td>
+            <td>{{dry_out_cf['others']}}</td>
+            <td>{{dry_out_cf['total']}}</td>
+        </tr>
+    </tbody></table>
+
+    <h4>3. Dry out Indent details:</h4>
+    <table>
+        <tbody><tr>
+            <th>Date</th>
+            <th>Dryout</th>
+            <th>Indent not raised</th>
+            <th>Indent raised</th>
+        </tr>
+        <tr>
+            <td>{{today}}</td>
+            <td>{{dry_out['dry_out']}}</td>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out['indent_raised']}}</td>
+        </tr>
+    </tbody></table>
+
+    <h4>4. SBU Wise Sales Summary</h4>
+    <div class="sbuSales">
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Retail</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{today}}</td>
+            <td>{{sales_data_retail['today_current']}}</td>
+            <td>{{sales_data_retail['today_historical']}}</td>
+            <td class="growth">{{sales_data_retail['today_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_retail['present_month_current']}}</td>
+            <td>{{sales_data_retail['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_retail['present_month_growth']}}</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_retail['ytpm_current']}}</td>
+            <td>{{sales_data_retail['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_retail['ytpm_growth']}}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>LPG</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{today}}</td>
+            <td>{{sales_data_lpg['today_current']}}</td>
+            <td>{{sales_data_lpg['today_historical']}}</td>
+            <td class="growth">{{sales_data_lpg['today_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_lpg['present_month_current']}}</td>
+            <td>{{sales_data_lpg['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_lpg['present_month_growth']}}</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_lpg['ytpm_current']}}</td>
+            <td>{{sales_data_lpg['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_lpg['ytpm_growth']}}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>I&amp;C</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{today}}</td>
+            <td>{{sales_data_i_c['today_current']}}</td>
+            <td>{{sales_data_i_c['today_historical']}}</td>
+            <td class="growth">{{sales_data_i_c['today_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_i_c['present_month_current']}}</td>
+            <td>{{sales_data_i_c['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_i_c['present_month_growth']}}</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_lpg['ytpm_current']}}</td>
+            <td>{{sales_data_lpg['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_lpg['ytpm_growth']}}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Lubes</b></td>
+        </tr>
+        <tr>
+        </tr><tr>
+            <td>Volume on {{today}}</td>
+            <td>{{sales_data_lubes['today_current']}}</td>
+            <td>{{sales_data_lubes['today_historical']}}</td>
+            <td class="growth">{{sales_data_lubes['today_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_lubes['present_month_current']}}</td>
+            <td>{{sales_data_lubes['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_lubes['present_month_growth']}}</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_lubes['ytpm_current']}}</td>
+            <td>{{sales_data_lubes['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_lubes['ytpm_growth']}}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Aviation</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{today}}</td>
+            <td>{{sales_data_aviation['today_current']}}</td>
+            <td>{{sales_data_aviation['today_historical']}}</td>
+            <td class="growth">{{sales_data_aviation['today_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_aviation['present_month_current']}}</td>
+            <td>{{sales_data_aviation['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_aviation['present_month_growth']}}</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_aviation['ytpm_current']}}</td>
+            <td>{{sales_data_aviation['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_aviation['ytpm_growth']}}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Petchem</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{today}}</td>
+            <td>{{sales_data_petchem['today_current']}}</td>
+            <td>{{sales_data_petchem['today_historical']}}</td>
+            <td class="growth">{{sales_data_petchem['today_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_petchem['present_month_current']}}</td>
+            <td>{{sales_data_petchem['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_petchem['present_month_growth']}}</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_petchem['ytpm_current']}}</td>
+            <td>{{sales_data_petchem['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_petchem['ytpm_growth']}}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Gas</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{today}}</td>
+            <td>{{sales_data_gas['today_current']}}</td>
+            <td>{{sales_data_gas['today_historical']}}</td>
+            <td class="growth">{{sales_data_gas['today_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_gas['present_month_current']}}</td>
+            <td>{{sales_data_gas['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_gas['present_month_growth']}}</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_gas['ytpm_current']}}</td>
+            <td>{{sales_data_gas['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_gas['ytpm_growth']}}</td>
+        </tr>
+    </tbody></table>
+    </div>
+    <h3>Zones Performance</h3>
+    <p>Zones show mixed performance with {{performing_zone}} zones advancing and {{under_performing}} zones declining.</p>
+<!--    <p>Advance Decline ratio for the month = <strong>1.6</strong></p>-->
+
+    <h3>Top Performing Regions (Growth %)</h3>
+    <ul>
+        <li>Retail: {{top_retail}}%</li>
+        <li>LPG: {{top_lpg}}%</li>
+        <li>Lubes: {{top_lubes}}%</li>
+    </ul>
+
+    <h3>Bottom Performing Regions (Growth %)</h3>
+    <ul>
+        <li>Retail: {{top_retail}}%</li>
+        <li>LPG: {{top_retail}}%</li>
+        <li>Lubes: {{top_retail}}%</li>
+    </ul>
+
+    <h3>Open Alert Summary</h3>
+    <div class="openAlert">
+    <table>
+        <tbody><tr>
+            <th>Category</th>
+            <th>BU</th>
+            <th>Critical</th>
+            <th>High</th>
+        </tr>
+        <tr>
+            <td>Retail Outlets</td>
+            <td>RO</td>
+            <td>{{ro_critical}}</td>
+            <td>{{ro_high}}</td>
+        </tr>
+        <tr>
+            <td>Terminals</td>
+            <td>TAS</td>
+            <td>{{tas_critical}}</td>
+            <td>{{tas_high}}</td>
+        </tr>
+        <tr>
+            <td>LPG Plants</td>
+            <td>LPG</td>
+            <td>{{lpg_critical}}</td>
+            <td>{{lpg_high}}</td>
+        </tr>
+        <tr>
+            <td>Video Analytics</td>
+            <td>LPG</td>
+            <td>{{va_critical_lpgl}}</td>
+            <td>{{va_high_lpg}}</td>
+        </tr>
+        <tr>
+            <td>Video Analytics</td>
+            <td>RO</td>
+            <td>{{va_critical_ro}}</td>
+            <td>{{va_high_ro}}</td>
+        </tr>
+        <tr>
+            <td>Video Analytics</td>
+            <td>TAS</td>
+            <td>{{va_critical_tas}}</td>
+            <td>{{va_high_tas}}</td>
+        </tr>
+        <tr>
+            <td>Vehicle Tracking System</td>
+            <td>LPG</td>
+            <td>{{vts_critical_lpg}}</td>
+            <td>{{vts_high_lpg}}</td>
+        </tr>
+        <tr>
+            <td>Vehicle Tracking System</td>
+            <td>RO</td>
+            <td>{{vts_critical_ro}}</td>
+            <td>{{vts_high_ro}}</td>
+        </tr>
+        <tr>
+            <td>Vehicle Tracking System</td>
+            <td>TAS</td>
+            <td>{{vts_critical_tas}}</td>
+            <td>{{vts_high_tas}}</td>
+        </tr>
+        <tr>
+            <td>EM Lock</td>
+            <td>LPG</td>
+            <td>{{emlock_critical_lpg}}</td>
+            <td>{{emlock_high_lpg}}</td>
+        </tr>
+        <tr>
+            <td>EM Lock</td>
+            <td>RO</td>
+            <td>{{emlock_critical_ro}}</td>
+            <td>{{emlock_high_ro}}</td>
+        </tr>
+        <tr>
+            <td>EM Lock</td>
+            <td>TAS</td>
+            <td>{{emlock_critical_tas}}</td>
+            <td>{{emlock_high_tas}}</td>
+        </tr>
+    </tbody></table>
+
+    <!-- <table>
+        <tr>
+            <th>Category</th>
+            <th>BU</th>
+            <th>Critical</th>
+            <th>High</th>
+        </tr>
+        <tr>
+            <td>Video Analytics</td>
+            <td>LPG</td>
+            <td>{{va_critical_lpgl}}</td>
+            <td>{{va_high_lpg}}</td>
+        </tr>
+        <tr>
+            <td>Video Analytics</td>
+            <td>RO</td>
+            <td>{{va_critical_ro}}</td>
+            <td>{{va_high_ro}}</td>
+        </tr>
+        <tr>
+            <td>Video Analytics</td>
+            <td>TAS</td>
+            <td>{{va_critical_tas}}</td>
+            <td>{{va_high_tas}}</td>
+        </tr>
+    </table> -->
+
+    <!-- <table>
+        <tr>
+            <th>Category</th>
+            <th>BU</th>
+            <th>Critical</th>
+            <th>High</th>
+        </tr>
+        <tr>
+            <td>Vehicle Tracking System</td>
+            <td>LPG</td>
+            <td>{{vts_critical_lpg}}</td>
+            <td>{{vts_high_lpg}}</td>
+        </tr>
+        <tr>
+            <td>Vehicle Tracking System</td>
+            <td>RO</td>
+            <td>{{vts_critical_ro}}</td>
+            <td>{{vts_high_ro}}</td>
+        </tr>
+        <tr>
+            <td>Vehicle Tracking System</td>
+            <td>TAS</td>
+            <td>{{vts_critical_tas}}</td>
+            <td>{{vts_high_tas}}</td>
+        </tr>
+    </table> -->
+
+    <!-- <table>
+        <tr>
+            <th>Category</th>
+            <th>BU</th>
+            <th>Critical</th>
+            <th>High</th>
+        </tr>
+        <tr>
+            <td>EM Lock</td>
+            <td>LPG</td>
+            <td>{{emlock_critical_lpg}}</td>
+            <td>{{emlock_high_lpg}}</td>
+        </tr>
+        <tr>
+            <td>EM Lock</td>
+            <td>RO</td>
+            <td>{{emlock_critical_ro}}</td>
+            <td>{{emlock_high_ro}}</td>
+        </tr>
+        <tr>
+            <td>EM Lock</td>
+            <td>TAS</td>
+            <td>{{emlock_critical_tas}}</td>
+            <td>{{emlock_high_tas}}</td>
+        </tr>
+    </table> -->
+</div>
+    <!-- <table>
+        <tr>
+            <th>Category</th>
+            <th>Critical</th>
+            <th>High</th>
+        </tr>
+        <tr>
+            <td>Video Analytics</td>
+            <td>{{va_critical}}</td>
+            <td>{{va_high}}</td>
+        </tr>
+        <tr>
+            <td>Retail Outlets</td>
+            <td>{{ro_critical}}</td>
+            <td>{{ro_high}}</td>
+        </tr>
+        <tr>
+            <td>Terminals</td>
+            <td>{{tas_critical}}</td>
+            <td>{{tas_high}}</td>
+        </tr>
+        <tr>
+            <td>LPG Plants</td>
+            <td>{{lpg_critical}}</td>
+            <td>{{lpg_high}}</td>
+        </tr>
+    </table> -->
+
+
+<script>
+    window.onload = function () {
+        document.querySelectorAll(".growth").forEach(td => {
+            let value = td.textContent.trim(); // Get text inside the <td>
+            let number = parseFloat(value); // Convert to number
+
+            if (!isNaN(number)) { // Check if it’s a valid number
+                if (number > 0) {
+                    td.classList.add("positive"); // Green for positive
+                } else if (number < 0) {
+                    td.classList.add("negative"); // Red for negative
+                }
+            }
+        });
+    };
+</script>
+
+</body></html>

@@ -1,0 +1,404 @@
+.table-container {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-wrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  background-color: #f3f4f6;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.sortable-header:hover {
+  background-color: #e5e7eb;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sort-indicator {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table td {
+  padding: 12px;
+  color: #4b5563;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.add-source-button {
+  background-color: transparent;
+  color: #4f46e5;
+  border: 2px solid #4f46e5;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-source-button:hover {
+  background-color: #4f46e5;
+  transform: translateY(0px);
+}
+
+.add-source-button svg {
+  transition: transform 0.2s ease-in-out;
+}
+
+.add-source-button:hover svg {
+  transform: rotate(90deg);
+}
+
+.action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.action-button:hover {
+  background-color: #f3f4f6;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.search-container {
+  position: relative;
+  flex-grow: 1;
+  max-width: 300px;
+  margin-right: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 16px 8px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #4b5563;
+}
+
+.status-badge {
+  padding: 2px 6px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+}
+
+.status-badge-active {
+  background-color: #10B981;
+}
+
+.status-badge-inactive {
+  background-color: #EF4444;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.column-popover .MuiPaper-root {
+  padding: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  width: 280px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.column-popover-header {
+  padding: 16px;
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.column-popover-title {
+  font-weight: 600;
+  color: #374151;
+  font-size: 16px;
+}
+
+.column-list {
+  padding: 8px 0;
+}
+
+.column-menu-item {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.column-menu-item:hover {
+  background-color: #f3f4f6;
+}
+
+.column-label {
+  font-weight: 500;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.visibility-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+.visibility-icon-visible {
+  background-color: #10B981;
+}
+
+.visibility-icon-hidden {
+  background-color: #EF4444;
+}
+
+.download-popover .MuiPaper-root {
+  padding: 0;
+  overflow-y: auto;
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.popover-header {
+  padding: 16px;
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.popover-title {
+  font-weight: 600;
+  color: #374151;
+  font-size: 16px;
+}
+
+.popover-content {
+  padding: 8px 0;
+}
+
+.download-menu-item {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.download-menu-item:hover {
+  background-color: #f3f4f6;
+}
+
+.download-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+}
+
+.download-icon-csv {
+  background-color: #217346;
+}
+
+.download-icon-doc,
+.download-icon-word {
+  background-color: #2B579A;
+}
+
+.download-icon-pdf {
+  background-color: #F40F02;
+}
+
+.download-label {
+  font-weight: 500;
+  color: #374151;
+}
+
+.custom-card-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 128px;
+  width: 100%;
+}
+
+.custom-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-card-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-card-title {
+  margin-bottom: 8px;
+}
+
+.custom-card-title-text {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.custom-card-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-card-detail-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.custom-card-detail-item:not(:last-child) {
+  margin-bottom: 4px;
+}
+
+.custom-card-label {
+  margin-right: 16px;
+  color: rgb(102, 102, 102);
+}
+
+/*................. AG GRID Styles.................... */
+/* DashboardTable.css */
+.ag-theme-alpine {
+  --ag-header-height: 48px;
+  --ag-header-background-color: #0047AB !important;
+  --ag-header-foreground-color: #fff;
+  --ag-header-cell-hover-background-color: #003d91;
+  --ag-row-hover-color: rgba(0, 71, 171, 0.1);
+  --ag-selected-row-background-color: rgba(0, 71, 171, 0.2);
+  --ag-font-size: 14px;
+  --ag-font-family: inherit;
+}
+
+.action-button {
+  @apply p-1.5 rounded-md text-gray-600 hover:bg-gray-100 hover:text-[#0047AB] transition-colors duration-200;
+}
+
+.ag-cell-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Status Badge Styles */
+.status-badge {
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full capitalize;
+}
+
+.status-badge.published {
+  @apply bg-green-50 text-green-700;
+}
+
+.status-badge.draft {
+  @apply bg-gray-100 text-gray-600;
+}
+
+/* Menu Styles */
+.MuiMenuItem-root {
+  @apply min-h-[40px];
+}
+
+.MuiMenuItem-root svg {
+  @apply mr-2;
+}

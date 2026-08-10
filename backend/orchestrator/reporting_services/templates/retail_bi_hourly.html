@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bi-Hourly Dry Out &amp; Nozzle Sales Report</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px; color: #333;">
+
+<h2 style="color: #003366; margin-bottom: 8px;">Bi-Hourly Dry Out &amp; Nozzle Sales Report</h2>
+{% if report_date %}<p style="margin: 0 0 8px 0; font-size: 14px;">Report Date: {{ report_date }}</p>{% endif %}
+<hr style="border: none; border-top: 1px solid #ccc; margin: 16px 0;">
+
+<h4 style="color: #003366; margin-top: 20px; margin-bottom: 8px;">1. Summary for the day (Unique Outlets)</h4>
+<table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+<thead>
+<tr>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Time</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Connected Outlets</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Partially Dry Outlets</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Stock &lt;6 hrs</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Stock 6-12 hrs</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Stock 12-24 hrs</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Stock 24-72 hrs</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Stock &gt;72 hrs</th>
+</tr>
+</thead>
+<tbody>
+{% for row in summary %}
+<tr>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.time }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.data.online | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.data.partial_dryout | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.data.hr_0_6 | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.data.hr_6_12 | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.data.hr_12_24 | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.data.hr_24_72 | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.data.Others | default(0) }}</td>
+</tr>
+{% else %}
+<tr><td colspan="7" style="border: 1px solid #ddd; padding: 12px; color: #666; font-style: italic;">No summary data for the day.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+
+<h4 style="color: #003366; margin-top: 20px; margin-bottom: 8px;">2. Zone Wise Summary at {{ time | default('--') }}</h4>
+<table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+<thead>
+<tr>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Zone</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Dry Out Count</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Indent Not Raised</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Indent Raised</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Indent On Hold</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Pending Indents</th>
+<th style="background: #003366; color: #fff; padding: 8px 6px; font-size: 13px; text-align: center; border: 1px solid #002244;">Valid Indents</th>
+</tr>
+</thead>
+<tbody>
+{% for row in zone_summary %}
+<tr>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.zone }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.dry_out | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.indents_not_raised | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.indents_raised | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.indents_on_hold | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.pending_indents | default(0) }}</td>
+<td style="border: 1px solid #ddd; padding: 8px 6px; font-size: 12px; text-align: center;">{{ row.valid_indents | default(0) }}</td>
+</tr>
+{% else %}
+<tr><td colspan="7" style="border: 1px solid #ddd; padding: 12px; color: #666; font-style: italic;">No zone summary data.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+
+</body>
+</html>

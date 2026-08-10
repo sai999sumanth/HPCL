@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/astha/Downloads/novex_daily_email%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Yesterday - Sales Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #003366;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+            /* width: 500px; */
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+        .sbuSales th{
+            /* width: 300px; */
+        }
+        .openAlert th{
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Novex Today - Sales Report</h2>
+    <p><strong>Date:</strong> {{yesterday_date}} | <strong>Day:</strong> {{yesterday_week}}</p>
+    <hr>
+<!--    <h3>Sales at a Glance:</h3>-->
+<!--    <table>-->
+<!--        <tbody><tr>-->
+<!--            <th style="background-color: white; color: black;">{{sales_data['current_sales']}} TMT <br>-->
+<!--                <div>Current Sales (YTD)</div>-->
+<!--            </th>-->
+<!--            <th style="background-color: white; color: black;">{{sales_data['pro_rate_sales_target']}} TMT<br>-->
+<!--                <div>Pro-rate Target Sales</div>-->
+<!--            </th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>-->
+<!--                <div class="growth"> {{sales_data['yesterday_growth_loss']}} TMT <div class="growth">{{sales_data['yesterday_growth_loss_percentage']}}%</div>-->
+<!--                </div>Yesterday’s Gain/Loss-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <div class="growth"> {{sales_data['total_growth_loss']}} TMT <div class="growth">{{sales_data['total_growth_loss_percentage']}}%</div>-->
+<!--                </div>Total Gain/Loss-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </tbody></table>-->
+
+    <h3>Catch up on Yesterday's Marketing Sales</h3>
+    <h4>1. Marketing Sales Summary:</h4>
+    <table>
+        <tbody><tr>
+            <th style="width: 400px;"> </th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data['yesterday_current']}}</td>
+            <td>{{sales_data['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data['present_month_current']}}</td>
+            <td>{{sales_data['present_month_historical']}}</td>
+            <td class="growth">{{sales_data['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data['ytpm_current']}}</td>
+            <td>{{sales_data['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data['ytpm_growth']}}{% if sales_data['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+
+    <h4>2. Carried Forward Indent Details</h4>
+    <table>
+        <tbody><tr>
+            <th>Date</th>
+            <th>Cat A</th>
+            <th>Dry-out</th>
+            <th>Others</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>{{yesterday}}</td>
+            <td>{{dry_out_cf['cat_a']}}</td>
+            <td>{{dry_out_cf['dry_out']}}</td>
+            <td>{{dry_out_cf['others']}}</td>
+            <td>{{dry_out_cf['total']}}</td>
+        </tr>
+    </tbody></table>
+
+    <h4>3. Retail Outlet Dryout Details (MS/HSD/E20):</h4>
+    <table>
+        <tbody><tr>
+            <th>Date</th>
+            <th>Dryout</th>
+            <th>Indent not raised</th>
+            <th>Indent raised</th>
+        </tr>
+        <tr>
+            <td style="color: darkgreen;">{{today}} {{report_generated_time}}</td>
+            <td>{{dry_out['dry_out']}}</td>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out['indent_raised']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>3.1. Indent Not Raised - Details By Sales (MS/HSD/E20):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th>Nozzle Sales Not Started</th>
+            <th>Closed Outlets</th>
+            <th>Volume (> 50KLPM)</th>
+            <th>Low Volume (< 50KLPM)</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['Nozzle Sales Not Started']}}</td>
+            <td>{{dry_out_details['Closed Outlets']}}</td>
+            <td>{{dry_out_details['Volume(>50KLPM)']}}</td>
+            <td>{{dry_out_details['Low Volume(<50KLPM)']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>3.2. Indent Not Raised - Details By Dryout Days (MS/HSD/E20):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th><2 Days</th>
+            <th>3 to 7 Days</th>
+            <th>8 to 15 Days</th>
+            <th>>15 Days</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['<2 Days']}}</td>
+            <td>{{dry_out_details['3 to 7 Days']}}</td>
+            <td>{{dry_out_details['8 to 15 Days']}}</td>
+            <td>{{dry_out_details['> 15 Days']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>3.3. Indent Not Raised - TAR Analysis (MS/HSD/E20):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th>< 25 Rs Lakhs</th>
+            <th>25 to 50 Rs lakhs</th>
+            <th>50 to 75 Rs Lakhs</th>
+            <th>> 1 Rs Cr</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['0 to 25 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['25 to 50 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['50 to 75 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['> 1 Rs Cr']}}</td>
+        </tr>
+    </tbody></table>
+
+    <h4>4. SBU Wise Sales Summary</h4>
+    <div class="sbuSales">
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Retail</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data_retail['yesterday_current']}}</td>
+            <td>{{sales_data_retail['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data_retail['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_retail['present_month_current']}}</td>
+            <td>{{sales_data_retail['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_retail['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_retail['ytpm_current']}}</td>
+            <td>{{sales_data_retail['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_retail['ytpm_growth']}}{% if sales_data_retail['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>LPG</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data_lpg['yesterday_current']}}</td>
+            <td>{{sales_data_lpg['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data_lpg['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_lpg['present_month_current']}}</td>
+            <td>{{sales_data_lpg['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_lpg['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_lpg['ytpm_current']}}</td>
+            <td>{{sales_data_lpg['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_lpg['ytpm_growth']}}{% if sales_data_lpg['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>I&amp;C</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data_i_c['yesterday_current']}}</td>
+            <td>{{sales_data_i_c['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data_i_c['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_i_c['present_month_current']}}</td>
+            <td>{{sales_data_i_c['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_i_c['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_lpg['ytpm_current']}}</td>
+            <td>{{sales_data_lpg['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_lpg['ytpm_growth']}}{% if sales_data_lpg['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Lubes</b></td>
+        </tr>
+        <tr>
+        </tr><tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data_lubes['yesterday_current']}}</td>
+            <td>{{sales_data_lubes['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data_lubes['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_lubes['present_month_current']}}</td>
+            <td>{{sales_data_lubes['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_lubes['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_lubes['ytpm_current']}}</td>
+            <td>{{sales_data_lubes['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_lubes['ytpm_growth']}}{% if sales_data_lubes['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Aviation</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data_aviation['yesterday_current']}}</td>
+            <td>{{sales_data_aviation['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data_aviation['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_aviation['present_month_current']}}</td>
+            <td>{{sales_data_aviation['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_aviation['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_aviation['ytpm_current']}}</td>
+            <td>{{sales_data_aviation['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_aviation['ytpm_growth']}}{% if sales_data_aviation['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Petchem</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data_petchem['yesterday_current']}}</td>
+            <td>{{sales_data_petchem['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data_petchem['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_petchem['present_month_current']}}</td>
+            <td>{{sales_data_petchem['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_petchem['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_petchem['ytpm_current']}}</td>
+            <td>{{sales_data_petchem['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_petchem['ytpm_growth']}}{% if sales_data_petchem['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+    <table>
+        <tbody><tr>
+            <th style="width: 300px;"></th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center"><b>Gas</b></td>
+        </tr>
+        <tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data_gas['yesterday_current']}}</td>
+            <td>{{sales_data_gas['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data_gas['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data_gas['present_month_current']}}</td>
+            <td>{{sales_data_gas['present_month_historical']}}</td>
+            <td class="growth">{{sales_data_gas['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data_gas['ytpm_current']}}</td>
+            <td>{{sales_data_gas['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data_gas['ytpm_growth']}}{% if sales_data_gas['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+    </div>
+
+    <h4>5. Zone-wise Performance - YTD</h4>
+    <p>Retail Zones show mixed performance: {{sales_data['Retail_growing_zones']}} Zones growing, while {{sales_data['Retail_declining_zones']}} Zones are declining.</p>
+    <p>LPG Zones show mixed performance: {{sales_data['LPG_growing_zones']}} Zones growing, while {{sales_data['LPG_declining_zones']}} Zones are declining.</p>
+<!--    <p>Lubes Zones show mixed performance: {{sales_data['Lubes_growing_zones']}} Zones growing,while {{sales_data['Lubes_declining_zones']}} Zones are declining.</p>-->
+
+    <h4>6. Top Performing Zones and Regions (Growth %) - YTD</h4>
+    <table>
+        <tbody>
+        <tr>
+            <th>SBU</th>
+            <th>Zones (Top 2)</th>
+            <th>Regions (Top 3)</th>
+        </tr>
+        <tr>
+            <td>Retail</td>
+            <td>{{sales_data['top_performing_Retail_zones'][0:2]|join("<br>")}}</td>
+            <td>{{sales_data['top_performing_Retail_regions'][0:3]|join("<br>")}}</td>
+        </tr>
+        <tr>
+            <td>LPG</td>
+            <td>{{sales_data['top_performing_LPG_zones'][0:2]|join("<br>")}}</td>
+            <td>{{sales_data['top_performing_LPG_regions'][0:3]|join("<br>")}}</td>
+        </tr>
+        <tr>
+            <td>Lubes</td>
+            <td>-</td>
+            <td>{{sales_data['top_performing_Lubes_regions'][0:3]|join("<br>")}}</td>
+        </tr>
+        <tr>
+            <td>I&C</td>
+            <td>-</td>
+            <td>{{sales_data['top_performing_I&C_regions'][0:3]|join("<br>")}}</td>
+        </tr>
+        <tbody></table>
+
+    <h4>7. Bottom Performing Zones and Regions (Growth %) - YTD</h4>
+    <table>
+        <tbody>
+        <tr>
+            <th>SBU</th>
+            <th>Zones (Bottom 2)</th>
+            <th>Regions (Bottom 3)</th>
+        </tr>
+        <tr>
+            <td>Retail</td>
+            <td>{{sales_data['bottom_performing_Retail_zones'][0:2]|join("<br>")}}</td>
+            <td>{{sales_data['bottom_performing_Retail_regions'][0:3]|join("<br>")}}</td>
+        </tr>
+        <tr>
+            <td>LPG</td>
+            <td>{{sales_data['bottom_performing_LPG_zones'][0:2]|join("<br>")}}</td>
+            <td>{{sales_data['bottom_performing_LPG_regions'][0:3]|join("<br>")}}</td>
+        </tr>
+        <tr>
+            <td>Lubes</td>
+            <td>-</td>
+            <td>{{sales_data['bottom_performing_Lubes_regions'][0:3]|join("<br>")}}</td>
+        </tr>
+        <tr>
+            <td>I&C</td>
+            <td>-</td>
+            <td>{{sales_data['bottom_performing_I&C_regions'][0:3]|join("<br>")}}</td>
+        </tr>
+        <tbody></table>
+
+    <h4>8. Open Alert Summary ({{present_month}})</h4>
+    <div class="openAlert">
+    <table>
+        <tbody>
+        <tr>
+            <th>SBU</th>
+            <th>Alert Category</th>
+            <th>Critical</th>
+            <th>High</th>
+        </tr>
+        <tr>
+            <td rowspan="4">SOD</td>
+            <td>VA</td>
+            <td>{{va_critical_tas}}</td>
+            <td>{{va_high_tas}}</td>
+        </tr>
+        <tr>
+            <td>VTS</td>
+            <td>{{vts_critical_tas}}</td>
+            <td>{{vts_high_tas}}</td>
+        </tr>
+        <tr>
+            <td>EMLock</td>
+            <td>{{emlock_critical_tas}}</td>
+            <td>{{emlock_high_tas}}</td>
+        </tr>
+        <tr>
+            <td>TAS</td>
+            <td>{{tas_critical_tas}}</td>
+            <td>{{tas_high_tas}}</td>
+        </tr>
+        <tr>
+            <td rowspan="3">LPG</td>
+            <td>VA</td>
+            <td>{{va_critical_lpg}}</td>
+            <td>{{va_high_lpg}}</td>
+        </tr>
+        <tr>
+            <td>VTS</td>
+            <td>{{vts_critical_lpg}}</td>
+            <td>{{vts_high_lpg}}</td>
+        </tr>
+        <tr>
+            <td>PQ</td>
+            <td>{{pq_critical_lpg}}</td>
+            <td>{{pq_high_lpg}}</td>
+        </tr>
+        <!-- <tr>
+            <td rowspan="2">Retail</td>
+            <td>VA</td>
+            <td>{{va_critical_ro}}</td>
+            <td>{{va_high_ro}}</td>
+        </tr>
+        <tr>
+            <td>Automation</td>
+            <td>{{automation_critical_ro}}</td>
+            <td>{{automation_high_ro}}</td>
+        </tr> -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    window.onload = function () {
+        document.querySelectorAll(".growth").forEach(td => {
+            let value = td.textContent.trim(); // Get text inside the <td>
+            let number = parseFloat(value); // Convert to number
+
+            if (!isNaN(number)) { // Check if it’s a valid number
+                if (number > 0) {
+                    td.classList.add("positive"); // Green for positive
+                } else if (number < 0) {
+                    td.classList.add("negative"); // Red for negative
+                }
+            }
+        });
+    };
+</script>
+
+</body></html>

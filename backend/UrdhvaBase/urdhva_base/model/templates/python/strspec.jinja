@@ -1,0 +1,24 @@
+{% extends "basedatatype" %}
+
+{% block datatype%}str{% endblock %}
+{% set kwargs = {} %}
+{% if input.maxlen %}
+{% set _ = kwargs.update({'max_length': input.maxlen}) %}
+{% endif %}
+{% if input.minlen %}
+{% set _ = kwargs.update({'min_length': input.minlen}) %}
+{% endif %}
+{% if input.regex %}
+{% set _ = kwargs.update({'pattern': input.regex}) %}
+{% endif %}
+{% if input.startswith %}
+{% set _ = kwargs.update({'pattern': '^'+input.startswith+'.*$'}) %}
+{% endif %}
+{% if input.endswith %}
+{% set _ = kwargs.update({'pattern': '^.*'+input.endswith+'$'}) %}
+{% endif %}
+{% if input.contains %}
+{% set _ = kwargs.update({'pattern': '^.*'+input.contains+'.*$'}) %}
+{% endif %}
+{{kwargs.items()}}
+{%- block constraints -%}**{{kwargs}}{%- endblock -%}

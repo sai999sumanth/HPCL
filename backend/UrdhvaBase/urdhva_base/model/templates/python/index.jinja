@@ -1,0 +1,5 @@
+spec = []
+    {%- for field_spec in input.fields %}
+    spec.append(('{{field_spec.field.name}}', {{ -1 if field_spec.sort else 1 }}))
+    {%- endfor %}
+    await {{input.parent.name}}Create.createIndex(spec, {{input.unique}})

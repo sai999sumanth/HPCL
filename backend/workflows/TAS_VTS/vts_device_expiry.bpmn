@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_00qdrrz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
+  <bpmn:process id="VtsDeviceExpiry" name="VtsDeviceExpiry" isExecutable="true" camunda:historyTimeToLive="10">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0etpjpw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:parallelGateway id="Gateway_11qmu8g">
+      <bpmn:incoming>Flow_0etpjpw</bpmn:incoming>
+      <bpmn:outgoing>Flow_131qn31</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0akxa5c</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_0etpjpw" sourceRef="StartEvent_1" targetRef="Gateway_11qmu8g" />
+    <bpmn:serviceTask id="Activity_181nepe" name="send_30thday_before_nitification" camunda:type="external" camunda:topic="vts_workflow_consumer_2">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">vts_device_expiry</camunda:inputParameter>
+          <camunda:inputParameter name="days_remaining">30</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ul3asr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oishv1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="Event_070rtj8" name="15 days">
+      <bpmn:incoming>Flow_1oishv1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qj1idg</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0qoi3op">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P15D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1oishv1" sourceRef="Activity_181nepe" targetRef="Event_070rtj8" />
+    <bpmn:serviceTask id="Activity_1glmeda" name="send_15&#10;thday_before_nitification" camunda:type="external" camunda:topic="vts_workflow_consumer_3">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">vts_device_expiry</camunda:inputParameter>
+          <camunda:inputParameter name="days_remaining">15</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0qj1idg</bpmn:incoming>
+      <bpmn:outgoing>Flow_033dbgc</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0qj1idg" sourceRef="Event_070rtj8" targetRef="Activity_1glmeda" />
+    <bpmn:intermediateCatchEvent id="Event_0jy4ho1" name="10 days">
+      <bpmn:incoming>Flow_033dbgc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c1689c</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1q7los4">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P5D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_033dbgc" sourceRef="Activity_1glmeda" targetRef="Event_0jy4ho1" />
+    <bpmn:serviceTask id="Activity_1nsde57" name="send_10th_day" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">vts_device_expiry</camunda:inputParameter>
+          <camunda:inputParameter name="days_remaining">10</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0c1689c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jjtn5t</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0c1689c" sourceRef="Event_0jy4ho1" targetRef="Activity_1nsde57" />
+    <bpmn:intermediateCatchEvent id="Event_07abupr" name="5 days">
+      <bpmn:incoming>Flow_1jjtn5t</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vl8er3</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_122qho9">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P5D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1jjtn5t" sourceRef="Activity_1nsde57" targetRef="Event_07abupr" />
+    <bpmn:sequenceFlow id="Flow_0vl8er3" sourceRef="Event_07abupr" targetRef="Activity_11ut6ff" />
+    <bpmn:serviceTask id="Activity_11ut6ff" name="send_5thday_notification" camunda:type="external" camunda:topic="vts_workflow_consumer_5">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">vts_device_expiry</camunda:inputParameter>
+          <camunda:inputParameter name="days_remaining">5</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vl8er3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gx8ogr</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_14y1q51" name="check_extended_expiry_date" camunda:type="external" camunda:topic="vts_workflow_consumer_9">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">check_extended_contract</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">CheckExtendedContract</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_extented_contract</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_131qn31</bpmn:incoming>
+      <bpmn:incoming>Flow_0v9jlu0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wrx7xb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_131qn31" sourceRef="Gateway_11qmu8g" targetRef="Activity_14y1q51" />
+    <bpmn:endEvent id="Event_1tcrku5">
+      <bpmn:incoming>Flow_1qjfht8</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0v9symt" />
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_09u1qnd">
+      <bpmn:incoming>Flow_0wrx7xb</bpmn:incoming>
+      <bpmn:outgoing>Flow_161aclg</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1tb9jy9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0wrx7xb" sourceRef="Activity_14y1q51" targetRef="Gateway_09u1qnd" />
+    <bpmn:intermediateCatchEvent id="Event_0luj5l5" name="5 mins">
+      <bpmn:incoming>Flow_161aclg</bpmn:incoming>
+      <bpmn:outgoing>Flow_0v9jlu0</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1giv8kc">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_161aclg" name="false" sourceRef="Gateway_09u1qnd" targetRef="Event_0luj5l5">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not contractExtended}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0v9jlu0" sourceRef="Event_0luj5l5" targetRef="Activity_14y1q51" />
+    <bpmn:intermediateCatchEvent id="Event_0ll9c7m" name="expiry date reached">
+      <bpmn:incoming>Flow_0gx8ogr</bpmn:incoming>
+      <bpmn:outgoing>Flow_00d9una</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_04jhxyq">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P5D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0gx8ogr" sourceRef="Activity_11ut6ff" targetRef="Event_0ll9c7m" />
+    <bpmn:endEvent id="Event_19fem9l">
+      <bpmn:incoming>Flow_05e7wn7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_1plk973" name="check_truck_blcoked" camunda:type="external" camunda:topic="vts_workflow_consumer_10">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">check_vts_blocked</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">CheckVTSBlocked</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_vts_blocked</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1tb9jy9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bv2owp</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1tb9jy9" name="true" sourceRef="Gateway_09u1qnd" targetRef="Activity_1plk973">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{contractExtended}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_1tkc9po">
+      <bpmn:incoming>Flow_1bv2owp</bpmn:incoming>
+      <bpmn:outgoing>Flow_19fkcsp</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1bzfrj9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1bv2owp" sourceRef="Activity_1plk973" targetRef="Gateway_1tkc9po" />
+    <bpmn:serviceTask id="Activity_0vrbbfn" name="check completed trips" camunda:type="external" camunda:topic="vts_workflow_consumer_6">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">check_completed_trip</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">CheckCompletedTrip</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_completed_trip</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_00d9una</bpmn:incoming>
+      <bpmn:incoming>Flow_1k7tgjj</bpmn:incoming>
+      <bpmn:incoming>Flow_1288hrf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ht7dht</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_00d9una" sourceRef="Event_0ll9c7m" targetRef="Activity_0vrbbfn" />
+    <bpmn:exclusiveGateway id="Gateway_1e8orn2">
+      <bpmn:incoming>Flow_1ht7dht</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wootz4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0ysgsci</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1ht7dht" sourceRef="Activity_0vrbbfn" targetRef="Gateway_1e8orn2" />
+    <bpmn:sequenceFlow id="Flow_1wootz4" sourceRef="Gateway_1e8orn2" targetRef="Activity_0moiud2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{tripCompleted}  </bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:intermediateCatchEvent id="Event_1xjghmy" name="check after 5 min">
+      <bpmn:incoming>Flow_0ysgsci</bpmn:incoming>
+      <bpmn:outgoing>Flow_1k7tgjj</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0v5tc9p">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0ysgsci" sourceRef="Gateway_1e8orn2" targetRef="Event_1xjghmy">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not tripCompleted}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1k7tgjj" sourceRef="Event_1xjghmy" targetRef="Activity_0vrbbfn" />
+    <bpmn:serviceTask id="Activity_0moiud2" name="Block" camunda:type="external" camunda:topic="vts_workflow_consumer_7">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_vts_command</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendVtsCommand</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">sendvtscommand</camunda:inputParameter>
+          <camunda:inputParameter name="vehicle">true</camunda:inputParameter>
+          <camunda:inputParameter name="interrupt">block</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1wootz4</bpmn:incoming>
+      <bpmn:incoming>Flow_1fznvw1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rmlzy8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0cysksi" name="Send Block  Notification" camunda:type="external" camunda:topic="vts_workflow_consumer_8">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">active</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1p8pgy4</bpmn:incoming>
+      <bpmn:outgoing>Flow_05e7wn7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_05e7wn7" sourceRef="Activity_0cysksi" targetRef="Event_19fem9l" />
+    <bpmn:exclusiveGateway id="Gateway_1ijmrk3">
+      <bpmn:incoming>Flow_1rmlzy8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1p8pgy4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_031v92y</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1rmlzy8" sourceRef="Activity_0moiud2" targetRef="Gateway_1ijmrk3" />
+    <bpmn:sequenceFlow id="Flow_1p8pgy4" sourceRef="Gateway_1ijmrk3" targetRef="Activity_0cysksi">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{blocked}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:intermediateCatchEvent id="Event_10f4lxb" name="check after 5 min">
+      <bpmn:incoming>Flow_031v92y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fznvw1</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0ocszth">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_031v92y" sourceRef="Gateway_1ijmrk3" targetRef="Event_10f4lxb">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not blocked}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1fznvw1" sourceRef="Event_10f4lxb" targetRef="Activity_0moiud2" />
+    <bpmn:serviceTask id="Activity_1rya063" name="unblock" camunda:type="external" camunda:topic="vts_workflow_consumer_11">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_vts_command</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendVtsCommand</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">sendvtscommand</camunda:inputParameter>
+          <camunda:inputParameter name="interrupt">unblock</camunda:inputParameter>
+          <camunda:inputParameter name="vehicle">true</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19fkcsp</bpmn:incoming>
+      <bpmn:incoming>Flow_184ihhx</bpmn:incoming>
+      <bpmn:outgoing>Flow_01oerlc</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_19fkcsp" sourceRef="Gateway_1tkc9po" targetRef="Activity_1rya063">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{vtsBlocked}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_1f4h055">
+      <bpmn:incoming>Flow_01oerlc</bpmn:incoming>
+      <bpmn:outgoing>Flow_15jfu55</bpmn:outgoing>
+      <bpmn:outgoing>Flow_13krblf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="Event_1947qew" name="5 mins">
+      <bpmn:incoming>Flow_15jfu55</bpmn:incoming>
+      <bpmn:outgoing>Flow_184ihhx</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0e0cz15">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_15jfu55" sourceRef="Gateway_1f4h055" targetRef="Event_1947qew">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not unblocked}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_184ihhx" sourceRef="Event_1947qew" targetRef="Activity_1rya063" />
+    <bpmn:serviceTask id="Activity_1n8bnvc" name="Reslove" camunda:type="external" camunda:topic="vts_workflow_consumer_13">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">close_alert</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">CloseAlert</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">closealert</camunda:inputParameter>
+          <camunda:inputParameter name="close">true</camunda:inputParameter>
+          <camunda:inputParameter name="BU">{bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1bzfrj9</bpmn:incoming>
+      <bpmn:incoming>Flow_01tl7q1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qjfht8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1bzfrj9" sourceRef="Gateway_1tkc9po" targetRef="Activity_1n8bnvc">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not vtsBlocked}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1qjfht8" sourceRef="Activity_1n8bnvc" targetRef="Event_1tcrku5" />
+    <bpmn:serviceTask id="Activity_1spafut" name="Send Unblock Notificatuion" camunda:type="external" camunda:topic="vts_workflow_consumer_12">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">resolved</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Alert Closed</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13krblf</bpmn:incoming>
+      <bpmn:outgoing>Flow_01tl7q1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_13krblf" sourceRef="Gateway_1f4h055" targetRef="Activity_1spafut">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{unblocked}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_01tl7q1" sourceRef="Activity_1spafut" targetRef="Activity_1n8bnvc" />
+    <bpmn:sequenceFlow id="Flow_01oerlc" sourceRef="Activity_1rya063" targetRef="Gateway_1f4h055" />
+    <bpmn:serviceTask id="Activity_0v12pul" name="send_30thday_before_nitification" camunda:type="external" camunda:topic="vts_workflow_consumer_1">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">vts_device_expiry</camunda:inputParameter>
+          <camunda:inputParameter name="days_remaining">${days_remaining}</camunda:inputParameter>
+          <camunda:inputParameter name="BU">${bu}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zumudj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cduryj</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_1w2c8pd">
+      <bpmn:incoming>Flow_0akxa5c</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zumudj</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ul3asr</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0akxa5c" sourceRef="Gateway_11qmu8g" targetRef="Gateway_1w2c8pd" />
+    <bpmn:sequenceFlow id="Flow_0zumudj" sourceRef="Gateway_1w2c8pd" targetRef="Activity_0v12pul">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not before30days}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1ul3asr" sourceRef="Gateway_1w2c8pd" targetRef="Activity_181nepe">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${before30days}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:intermediateCatchEvent id="Event_0v0uwsf" name="wait time to block">
+      <bpmn:incoming>Flow_1cduryj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1288hrf</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1dhvrb0">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">${waitTime}</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1cduryj" sourceRef="Activity_0v12pul" targetRef="Event_0v0uwsf" />
+    <bpmn:sequenceFlow id="Flow_1288hrf" sourceRef="Event_0v0uwsf" targetRef="Activity_0vrbbfn" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="VtsDeviceExpiry">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="329" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_11qmu8g_di" bpmnElement="Gateway_11qmu8g">
+        <dc:Bounds x="265" y="322" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_181nepe_di" bpmnElement="Activity_181nepe">
+        <dc:Bounds x="370" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_070rtj8_di" bpmnElement="Event_070rtj8">
+        <dc:Bounds x="532" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="531" y="315" width="39" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1glmeda_di" bpmnElement="Activity_1glmeda">
+        <dc:Bounds x="630" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jy4ho1_di" bpmnElement="Event_0jy4ho1">
+        <dc:Bounds x="792" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="791" y="315" width="39" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nsde57_di" bpmnElement="Activity_1nsde57">
+        <dc:Bounds x="890" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_07abupr_di" bpmnElement="Event_07abupr">
+        <dc:Bounds x="1052" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1054" y="315" width="33" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11ut6ff_di" bpmnElement="Activity_11ut6ff">
+        <dc:Bounds x="1150" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14y1q51_di" bpmnElement="Activity_14y1q51">
+        <dc:Bounds x="370" y="420" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_09u1qnd_di" bpmnElement="Gateway_09u1qnd" isMarkerVisible="true">
+        <dc:Bounds x="525" y="435" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0luj5l5_di" bpmnElement="Event_0luj5l5">
+        <dc:Bounds x="532" y="592" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="534" y="635" width="33" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ll9c7m_di" bpmnElement="Event_0ll9c7m">
+        <dc:Bounds x="1312" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1303" y="315" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1plk973_di" bpmnElement="Activity_1plk973">
+        <dc:Bounds x="630" y="420" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1tkc9po_di" bpmnElement="Gateway_1tkc9po" isMarkerVisible="true">
+        <dc:Bounds x="785" y="435" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vrbbfn_di" bpmnElement="Activity_0vrbbfn">
+        <dc:Bounds x="1410" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0moiud2_di" bpmnElement="Activity_0moiud2">
+        <dc:Bounds x="1660" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19fem9l_di" bpmnElement="Event_19fem9l">
+        <dc:Bounds x="2022" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1e8orn2_di" bpmnElement="Gateway_1e8orn2" isMarkerVisible="true">
+        <dc:Bounds x="1555" y="265" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xjghmy_di" bpmnElement="Event_1xjghmy">
+        <dc:Bounds x="1562" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1538" y="415" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1amxlpz_di" bpmnElement="Activity_0cysksi">
+        <dc:Bounds x="1890" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ijmrk3_di" bpmnElement="Gateway_1ijmrk3" isMarkerVisible="true">
+        <dc:Bounds x="1795" y="265" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_10f4lxb_di" bpmnElement="Event_10f4lxb">
+        <dc:Bounds x="1802" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1778" y="415" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rya063_di" bpmnElement="Activity_1rya063">
+        <dc:Bounds x="910" y="420" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1f4h055_di" bpmnElement="Gateway_1f4h055" isMarkerVisible="true">
+        <dc:Bounds x="1085" y="435" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0zw8b12" bpmnElement="Event_1947qew">
+        <dc:Bounds x="1092" y="572" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1094" y="615" width="33" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1spafut_di" bpmnElement="Activity_1spafut">
+        <dc:Bounds x="1180" y="420" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1n8bnvc_di" bpmnElement="Activity_1n8bnvc">
+        <dc:Bounds x="1320" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1tcrku5_di" bpmnElement="Event_1tcrku5">
+        <dc:Bounds x="1532" y="522" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1w2c8pd_di" bpmnElement="Gateway_1w2c8pd" isMarkerVisible="true">
+        <dc:Bounds x="265" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1oru099" bpmnElement="Activity_0v12pul">
+        <dc:Bounds x="660" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0v0uwsf_di" bpmnElement="Event_0v0uwsf">
+        <dc:Bounds x="1092" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1068" y="145" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0etpjpw_di" bpmnElement="Flow_0etpjpw">
+        <di:waypoint x="215" y="347" />
+        <di:waypoint x="265" y="347" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oishv1_di" bpmnElement="Flow_1oishv1">
+        <di:waypoint x="470" y="290" />
+        <di:waypoint x="532" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qj1idg_di" bpmnElement="Flow_0qj1idg">
+        <di:waypoint x="568" y="290" />
+        <di:waypoint x="630" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_033dbgc_di" bpmnElement="Flow_033dbgc">
+        <di:waypoint x="730" y="290" />
+        <di:waypoint x="792" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0c1689c_di" bpmnElement="Flow_0c1689c">
+        <di:waypoint x="828" y="290" />
+        <di:waypoint x="890" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jjtn5t_di" bpmnElement="Flow_1jjtn5t">
+        <di:waypoint x="990" y="290" />
+        <di:waypoint x="1052" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vl8er3_di" bpmnElement="Flow_0vl8er3">
+        <di:waypoint x="1088" y="290" />
+        <di:waypoint x="1150" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_131qn31_di" bpmnElement="Flow_131qn31">
+        <di:waypoint x="290" y="372" />
+        <di:waypoint x="290" y="460" />
+        <di:waypoint x="370" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wrx7xb_di" bpmnElement="Flow_0wrx7xb">
+        <di:waypoint x="470" y="460" />
+        <di:waypoint x="525" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_161aclg_di" bpmnElement="Flow_161aclg">
+        <di:waypoint x="550" y="485" />
+        <di:waypoint x="550" y="592" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="568" y="536" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0v9jlu0_di" bpmnElement="Flow_0v9jlu0">
+        <di:waypoint x="532" y="610" />
+        <di:waypoint x="420" y="610" />
+        <di:waypoint x="420" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gx8ogr_di" bpmnElement="Flow_0gx8ogr">
+        <di:waypoint x="1250" y="290" />
+        <di:waypoint x="1312" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tb9jy9_di" bpmnElement="Flow_1tb9jy9">
+        <di:waypoint x="575" y="460" />
+        <di:waypoint x="630" y="460" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="593" y="442" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bv2owp_di" bpmnElement="Flow_1bv2owp">
+        <di:waypoint x="730" y="460" />
+        <di:waypoint x="785" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00d9una_di" bpmnElement="Flow_00d9una">
+        <di:waypoint x="1348" y="290" />
+        <di:waypoint x="1410" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ht7dht_di" bpmnElement="Flow_1ht7dht">
+        <di:waypoint x="1510" y="290" />
+        <di:waypoint x="1555" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wootz4_di" bpmnElement="Flow_1wootz4">
+        <di:waypoint x="1605" y="290" />
+        <di:waypoint x="1660" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ysgsci_di" bpmnElement="Flow_0ysgsci">
+        <di:waypoint x="1580" y="315" />
+        <di:waypoint x="1580" y="372" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1k7tgjj_di" bpmnElement="Flow_1k7tgjj">
+        <di:waypoint x="1562" y="390" />
+        <di:waypoint x="1450" y="390" />
+        <di:waypoint x="1450" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05e7wn7_di" bpmnElement="Flow_05e7wn7">
+        <di:waypoint x="1990" y="290" />
+        <di:waypoint x="2022" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rmlzy8_di" bpmnElement="Flow_1rmlzy8">
+        <di:waypoint x="1760" y="290" />
+        <di:waypoint x="1795" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p8pgy4_di" bpmnElement="Flow_1p8pgy4">
+        <di:waypoint x="1845" y="290" />
+        <di:waypoint x="1890" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_031v92y_di" bpmnElement="Flow_031v92y">
+        <di:waypoint x="1820" y="315" />
+        <di:waypoint x="1820" y="372" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fznvw1_di" bpmnElement="Flow_1fznvw1">
+        <di:waypoint x="1802" y="390" />
+        <di:waypoint x="1710" y="390" />
+        <di:waypoint x="1710" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19fkcsp_di" bpmnElement="Flow_19fkcsp">
+        <di:waypoint x="835" y="460" />
+        <di:waypoint x="910" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15jfu55_di" bpmnElement="Flow_15jfu55">
+        <di:waypoint x="1110" y="485" />
+        <di:waypoint x="1110" y="572" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_184ihhx_di" bpmnElement="Flow_184ihhx">
+        <di:waypoint x="1092" y="590" />
+        <di:waypoint x="960" y="590" />
+        <di:waypoint x="960" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bzfrj9_di" bpmnElement="Flow_1bzfrj9">
+        <di:waypoint x="810" y="485" />
+        <di:waypoint x="810" y="670" />
+        <di:waypoint x="1380" y="670" />
+        <di:waypoint x="1380" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qjfht8_di" bpmnElement="Flow_1qjfht8">
+        <di:waypoint x="1420" y="540" />
+        <di:waypoint x="1532" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13krblf_di" bpmnElement="Flow_13krblf">
+        <di:waypoint x="1135" y="460" />
+        <di:waypoint x="1180" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01tl7q1_di" bpmnElement="Flow_01tl7q1">
+        <di:waypoint x="1280" y="460" />
+        <di:waypoint x="1370" y="460" />
+        <di:waypoint x="1370" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01oerlc_di" bpmnElement="Flow_01oerlc">
+        <di:waypoint x="1010" y="460" />
+        <di:waypoint x="1085" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0akxa5c_di" bpmnElement="Flow_0akxa5c">
+        <di:waypoint x="290" y="322" />
+        <di:waypoint x="290" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zumudj_di" bpmnElement="Flow_0zumudj">
+        <di:waypoint x="290" y="185" />
+        <di:waypoint x="290" y="120" />
+        <di:waypoint x="660" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ul3asr_di" bpmnElement="Flow_1ul3asr">
+        <di:waypoint x="315" y="210" />
+        <di:waypoint x="420" y="210" />
+        <di:waypoint x="420" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cduryj_di" bpmnElement="Flow_1cduryj">
+        <di:waypoint x="760" y="120" />
+        <di:waypoint x="1092" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1288hrf_di" bpmnElement="Flow_1288hrf">
+        <di:waypoint x="1128" y="120" />
+        <di:waypoint x="1460" y="120" />
+        <di:waypoint x="1460" y="250" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

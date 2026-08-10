@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Today - TAS Daily Alert Summary Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333333;
+        }
+
+        h2 {
+            color: #003366;
+            margin: 20px 0 10px 0;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .meta-info {
+            font-size: 12px;
+            color: #555555;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 6px 8px;
+            font-size: 12px;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .text-left {
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .total-row {
+            background-color: #f1f5f9;
+            font-weight: bold;
+            color: #003366;
+        }
+
+        .total-row td {
+            font-size: 13px;
+        }
+
+        .loc-none { background-color: #38761d; color: white; }
+        .loc-low { background-color: #bf9000; color: white; }
+        .loc-medium { background-color: #b45f06; color: white; }
+        .loc-high { background-color: #ea9999; color: black; }
+        .loc-critical { background-color: #ff0000; color: white; }
+    </style>
+</head>
+
+<body>
+    <h2>Novex Daily Report: TAS Location-Wise Alert Summary</h2>
+    <div class="meta-info">
+        <strong>Date:</strong> {{today_date}} |
+        <strong>Day:</strong> {{today_week}} |
+        <strong>Report Generated Time:</strong> {{report_generated_time}}
+    </div>
+    <hr>
+
+    <p style="font-size: 12px; line-height: 1.6; color: #333333; margin-bottom: 15px;">
+        The following table displays the daily TAS alert counts resolved <strong>severity-wise</strong> for each active
+        onboarded location on the platform.<br>
+        <strong>Total Open Alerts:</strong> {{ totals.open_critical + totals.open_high + totals.open_medium + totals.open_low }} &nbsp;|&nbsp;
+        <strong>Total Closed Alerts:</strong> {{ totals.close_critical + totals.close_high + totals.close_medium + totals.close_low }} &nbsp;|&nbsp;
+        <strong>Grand Total:</strong> {{ totals.grand_total }}
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 50px;">Sl No</th>
+                <th rowspan="2" class="text-left">Location Name</th>
+                <th rowspan="2" style="width: 80px;">SAP ID</th>
+                <th colspan="2">Critical</th>
+                <th colspan="2">High</th>
+                <th colspan="2">Medium</th>
+                <th colspan="2">Low</th>
+                <th rowspan="2" style="width: 80px;">Total Open</th>
+                <th rowspan="2" style="width: 100px;">Grand Total</th>
+            </tr>
+            <tr>
+                <th style="font-size: 10px; width: 60px;">Open</th>
+                <th style="font-size: 10px; width: 60px;">Closed</th>
+                <th style="font-size: 10px; width: 60px;">Open</th>
+                <th style="font-size: 10px; width: 60px;">Closed</th>
+                <th style="font-size: 10px; width: 60px;">Open</th>
+                <th style="font-size: 10px; width: 60px;">Closed</th>
+                <th style="font-size: 10px; width: 60px;">Open</th>
+                <th style="font-size: 10px; width: 60px;">Closed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tas_onboarded_counts %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td class="text-left" style="font-weight: 500;">{{ row.location_name }}</td>
+                <td style="font-family: monospace;">{{ row.sap_id }}</td>
+
+                <!-- Critical -->
+                <td>{{ row.open_critical }}</td>
+                <td>{{ row.close_critical }}</td>
+
+                <!-- High -->
+                <td>{{ row.open_high }}</td>
+                <td>{{ row.close_high }}</td>
+
+                <!-- Medium -->
+                <td>{{ row.open_medium }}</td>
+                <td>{{ row.close_medium }}</td>
+
+                <!-- Low -->
+                <td>{{ row.open_low }}</td>
+                <td>{{ row.close_low }}</td>
+
+                <td style="font-weight: bold;">
+                    {{ row.open_critical + row.open_high + row.open_medium + row.open_low }}
+                </td>
+                <!-- Grand Total -->
+                <td style="font-weight: bold; color: #003366;">{{ row.grand_total }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="13" style="color: #666666; padding: 20px;">No onboarded locations found.</td>
+            </tr>
+            {% endfor %}
+
+            <!-- Bottom Totals Row -->
+            {% if tas_onboarded_counts %}
+            <tr class="total-row">
+                <td colspan="3" class="text-left">TOTAL</td>
+                <td>{{ totals.open_critical }}</td>
+                <td>{{ totals.close_critical }}</td>
+                <td>{{ totals.open_high }}</td>
+                <td>{{ totals.close_high }}</td>
+                <td>{{ totals.open_medium }}</td>
+                <td>{{ totals.close_medium }}</td>
+                <td>{{ totals.open_low }}</td>
+                <td>{{ totals.close_low }}</td>
+                <td style="font-weight: bold;">
+                    {{ totals.open_critical + totals.open_high + totals.open_medium + totals.open_low }}
+                </td>
+                <td style="font-size: 14px; font-weight: bold; color: #003366;">{{ totals.grand_total }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <hr>
+    
+    <h2>Loss of Communication (LOC) Summary</h2>
+    <p style="font-size: 12px; color: #333333; margin-bottom: 15px;">
+        Summary of LOC's detected today (Threshold: 30 min).
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 50px;">Sl No</th>
+                <th class="text-left">Location Name</th>
+                <th style="width: 120px;">LOC Count</th>
+                <th style="width: 150px;">Total Downtime</th>
+                <th style="width: 120px;">Severity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loc in loc_summary %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td class="text-left">{{ loc.name }}</td>
+                <td>{{ loc.count }}</td>
+                <td>{{ loc.downtime }}</td>
+                <td class="loc-{{ loc.severity_class }}">{{ loc.severity }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" style="color: #666666; padding: 20px;">No communication loss detected today.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+    <p style="font-size: 11px; color: #999999; text-align: center; margin-top: 20px;">
+        This is an automated system generated report. Please do not reply directly to this email.
+    </p>
+</body>
+
+</html>

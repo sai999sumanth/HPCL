@@ -1,0 +1,288 @@
+{
+  "pq": {
+    "name": "PQ Rejection",
+    "weightage": 20,
+    "rules": [
+      {
+        "name": "PQ Check Scale Rejection Alert",
+        "model": "open_alerts",
+        "weightage": 3.34,
+        "search_key": "interlock_name",
+        "search_value": "Check Scale Rejection",
+        "interlock_name": "Check Scale Rejection"
+      },
+      {
+        "name": "PQ Valve Leak Rejection Alert",
+        "model": "open_alerts",
+        "weightage": 3.33,
+        "search_key": "interlock_name",
+        "search_value": "Valve Leak Rejection",
+        "interlock_name": "Valve Leak Rejection"
+      },
+      {
+        "name": "PQ O-Ring Leak Rejection Alert",
+        "model": "open_alerts",
+        "weightage": 3.33,
+        "search_key": "interlock_name",
+        "search_value": "O-Ring Leak Rejection",
+        "interlock_name": "O-Ring Leak Rejection"
+      },
+      {
+        "name": "PQ Check Scale Rejection",
+        "model": "percentage_rejection",
+        "weightage": 25,
+        "search_key": "interlock_name",
+        "search_value": "Check Scale Rejection",
+        "interlock_name": "Check Scale Rejection",
+        "rules": [
+          {"min":  3.0, "max": 5.0, "weightage": 100, "method": "waterfall"},
+          {"min":  5.0, "max": 10000.0, "weightage": 0, "method": "waterfall"}
+        ]
+      },
+      {
+        "name": "PQ Valve Leak Rejection",
+        "model": "percentage_rejection",
+        "weightage": 30,
+        "search_key": "interlock_name",
+        "search_value": "Valve Leak Rejection",
+        "interlock_name": "Valve Leak Rejection",
+        "rules": [
+          {"min":  3.1, "max": 6.0, "weightage": 100},
+          {"min":  6.1, "max": 10000.0, "weightage": 0}
+        ]
+      },
+      {
+        "name": "PQ O-Ring Leak Rejection",
+        "model": "percentage_rejection",
+        "weightage": 35,
+        "search_key": "interlock_name",
+        "search_value": "O-Ring Leak Rejection",
+        "interlock_name": "O-Ring Leak Rejection",
+        "rules": [
+          {"min":  0, "max": 6.0, "weightage": 100},
+          {"min":  6, "max": 10000.0, "weightage": 0}
+        ]
+      }
+    ]
+  },
+  "productivity": {
+  "name": "Productivity",
+  "weightage": 15,
+  "rules": [
+    {
+      "name": "12 Head Productivity",
+      "model": "productivity",
+      "weightage": 100,
+      "search_key": "productivity_normal_productivity",
+      "search_value": "12H",
+      "interlock_name": "productivity_normal_productivity",
+      "rules": [
+        {"min": 650, "max": 800, "weightage": 100, "method": "waterfall"}
+      ]
+    },
+    {
+      "name": "24 Head Productivity",
+      "model": "productivity",
+      "weightage": 100,
+      "search_key": "productivity_normal_productivity",
+      "search_value": "24H",
+      "interlock_name": "productivity_normal_productivity",
+      "rules": [
+        {"min": 1400, "max": 1600, "weightage": 100, "method": "waterfall"}
+      ]
+    },
+    {
+      "name": "48 Head Productivity",
+      "model": "productivity",
+      "weightage": 100,
+      "search_key": "productivity_normal_productivity",
+      "search_value": "48H",
+      "interlock_name": "productivity_normal_productivity",
+      "rules": [
+        {"min": 2600, "max": 3200, "weightage": 100, "method": "waterfall"}
+      ]
+    },
+    {
+      "name": "72 Head Productivity",
+      "model": "productivity",
+      "weightage": 100,
+      "search_key": "productivity_normal_productivity",
+      "search_value": "72H",
+      "interlock_name": "productivity_normal_productivity",
+      "rules": [
+        {"min": 3400, "max": 4200, "weightage": 100, "method": "waterfall"}
+      ]
+    }
+  ]
+},
+  "production": {
+    "name": "Production",
+    "weightage": 5
+  },
+  "break_down": {
+    "name": "LPG Breakdown",
+    "weightage": 10,
+    "rules": [
+      {
+        "name": "BreakDown Hours",
+        "model": "break_down_hours_percentage",
+        "weightage": 100
+      }
+    ]
+  },
+  "va": {
+    "name": "VA",
+    "weightage": 30,
+    "rules": [
+      {
+        "name": "VA Portal",
+        "model": "va_portal",
+        "weightage": 90
+      },
+      {
+        "name": "Alert Severity",
+        "model": "va_alerts",
+        "weightage": 10,
+        "rules": [
+          {
+            "name": "VA Critical Severity Open Alerts",
+            "search_key": "severity",
+            "search_value": "Critical",
+            "interlock_name": "Critical",
+            "weightage": 40,
+            "model": "total_open_closed"
+          },
+          {
+            "name": "VA High Severity Open Alerts",
+            "search_key": "severity",
+            "search_value": "High",
+            "interlock_name": "High",
+            "weightage": 30,
+            "model": "total_open_closed"
+          },
+          {
+            "name": "VA Medium Severity Open Alerts",
+            "search_key": "severity",
+            "search_value": "Medium",
+            "interlock_name": "Medium",
+            "weightage": 20,
+            "model": "total_open_closed"
+          },
+          {
+            "name": "VA Low Severity Open Alerts",
+            "search_key": "severity",
+            "search_value": "Low",
+            "interlock_name": "Low",
+            "weightage": 10,
+            "model": "total_open_closed"
+          }
+        ]
+      }
+    ]
+  },
+  "vts": {
+    "name": "VTS",
+    "weightage": 20,
+    "rules": [
+      {
+        "name": "VTS Vehicle Wise Alerts",
+        "model": "vts_interlock",
+        "weightage": 0,
+        "rules": [
+          {
+            "name": "Speed Violation",
+            "search_key": "interlock_name",
+            "search_value": "Speed Violation",
+            "interlock_name": "Speed Violation",
+            "weightage": 15.00,
+            "model": "interlock_type"
+          },
+          {
+            "name": "Unauthorised Stoppage Violations",
+            "search_key": "interlock_name",
+            "search_value": "Unauthorized Stoppage",
+            "interlock_name": "Unauthorised Stoppage Violations",
+            "weightage": 24.00,
+            "model": "interlock_type"
+          },
+          {
+            "name": "Route Deviation",
+            "search_key": "interlock_name",
+            "search_value": "RouteDeviation",
+            "interlock_name": "Route Deviation",
+            "weightage": 24.00,
+            "model": "interlock_type"
+          },
+          {
+            "name": "Night Driving violations",
+            "search_key": "interlock_name",
+            "search_value": "Night Driving",
+            "interlock_name": "Night Driving violations",
+            "weightage": 15.00,
+            "model": "interlock_type"
+          },
+          {
+            "name": "Continuous driving",
+            "search_key": "interlock_name",
+            "search_value": "Continuous Driving",
+            "interlock_name": "Continuous driving",
+            "weightage": 10.00,
+            "model": "interlock_type"
+          },
+          {
+            "name": "Power Disconnections",
+            "search_key": "interlock_name",
+            "search_value": "PowerDisconnect",
+            "interlock_name": "Power Disconnections",
+            "weightage": 12.00,
+            "model": "interlock_type"
+          }
+        ]
+      },
+      {
+        "name": "Active Vehicles",
+        "model": "vts_active_vehicles",
+        "weightage": 0
+      },
+      {
+        "name": "VTS Closure Status ",
+        "model": "vts_alerts",
+        "weightage": 100,
+        "rules": [
+          {
+            "name": "Critical",
+            "search_key": "severity",
+            "search_value": "Critical",
+            "interlock_name": "Critical",
+            "weightage": 40,
+            "model": "total_open_closed"
+          },
+          {
+            "name": "High",
+            "search_key": "severity",
+            "search_value": "High",
+            "interlock_name": "High",
+            "weightage": 30,
+            "model": "total_open_closed"
+          },
+          {
+            "name": "Medium",
+            "search_key": "severity",
+            "search_value": "Medium",
+            "interlock_name": "Medium",
+            "weightage": 20,
+            "model": "total_open_closed"
+          },
+          {
+            "name": "Low",
+            "search_key": "severity",
+            "search_value": "Low",
+            "interlock_name": "Low",
+            "weightage": 10,
+            "model": "total_open_closed"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+EMPLOYEE_NUMBER,EMPLOYEE_NAME,EMP_EMAIL,ROLE_NAME,LOCATION,Novex Role,BU,Zone,Region
+9405_v1c,VENUGOPALNAIDU.CH,venu@algofusiontech.com,ADMIN,1999,HQO HSSE Team,TAS
+9405_s1k,Santosh,santoshkumar.s@algofusiontech.com,ADMIN,1999,Zonal HSSE,TAS
+9405_N1K,Nirmal Kumar,nirmalkumar@algofusiontech.com,Loc I/C- Meerut IRD,1999,Location In-charge,TAS		
+9405_S1B,SRIHARI BHAT,shrihari.b@algofusiontech.com,Operations Head,1999,Zonal TAS Officer,TAS		
+9405_K1P,Keerthesre P,keerthesrep@algofusiontech.com,GM- Operations,1999,Zonal Operations Head,TAS		
+9405_S1M,Sreedhar M,sreedhar.maddipati@algofusiontech.com,TAS Officer,1999,TAS Officer SOD,TAS		
+hpcl\9000_A1V,Aditya V,aditya@algofusiontech.com,Operations Head,1999,Zonal SOD Head,TAS,NWZ	
+hpcl\9405_K1P,Keerthesre,keerthesrep@algofusiontech.com,HQO TAS Coordinator,1999,HQO TAS Coordinator,TAS		
+9405_m1v,Manohar Vanteru,manohar.v@algofusiontech.com,HQO Operations team,1999,HQO Operations Team,TAS		
+hpcl\9405_K1P,Keerthesre,venu@algofusiontech.com,HQO TAS Coordinator,1999,HQO TAS Coordinator,TAS

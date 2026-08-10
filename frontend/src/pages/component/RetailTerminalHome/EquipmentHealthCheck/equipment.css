@@ -1,0 +1,17 @@
+/*
+ * Equipment Help Desk — hide native horizontal scrollbar on the table inner div.
+ * A custom always-visible scrollbar track is rendered as a sibling div in JSX.
+ */
+
+/* Hide native scrollbar — WebKit (Chrome / Safari / Edge) */
+.eq-table-inner::-webkit-scrollbar {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+
+/* Firefox & IE/Edge legacy — already handled via inline style scrollbarWidth:'none' */
+.eq-table-inner {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}

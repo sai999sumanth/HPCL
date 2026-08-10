@@ -1,0 +1,217 @@
+{
+  "ruleChain": {
+    "name": "TAS-SOP3-Power ESD",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null,
+    "additionalInfo": {
+      "description": "power Esd"
+    }
+  },
+  "metadata": {
+    "version": 3,
+    "firstNodeIndex": 4,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Power Esd Check",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "if (metadata[\"deviceType\"] == \"Power ESD\"){\n    return true\n}\nreturn false",
+          "tbelScript": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 571,
+          "layoutY": 76
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Scope Attributes",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "fetchTo": "METADATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "plantlocation",
+            "plantlocationid",
+            "POWER SWITCH STATUS",
+            "BU",
+            "SAPID"
+          ],
+          "latestTsKeyNames": [
+            "POWER SWITCH STATUS"
+          ],
+          "getLatestValueWithTs": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 806,
+          "layoutY": 124
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Power ESD Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD(Power shutdown)\";\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP003\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\n\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "PowerESD Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 623,
+          "layoutY": 285
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Power ESD Status Check",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"POWER SWITCH STATUS\"] != undefined && (msg[\"POWER SWITCH STATUS\"] != metadata[\"ss_POWER SWITCH STATUS\"])){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 321,
+          "layoutY": 315
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 339,
+          "layoutY": 157
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "140.245.238.142",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 985,
+          "layoutY": 318
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Power ESD Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD(Power shutdown)\";\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP003\";\r\nreturn details;\r\n",
+          "alarmDetailsBuildTbel": "var details = {};\nif (metadata.prevAlarmDetails != null) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    //remove prevAlarmDetails from metadata\n    metadata.remove('prevAlarmDetails');\n    //now metadata is the same as it comes IN this rule node\n}\n\n\nreturn details;",
+          "alarmType": "General Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 625,
+          "layoutY": 379
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 5,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 6,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 5,
+        "type": "Cleared"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

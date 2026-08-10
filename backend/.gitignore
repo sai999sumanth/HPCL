@@ -1,0 +1,19 @@
+# NOTE: restapi.py, settings.py, and .alg_env are intentionally tracked.
+# They are deployment-critical and contain no per-environment secrets
+# (credentials live in the .alg_env which is gitignored for OTHER services;
+# api_manager/.alg_env is committed since it's the primary service config).
+.idea
+*.pyc
+.DS_Store
+.scannerwork/.sonar_lock
+.scannerwork/report-task.txt
+/UrdhvaBase/urdhva_base.egg-info
+/my_env
+UrdhvaBase/urdhva_base.egg-info/PKG-INFO
+UrdhvaBase/urdhva_base.egg-info/requires.txt
+UrdhvaBase/urdhva_base.egg-info/PKG-INFO
+UrdhvaBase/urdhva_base.egg-info/requires.txt
+UrdhvaBase/urdhva_base.egg-info/SOURCES.txt
+UrdhvaBase/urdhva_base.egg-info/PKG-INFO
+UrdhvaBase/urdhva_base.egg-info/PKG-INFO
+/UrdhvaBase/urdhva_base.egg-info

@@ -1,0 +1,174 @@
+name: Build and Deploy Application
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+  # ghcr.io requires lowercase image names; github.repository can contain
+  # uppercase letters (your repo is "vatsav466/Helenwick"), so we normalize.
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_lower: ${{ steps.vars.outputs.image_lower }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute lowercase image name
+        id: vars
+        run: echo "image_lower=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # FIX: use the auto-generated GITHUB_TOKEN instead of a PAT.
+      # It already has packages:write via the job's `permissions:` block above,
+      # never expires mid-project, and needs zero manual scope configuration.
+      # This removes both the "Password required" and "403 Forbidden" push errors.
+      - name: Login to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ steps.vars.outputs.image_lower }}
+          tags: |
+            type=raw,value=latest
+            type=sha,format=short
+
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build-and-push
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          ALG_ENV_CONTENTS: ${{ secrets.ALG_ENV_CONTENTS }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_ACTOR: ${{ github.actor }}
+          IMAGE: ghcr.io/${{ needs.build-and-push.outputs.image_lower }}
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: 22
+          envs: ALG_ENV_CONTENTS,GH_TOKEN,GH_ACTOR,IMAGE
+          script: |
+            set -e
+
+            # FIX: same GITHUB_TOKEN as the build job — read:packages is enough to pull.
+            echo "${GH_TOKEN}" | sudo docker login ghcr.io \
+              -u "${GH_ACTOR}" \
+              --password-stdin
+
+            sudo docker pull ${IMAGE}:latest
+            sudo docker stop app-container || true
+            sudo docker rm app-container || true
+            sudo mkdir -p /opt/digitaltwin_images
+            sudo mkdir -p /opt/novex/secrets
+
+            # .alg_env is never baked into the image or committed to git.
+            # It's delivered here from the ALG_ENV_CONTENTS GitHub secret and
+            # mounted read-only, matching how docker-compose.yml does it locally.
+            echo "${ALG_ENV_CONTENTS}" | sudo tee /opt/novex/secrets/.alg_env > /dev/null
+            sudo chmod 600 /opt/novex/secrets/.alg_env
+
+            # Standard bridge networking with explicit port publishing —
+            # matches docker-compose.yml exactly. --network host is NOT
+            # required: Redis runs inside the container (see supervisord.conf,
+            # which self-starts its own instance if none is already up), and
+            # the api process listens on 0.0.0.0:8002 so it's reachable
+            # through the published port either way.
+            sudo docker run -d \
+              --name app-container \
+              --restart unless-stopped \
+              -p 5378:5378 \
+              -p 8002:8002 \
+              -e MODE=prod \
+              -v /opt/novex/secrets/.alg_env:/opt/ceg/algo/api_manager/.alg_env:ro \
+              -v /opt/digitaltwin_images:/opt/digitaltwin_images \
+              ${IMAGE}:latest
+
+            echo "Waiting for application..."
+            for i in $(seq 1 15); do
+              STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/ || echo "000")
+              if [ "$STATUS" = "200" ]; then
+                echo "Frontend is up (HTTP $STATUS)"
+                break
+              fi
+              echo "Not ready yet (HTTP $STATUS), retrying ($i/15)..."
+              sleep 5
+              if [ "$i" -eq 15 ]; then
+                echo "Frontend failed to start (last HTTP status: $STATUS)."
+                echo "--- Checking if frontend files exist in container ---"
+                sudo docker exec app-container ls -la /usr/share/nginx/html || echo "Path /usr/share/nginx/html not found in container"
+                echo "--- nginx config test ---"
+                sudo docker exec app-container nginx -t || true
+                echo "--- supervisord process status ---"
+                sudo docker exec app-container supervisorctl status || true
+                echo "--- api process log tail ---"
+                sudo docker exec app-container tail -n 100 /var/log/api.log || true
+                echo "--- Full container logs ---"
+                sudo docker logs app-container
+                exit 1
+              fi
+            done
+
+            echo "Checking Swagger..."
+            DOCS_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/docs || echo "000")
+            if [ "$DOCS_STATUS" = "000" ] || [ "$DOCS_STATUS" = "404" ]; then
+              echo "Swagger endpoint unreachable or missing (HTTP $DOCS_STATUS)."
+              sudo docker exec app-container supervisorctl status || true
+              sudo docker exec app-container tail -n 100 /var/log/api.log || true
+              sudo docker logs app-container
+              exit 1
+            else
+              echo "Swagger endpoint reachable (HTTP $DOCS_STATUS)"
+            fi
+
+            echo "Checking API proxy..."
+            API_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/api/ || echo "000")
+            echo "API endpoint responded with HTTP $API_STATUS"
+
+            echo "Checking direct :8002 access..."
+            DIRECT_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8002/docs || echo "000")
+            if [ "$DIRECT_STATUS" != "200" ]; then
+              echo "Direct :8002 access failed (HTTP $DIRECT_STATUS)."
+              sudo docker exec app-container tail -n 100 /var/log/api.log || true
+              exit 1
+            else
+              echo "Direct :8002 access OK (HTTP $DIRECT_STATUS)"
+            fi
+
+            sudo docker image prune -f

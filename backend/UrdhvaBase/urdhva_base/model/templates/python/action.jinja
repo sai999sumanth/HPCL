@@ -1,0 +1,6 @@
+
+# Action {{input.name}}
+@router.post('/{{input.name}}', tags=['{{input.parent.name}}'])
+async def {{input.parent.name.lower()}}_{{input.name.lower()}}(data: {{input.parent.name.title()}}_{{input.name.title()}}Params):
+    ...
+

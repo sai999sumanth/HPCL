@@ -1,0 +1,135 @@
+-- ============================================================
+-- SQL FUNCTIONS & TRIGGERS
+-- ============================================================
+
+
+-- ------------------------------------------------------------
+-- 1. FUNCTION: prevent_null_host_day_end_details
+-- ------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION prevent_null_host_day_end_details()
+RETURNS TRIGGER AS $$
+BEGIN
+
+    -- Only protect numeric columns
+    IF NEW.bcu_start_totalizer IS NULL THEN
+        NEW.bcu_start_totalizer := OLD.bcu_start_totalizer;
+    END IF;
+
+    IF NEW.bcu_end_totalizer IS NULL THEN
+        NEW.bcu_end_totalizer := OLD.bcu_end_totalizer;
+    END IF;
+
+    IF NEW.bcu_net_totalizer IS NULL THEN
+        NEW.bcu_net_totalizer := OLD.bcu_net_totalizer;
+    END IF;
+
+    IF NEW.mfm_start_totalizer IS NULL THEN
+        NEW.mfm_start_totalizer := OLD.mfm_start_totalizer;
+    END IF;
+
+    IF NEW.mfm_end_totalizer IS NULL THEN
+        NEW.mfm_end_totalizer := OLD.mfm_end_totalizer;
+    END IF;
+
+    IF NEW.mfm_net_totalizer IS NULL THEN
+        NEW.mfm_net_totalizer := OLD.mfm_net_totalizer;
+    END IF;
+
+    IF NEW.invoiced_qty IS NULL THEN
+        NEW.invoiced_qty := OLD.invoiced_qty;
+    END IF;
+
+    IF NEW.total_tl_qty_loaded IS NULL THEN
+        NEW.total_tl_qty_loaded := OLD.total_tl_qty_loaded;
+    END IF;
+
+    IF NEW.bcu_mfm_net_totalizer_diff IS NULL THEN
+        NEW.bcu_mfm_net_totalizer_diff := OLD.bcu_mfm_net_totalizer_diff;
+    END IF;
+
+    IF NEW.invoiced_total_tl_qty_diff IS NULL THEN
+        NEW.invoiced_total_tl_qty_diff := OLD.invoiced_total_tl_qty_diff;
+    END IF;
+
+    IF NEW.invoiced_bcu_net_qty_diff IS NULL THEN
+        NEW.invoiced_bcu_net_qty_diff := OLD.invoiced_bcu_net_qty_diff;
+    END IF;
+
+    IF NEW.topup_qty_local_mode IS NULL THEN
+        NEW.topup_qty_local_mode := OLD.topup_qty_local_mode;
+    END IF;
+
+    IF NEW.sampling_qty IS NULL THEN
+        NEW.sampling_qty := OLD.sampling_qty;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- ------------------------------------------------------------
+-- 2. TRIGGER: trg_prevent_null_host_day_end_details
+-- ------------------------------------------------------------
+
+CREATE TRIGGER trg_prevent_null_host_day_end_details
+BEFORE UPDATE ON host_day_end_details
+FOR EACH ROW
+EXECUTE FUNCTION prevent_null_host_day_end_details();
+
+
+-- ------------------------------------------------------------
+-- 3. FUNCTION: public.getendgapforphase
+-- ------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION public.getendgapforphase(
+    last_cyl_time time without time zone,
+    phase_start text,
+    phase_end text
+)
+RETURNS interval
+LANGUAGE plpgsql
+AS $function$
+BEGIN
+    RETURN CASE
+        WHEN last_cyl_time < phase_start::time THEN phase_end::time - phase_start::time
+        WHEN last_cyl_time > phase_end::time THEN '0 seconds'::interval
+        WHEN last_cyl_time BETWEEN phase_start::time AND phase_end::time THEN phase_end::time - last_cyl_time
+        ELSE '0 seconds'::interval
+    END;
+END;
+$function$;
+
+
+-- ------------------------------------------------------------
+-- 4. FUNCTION: public.getgapbetweentimes
+-- ------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION public.getgapbetweentimes(
+    process_time text,
+    prev_process_time text,
+    start_time text,
+    end_time text
+)
+RETURNS interval
+LANGUAGE plpgsql
+AS $function$
+BEGIN
+    RETURN CASE
+        WHEN prev_process_time IS NULL THEN
+            CASE
+                WHEN process_time::time <= start_time::time THEN '0 seconds'::interval
+                WHEN process_time::time >= end_time::time THEN end_time::time - start_time::time
+                ELSE process_time::time - start_time::time
+            END
+        WHEN process_time::time > end_time::time AND prev_process_time::time > end_time::time THEN '0 seconds'::interval
+        WHEN process_time::time < start_time::time AND prev_process_time::time < start_time::time THEN '0 seconds'::interval
+        WHEN prev_process_time::time >= start_time::time AND process_time::time <= end_time::time THEN process_time::time - prev_process_time::time
+        WHEN prev_process_time::time < start_time::time AND process_time::time > end_time::time THEN end_time::time - start_time::time
+        WHEN prev_process_time::time < start_time::time AND process_time::time BETWEEN start_time::time AND end_time::time THEN process_time::time - start_time::time
+        WHEN process_time::time > end_time::time AND prev_process_time::time BETWEEN start_time::time AND end_time::time THEN end_time::time - prev_process_time::time
+        ELSE '2 days'::interval
+    END;
+END;
+$function$;

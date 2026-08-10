@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            h2 {
+                color: #003366;
+            }
+        </style>
+    </head>
+
+    <body>
+       
+        <h3>Daily Sync Script Failure Alert</h3>
+        <p>Hi Team,</p>
+        <div class="box">
+            <p class="error">The daily sync script execution failed at: {{ generated_time }} </p>
+        </div>
+
+        <div class="box">
+            <p><b>Error Message:</b></p>
+            <pre style="white-space: pre-wrap; word-break: break-word; background: #f8f8f8; padding: 10px; border: 1px solid #ddd; font-size: 12px;">
+                {{ error_message }}
+            </pre>
+        </div>
+
+        <div class="box">
+            <p><b>Traceback:</b></p>
+            <pre style="white-space: pre-wrap; word-break: break-word; background: #f8f8f8; padding: 10px; border: 1px solid #ddd; font-size: 12px;">
+                {{ traceback }}
+            </pre>
+        </div>
+        <br/>
+        <p></p>
+    </body>
+</html>

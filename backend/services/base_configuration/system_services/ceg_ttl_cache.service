@@ -1,0 +1,14 @@
+[Unit]
+Description=CEG TTL Cache API Service %I
+
+[Service]
+Type=simple
+# Another Type option: forking
+WorkingDirectory=/opt/ceg/algo/cache_gateway
+ExecStart=/bin/bash -c 'export PORT=%i;unbuffer /opt/ceg/venv/bin/python cache_api_actions.py >> /var/log/ceg_sys_logs/ceg_cache_api.log 2>&1'
+Restart=always
+RestartSec=30s
+# Other Restart options: or always, on-abort, etc
+
+[Install]
+WantedBy=multi-user.target

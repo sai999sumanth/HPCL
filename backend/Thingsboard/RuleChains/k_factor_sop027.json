@@ -1,0 +1,182 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "K-Factor SOP027",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 6,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 649,
+          "layoutY": 291
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "KFactor Change",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"K Factor Change_BCU\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP027\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "KFactor Change",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 652,
+          "layoutY": 420
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "KFactor Change",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"K Factor Change_BCU\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP027\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "KFactor Change"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 909,
+          "layoutY": 355
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 613,
+          "layoutY": 113
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"K-Factor\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 117,
+          "layoutY": 256
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "K-FACTOR CHANGE STATUS"
+          ],
+          "latestTsKeyNames": [
+            "K-FACTOR CHANGE STATUS"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 321,
+          "layoutY": 366
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "K Factor Change ",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"K-FACTOR CHANGE STATUS\"] != undefined && msg[\"K-FACTOR CHANGE STATUS\"] != metadata[\"ss_K-FACTOR CHANGE STATUS\"]){\n    return true\n}\nreturn false\n\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 301,
+          "layoutY": 110
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 0,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 1,
+        "type": "False"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 3,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

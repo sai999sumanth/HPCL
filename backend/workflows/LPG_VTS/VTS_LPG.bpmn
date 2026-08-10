@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1vd8roa" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.29.0">
+  <bpmn:process id="LPGSOP0017DAYS1stInstance" name="UC_LPG_SOP27_33_7DAYS_1st_Instance" isExecutable="true" camunda:historyTimeToLive="10">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0idhsrt</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_1n9drcw" name="Send Notification to first level notification" camunda:type="external" camunda:topic="vts_workflow_consumer_1">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="mqofrole">0</camunda:inputParameter>
+          <camunda:inputParameter name="rolemailto">0</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">active</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0lrw5yi</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pnwwd1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1pnwwd1" sourceRef="Activity_1n9drcw" targetRef="Gateway_12d1ukj" />
+    <bpmn:parallelGateway id="Gateway_12d1ukj">
+      <bpmn:incoming>Flow_1pnwwd1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1h7gzpd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_18lrwnv</bpmn:outgoing>
+      <bpmn:outgoing>Flow_17iwn6x</bpmn:outgoing>
+      <bpmn:outgoing>Flow_080rcgv</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1pi7854</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_15esbea" sourceRef="Activity_05idm25" targetRef="Activity_1l9ecki" />
+    <bpmn:endEvent id="Event_09pgnb5">
+      <bpmn:incoming>Flow_14lydl3</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_1810xry" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_14lydl3" sourceRef="Activity_1l9ecki" targetRef="Event_09pgnb5" />
+    <bpmn:serviceTask id="Activity_05idm25" name="Notify all roles" camunda:type="external" camunda:topic="vts_workflow_consumer_2">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">2</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">resolved</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Alert Closed</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1l6kf2x</bpmn:incoming>
+      <bpmn:outgoing>Flow_15esbea</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_1l9ecki" name="Resolve Alert" camunda:type="external" camunda:topic="vts_workflow_consumer_3">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="auto_unblock">false</camunda:inputParameter>
+          <camunda:inputParameter name="close">true</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">close_alert</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">CloseAlert</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">closealert</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15esbea</bpmn:incoming>
+      <bpmn:outgoing>Flow_14lydl3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="Event_0f60pvt" name="Justification received after ATR upload by Engineer">
+      <bpmn:incoming>Flow_18lrwnv</bpmn:incoming>
+      <bpmn:incoming>Flow_1gfwk3m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0i2lmtt</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1qrq7ek" messageRef="Message_1kquxyf" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Event_1d1d53k" name="AcceptClose">
+      <bpmn:incoming>Flow_1h7gzpd</bpmn:incoming>
+      <bpmn:incoming>Flow_0v1bblj</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z02t7c</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0st3di3" messageRef="Message_0aggcmq" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1h7gzpd" sourceRef="Gateway_12d1ukj" targetRef="Event_1d1d53k" />
+    <bpmn:intermediateCatchEvent id="Event_07vw90u" name="Approved By LIC">
+      <bpmn:incoming>Flow_08bzexe</bpmn:incoming>
+      <bpmn:outgoing>Flow_18u06g7</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_04zx85d" messageRef="Message_1v4fll7" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_18lrwnv" sourceRef="Gateway_12d1ukj" targetRef="Event_0f60pvt" />
+    <bpmn:sequenceFlow id="Flow_0i2lmtt" sourceRef="Event_0f60pvt" targetRef="Activity_0zyfuc4" />
+    <bpmn:sequenceFlow id="Flow_18u06g7" sourceRef="Event_07vw90u" targetRef="Gateway_12ne1an" />
+    <bpmn:serviceTask id="Activity_0zyfuc4" name="Notify to LIC" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">1</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">notify</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="mqofrole">1</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0i2lmtt</bpmn:incoming>
+      <bpmn:outgoing>Flow_08bzexe</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_08bzexe" sourceRef="Activity_0zyfuc4" targetRef="Event_07vw90u" />
+    <bpmn:exclusiveGateway id="Gateway_12ne1an">
+      <bpmn:incoming>Flow_18u06g7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ymvm3o</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0g9s99y</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_1uro4ab" name="Reject Notification" camunda:type="external" camunda:topic="vts_workflow_consumer_5">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">0</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">reject</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="mqofrole">0</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ymvm3o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gfwk3m</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0ymvm3o" sourceRef="Gateway_12ne1an" targetRef="Activity_1uro4ab">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1gfwk3m" sourceRef="Activity_1uro4ab" targetRef="Event_0f60pvt" />
+    <bpmn:intermediateCatchEvent id="Event_1xircao" name="Mark As False">
+      <bpmn:incoming>Flow_17iwn6x</bpmn:incoming>
+      <bpmn:incoming>Flow_1b4vfoq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xga8t3</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0ria040" messageRef="Message_120eizm" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_17iwn6x" sourceRef="Gateway_12d1ukj" targetRef="Event_1xircao" />
+    <bpmn:intermediateCatchEvent id="Event_1ll07jg" name="Approved By LIC">
+      <bpmn:incoming>Flow_1x3rxei</bpmn:incoming>
+      <bpmn:outgoing>Flow_1onwzjz</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_00ddhdq" messageRef="Message_0mglzds" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1onwzjz" sourceRef="Event_1ll07jg" targetRef="Gateway_1b6binf" />
+    <bpmn:exclusiveGateway id="Gateway_1b6binf">
+      <bpmn:incoming>Flow_1onwzjz</bpmn:incoming>
+      <bpmn:outgoing>Flow_08kgdm9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0li3n9x</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="Event_0mlc0r1" name="Approved By LIC">
+      <bpmn:incoming>Flow_0ya7k6s</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tx7200</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0cuf8sh" messageRef="Message_0tjs0ox" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_06y2zj5">
+      <bpmn:incoming>Flow_1tx7200</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zc0znn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0u6uxa2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1tx7200" sourceRef="Event_0mlc0r1" targetRef="Gateway_06y2zj5" />
+    <bpmn:intermediateCatchEvent id="Event_0hjp3ij" name="Auto Unblock Based On DAys">
+      <bpmn:incoming>Flow_0oknesk</bpmn:incoming>
+      <bpmn:outgoing>Flow_16whi30</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0wia7ca">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">${waitTime}</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="Activity_0ufvasd" name="Notify all roles" camunda:type="external" camunda:topic="vts_workflow_consumer_6">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">2</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">resolved</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Closed</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0qjk8xu</bpmn:incoming>
+      <bpmn:outgoing>Flow_04265yn</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0bt5sn5" name="Resolve Alert" camunda:type="external" camunda:topic="vts_workflow_consumer_7">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="auto_unblock">true</camunda:inputParameter>
+          <camunda:inputParameter name="close">true</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">close_alert</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">CloseAlert</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">closealert</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04265yn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vzv2kz</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1cjymui">
+      <bpmn:incoming>Flow_1vzv2kz</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_10kku4z" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_04265yn" sourceRef="Activity_0ufvasd" targetRef="Activity_0bt5sn5" />
+    <bpmn:sequenceFlow id="Flow_1vzv2kz" sourceRef="Activity_0bt5sn5" targetRef="Event_1cjymui" />
+    <bpmn:serviceTask id="Activity_1396waa" name="Block" camunda:type="external" camunda:topic="vts_workflow_consumer_8">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="interrupt">block</camunda:inputParameter>
+          <camunda:inputParameter name="vehicle">true</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_vts_command</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendVtsCommand</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">sendvtscommand</camunda:inputParameter>
+          <camunda:inputParameter name="auto_unblock">false</camunda:inputParameter>
+          <camunda:inputParameter name="WaivedOff">false</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0idhsrt</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lrw5yi</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0idhsrt" sourceRef="StartEvent_1" targetRef="Activity_1396waa" />
+    <bpmn:sequenceFlow id="Flow_0lrw5yi" sourceRef="Activity_1396waa" targetRef="Activity_1n9drcw" />
+    <bpmn:serviceTask id="Activity_0ljcl4k" name="Unblock" camunda:type="external" camunda:topic="vts_workflow_consumer_9">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="interrupt">unblock</camunda:inputParameter>
+          <camunda:inputParameter name="vehicle">true</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_vts_command</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendVtsCommand</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">sendvtscommand</camunda:inputParameter>
+          <camunda:inputParameter name="WaivedOff">true</camunda:inputParameter>
+          <camunda:inputParameter name="auto_unblock">false</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0g9s99y</bpmn:incoming>
+      <bpmn:incoming>Flow_08kgdm9</bpmn:incoming>
+      <bpmn:incoming>Flow_0zc0znn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1l6kf2x</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0g9s99y" sourceRef="Gateway_12ne1an" targetRef="Activity_0ljcl4k">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1l6kf2x" sourceRef="Activity_0ljcl4k" targetRef="Activity_05idm25" />
+    <bpmn:sequenceFlow id="Flow_08kgdm9" sourceRef="Gateway_1b6binf" targetRef="Activity_0ljcl4k">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0zc0znn" sourceRef="Gateway_06y2zj5" targetRef="Activity_0ljcl4k">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_02gtfsl" name="Unblock" camunda:type="external" camunda:topic="vts_workflow_consumer_10">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="interrupt">unblock</camunda:inputParameter>
+          <camunda:inputParameter name="vehicle">true</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_vts_command</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendVtsCommand</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">sendvtscommand</camunda:inputParameter>
+          <camunda:inputParameter name="WaivedOff">false</camunda:inputParameter>
+          <camunda:inputParameter name="auto_unblock">true</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16whi30</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qjk8xu</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_16whi30" sourceRef="Event_0hjp3ij" targetRef="Activity_02gtfsl" />
+    <bpmn:sequenceFlow id="Flow_0qjk8xu" sourceRef="Activity_02gtfsl" targetRef="Activity_0ufvasd" />
+    <bpmn:serviceTask id="Activity_1soed14" name="Notify to LIC" camunda:type="external" camunda:topic="vts_workflow_consumer_11">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">1</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">notify</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="mqofrole">1</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0z02t7c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x3rxei</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0z02t7c" sourceRef="Event_1d1d53k" targetRef="Activity_1soed14" />
+    <bpmn:sequenceFlow id="Flow_1x3rxei" sourceRef="Activity_1soed14" targetRef="Event_1ll07jg" />
+    <bpmn:serviceTask id="Activity_0ezwxl5" name="Reject Notification" camunda:type="external" camunda:topic="vts_workflow_consumer_12">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">0</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">reject</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="mqofrole">0</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0li3n9x</bpmn:incoming>
+      <bpmn:outgoing>Flow_0v1bblj</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0li3n9x" sourceRef="Gateway_1b6binf" targetRef="Activity_0ezwxl5">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0v1bblj" sourceRef="Activity_0ezwxl5" targetRef="Event_1d1d53k" />
+    <bpmn:serviceTask id="Activity_0ps74cq" name="Reject Notification" camunda:type="external" camunda:topic="vts_workflow_consumer_13">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">0</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">reject</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="mqofrole">0</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0u6uxa2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b4vfoq</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0u6uxa2" sourceRef="Gateway_06y2zj5" targetRef="Activity_0ps74cq">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1b4vfoq" sourceRef="Activity_0ps74cq" targetRef="Event_1xircao" />
+    <bpmn:serviceTask id="Activity_113zd5r" name="Notify to LIC" camunda:type="external" camunda:topic="vts_workflow_consumer_14">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">1</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">notify</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="mqofrole">1</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xga8t3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ya7k6s</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0xga8t3" sourceRef="Event_1xircao" targetRef="Activity_113zd5r" />
+    <bpmn:sequenceFlow id="Flow_0ya7k6s" sourceRef="Activity_113zd5r" targetRef="Event_0mlc0r1" />
+    <bpmn:serviceTask id="Activity_1k1ju8y" name="Check For Unblock" camunda:type="external" camunda:topic="vts_workflow_consumer_10">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="interrupt">checkForVehicleUnblock</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">check_for_unblock</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">CheckForUnblock</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">checkForVehicleUnblock</camunda:inputParameter>
+          <camunda:inputParameter name="escalate_time_block">0</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_080rcgv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oknesk</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_080rcgv" sourceRef="Gateway_12d1ukj" targetRef="Activity_1k1ju8y" />
+    <bpmn:sequenceFlow id="Flow_0oknesk" sourceRef="Activity_1k1ju8y" targetRef="Event_0hjp3ij" />
+    <bpmn:serviceTask id="Activity_1feuu1j" name="Check For Unblock" camunda:type="external" camunda:topic="vts_workflow_consumer_10">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="interrupt">checkForVehicleUnblock</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">check_for_unblock</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">CheckForUnblock</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">checkForVehicleUnblock</camunda:inputParameter>
+          <camunda:inputParameter name="escalate_time_block">1</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1pi7854</bpmn:incoming>
+      <bpmn:outgoing>Flow_08w9b2y</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1pi7854" sourceRef="Gateway_12d1ukj" targetRef="Activity_1feuu1j" />
+    <bpmn:intermediateCatchEvent id="Event_143zrsb" name="1 Hour">
+      <bpmn:incoming>Flow_08w9b2y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rmbw2t</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0fnlpip">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">${waitTime}</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_08w9b2y" sourceRef="Activity_1feuu1j" targetRef="Event_143zrsb" />
+    <bpmn:serviceTask id="Activity_0kl1xk6" name="Escalaion to Next Level" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="rolemailto">1</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">escalation</camunda:inputParameter>
+          <camunda:inputParameter name="BU">LPG</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_notification</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Interlock Active</camunda:inputParameter>
+          <camunda:inputParameter name="escalationlevel_inmail">1</camunda:inputParameter>
+          <camunda:inputParameter name="escalationtime_inmail">60 min</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rmbw2t</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1rmbw2t" sourceRef="Event_143zrsb" targetRef="Activity_0kl1xk6" />
+  </bpmn:process>
+  <bpmn:message id="Message_1kquxyf" name="Justification" />
+  <bpmn:message id="Message_120eizm" name="FalseAlert" />
+  <bpmn:message id="Message_1v4fll7" name="Approved" />
+  <bpmn:message id="Message_0mglzds" name="Approved" />
+  <bpmn:message id="Message_0tjs0ox" name="Approved" />
+  <bpmn:message id="Message_0aggcmq" name="AcceptClose" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="LPGSOP0017DAYS1stInstance">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g48z2b_di" bpmnElement="Activity_1n9drcw">
+        <dc:Bounds x="410" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0svkusr_di" bpmnElement="Gateway_12d1ukj">
+        <dc:Bounds x="605" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="542" y="166" width="76" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cpestk_di" bpmnElement="Event_09pgnb5">
+        <dc:Bounds x="1892" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1efjdil_di" bpmnElement="Activity_05idm25">
+        <dc:Bounds x="1530" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16e1rk6_di" bpmnElement="Activity_1l9ecki">
+        <dc:Bounds x="1700" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0f60pvt_di" bpmnElement="Event_0f60pvt">
+        <dc:Bounds x="722" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="704" y="223" width="72" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0oszkb7" bpmnElement="Event_1d1d53k">
+        <dc:Bounds x="722" y="552" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="711" y="533" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0f57rab" bpmnElement="Event_07vw90u">
+        <dc:Bounds x="1032" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1010" y="263" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_02x62n2" bpmnElement="Activity_0zyfuc4">
+        <dc:Bounds x="850" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_12ne1an_di" bpmnElement="Gateway_12ne1an" isMarkerVisible="true">
+        <dc:Bounds x="1175" y="275" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_00gkqf9" bpmnElement="Activity_1uro4ab">
+        <dc:Bounds x="940" y="400" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1xfbaro" bpmnElement="Event_1xircao">
+        <dc:Bounds x="722" y="822" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="711" y="803" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ll07jg_di" bpmnElement="Event_1ll07jg">
+        <dc:Bounds x="1032" y="552" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1010" y="533" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1b6binf_di" bpmnElement="Gateway_1b6binf" isMarkerVisible="true">
+        <dc:Bounds x="1175" y="545" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mlc0r1_di" bpmnElement="Event_0mlc0r1">
+        <dc:Bounds x="1032" y="822" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1010" y="803" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_06y2zj5_di" bpmnElement="Gateway_06y2zj5" isMarkerVisible="true">
+        <dc:Bounds x="1175" y="815" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0hjp3ij_di" bpmnElement="Event_0hjp3ij">
+        <dc:Bounds x="802" y="1122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="783" y="1165" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ufvasd_di" bpmnElement="Activity_0ufvasd">
+        <dc:Bounds x="1060" y="1100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bt5sn5_di" bpmnElement="Activity_0bt5sn5">
+        <dc:Bounds x="1230" y="1100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cjymui_di" bpmnElement="Event_1cjymui">
+        <dc:Bounds x="1492" y="1122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1396waa_di" bpmnElement="Activity_1396waa">
+        <dc:Bounds x="240" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ljcl4k_di" bpmnElement="Activity_0ljcl4k">
+        <dc:Bounds x="1340" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0n1q1at" bpmnElement="Activity_02gtfsl">
+        <dc:Bounds x="910" y="1100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_07n69q2" bpmnElement="Activity_1soed14">
+        <dc:Bounds x="850" y="530" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1wu5quh" bpmnElement="Activity_0ezwxl5">
+        <dc:Bounds x="880" y="650" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_14yiud7" bpmnElement="Activity_0ps74cq">
+        <dc:Bounds x="900" y="950" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_051qaft" bpmnElement="Activity_113zd5r">
+        <dc:Bounds x="840" y="800" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1k1ju8y_di" bpmnElement="Activity_1k1ju8y">
+        <dc:Bounds x="580" y="1100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_075sn6g" bpmnElement="Activity_1feuu1j">
+        <dc:Bounds x="710" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_10k0tvg" bpmnElement="Event_143zrsb">
+        <dc:Bounds x="912" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="916" y="145" width="34" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ozdh3b" bpmnElement="Activity_0kl1xk6">
+        <dc:Bounds x="1020" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1pnwwd1_di" bpmnElement="Flow_1pnwwd1">
+        <di:waypoint x="510" y="300" />
+        <di:waypoint x="605" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15esbea_di" bpmnElement="Flow_15esbea">
+        <di:waypoint x="1630" y="300" />
+        <di:waypoint x="1700" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14lydl3_di" bpmnElement="Flow_14lydl3">
+        <di:waypoint x="1800" y="300" />
+        <di:waypoint x="1892" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h7gzpd_di" bpmnElement="Flow_1h7gzpd">
+        <di:waypoint x="630" y="325" />
+        <di:waypoint x="630" y="570" />
+        <di:waypoint x="722" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18lrwnv_di" bpmnElement="Flow_18lrwnv">
+        <di:waypoint x="655" y="300" />
+        <di:waypoint x="722" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i2lmtt_di" bpmnElement="Flow_0i2lmtt">
+        <di:waypoint x="758" y="300" />
+        <di:waypoint x="850" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18u06g7_di" bpmnElement="Flow_18u06g7">
+        <di:waypoint x="1068" y="300" />
+        <di:waypoint x="1175" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08bzexe_di" bpmnElement="Flow_08bzexe">
+        <di:waypoint x="950" y="300" />
+        <di:waypoint x="1032" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ymvm3o_di" bpmnElement="Flow_0ymvm3o">
+        <di:waypoint x="1200" y="325" />
+        <di:waypoint x="1200" y="440" />
+        <di:waypoint x="1040" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gfwk3m_di" bpmnElement="Flow_1gfwk3m">
+        <di:waypoint x="940" y="440" />
+        <di:waypoint x="740" y="440" />
+        <di:waypoint x="740" y="318" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17iwn6x_di" bpmnElement="Flow_17iwn6x">
+        <di:waypoint x="630" y="325" />
+        <di:waypoint x="630" y="840" />
+        <di:waypoint x="722" y="840" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1onwzjz_di" bpmnElement="Flow_1onwzjz">
+        <di:waypoint x="1068" y="570" />
+        <di:waypoint x="1175" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tx7200_di" bpmnElement="Flow_1tx7200">
+        <di:waypoint x="1068" y="840" />
+        <di:waypoint x="1175" y="840" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04265yn_di" bpmnElement="Flow_04265yn">
+        <di:waypoint x="1160" y="1140" />
+        <di:waypoint x="1230" y="1140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vzv2kz_di" bpmnElement="Flow_1vzv2kz">
+        <di:waypoint x="1330" y="1140" />
+        <di:waypoint x="1492" y="1140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0idhsrt_di" bpmnElement="Flow_0idhsrt">
+        <di:waypoint x="188" y="300" />
+        <di:waypoint x="240" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lrw5yi_di" bpmnElement="Flow_0lrw5yi">
+        <di:waypoint x="340" y="300" />
+        <di:waypoint x="410" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0g9s99y_di" bpmnElement="Flow_0g9s99y">
+        <di:waypoint x="1225" y="300" />
+        <di:waypoint x="1340" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l6kf2x_di" bpmnElement="Flow_1l6kf2x">
+        <di:waypoint x="1440" y="300" />
+        <di:waypoint x="1530" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08kgdm9_di" bpmnElement="Flow_08kgdm9">
+        <di:waypoint x="1225" y="570" />
+        <di:waypoint x="1360" y="570" />
+        <di:waypoint x="1360" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zc0znn_di" bpmnElement="Flow_0zc0znn">
+        <di:waypoint x="1225" y="840" />
+        <di:waypoint x="1390" y="840" />
+        <di:waypoint x="1390" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16whi30_di" bpmnElement="Flow_16whi30">
+        <di:waypoint x="838" y="1140" />
+        <di:waypoint x="910" y="1140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qjk8xu_di" bpmnElement="Flow_0qjk8xu">
+        <di:waypoint x="1010" y="1140" />
+        <di:waypoint x="1060" y="1140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z02t7c_di" bpmnElement="Flow_0z02t7c">
+        <di:waypoint x="758" y="570" />
+        <di:waypoint x="850" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x3rxei_di" bpmnElement="Flow_1x3rxei">
+        <di:waypoint x="950" y="570" />
+        <di:waypoint x="1032" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0li3n9x_di" bpmnElement="Flow_0li3n9x">
+        <di:waypoint x="1200" y="595" />
+        <di:waypoint x="1200" y="690" />
+        <di:waypoint x="980" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0v1bblj_di" bpmnElement="Flow_0v1bblj">
+        <di:waypoint x="880" y="690" />
+        <di:waypoint x="740" y="690" />
+        <di:waypoint x="740" y="588" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u6uxa2_di" bpmnElement="Flow_0u6uxa2">
+        <di:waypoint x="1200" y="865" />
+        <di:waypoint x="1200" y="990" />
+        <di:waypoint x="1000" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b4vfoq_di" bpmnElement="Flow_1b4vfoq">
+        <di:waypoint x="900" y="990" />
+        <di:waypoint x="740" y="990" />
+        <di:waypoint x="740" y="858" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xga8t3_di" bpmnElement="Flow_0xga8t3">
+        <di:waypoint x="758" y="840" />
+        <di:waypoint x="840" y="840" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ya7k6s_di" bpmnElement="Flow_0ya7k6s">
+        <di:waypoint x="940" y="840" />
+        <di:waypoint x="1032" y="840" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_080rcgv_di" bpmnElement="Flow_080rcgv">
+        <di:waypoint x="630" y="325" />
+        <di:waypoint x="630" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oknesk_di" bpmnElement="Flow_0oknesk">
+        <di:waypoint x="680" y="1140" />
+        <di:waypoint x="802" y="1140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pi7854_di" bpmnElement="Flow_1pi7854">
+        <di:waypoint x="630" y="275" />
+        <di:waypoint x="630" y="120" />
+        <di:waypoint x="710" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08w9b2y_di" bpmnElement="Flow_08w9b2y">
+        <di:waypoint x="810" y="120" />
+        <di:waypoint x="912" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rmbw2t_di" bpmnElement="Flow_1rmbw2t">
+        <di:waypoint x="948" y="120" />
+        <di:waypoint x="1020" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

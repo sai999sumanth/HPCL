@@ -1,0 +1,607 @@
+{
+    "plants": [
+      {
+        "plantName": [
+          "LONI LPG PLANT"
+        ],
+        "cars": [
+          {
+            "carName": [
+              1
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 16310,
+              "19kgCylinders": 2443,
+              "total": 18753
+            },
+            "normalHours": {
+              "production": 18562.75,
+              "availableHours": 15.5,
+              "stoppagesHours": 2.42,
+              "netBottlingHours": 13.08,
+              "productivity": 1419.17
+            },
+            "breakHours": {
+              "production": 667,
+              "availableHours": 1,
+              "stoppagesHours": 0.46,
+              "netBottlingHours": 0.54,
+              "productivity": 1235.19
+            },
+            "overtimeHours": {
+              "production": 134,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0.11,
+              "productivity": 1218.18
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 18796,
+              "RejectionUnderweight": 992,
+              "RejectionOverweight": 490,
+              "RejectionOtherErrors": 337,
+              "RejectionTotal": 1861,
+              "RejectionPercentage": 9.9
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 18950,
+              "RejectionTotal": 510,
+              "RejectionPercentage": 2.69
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 19392,
+              "RejectionTotal": 679,
+              "RejectionPercentage": 3.5
+            }
+          },
+          {
+            "carName": [
+              2
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 17171,
+              "19kgCylinders": 0,
+              "total": 17171
+            },
+            "normalHours": {
+              "production": 16002,
+              "availableHours": 15.5,
+              "stoppagesHours": 4.14,
+              "netBottlingHours": 11.36,
+              "productivity": 1408.63
+            },
+            "breakHours": {
+              "production": 997,
+              "availableHours": 1,
+              "stoppagesHours": 0.3,
+              "netBottlingHours": 0.7,
+              "productivity": 1424.29
+            },
+            "overtimeHours": {
+              "production": 172,
+              "stoppagesHours": 0.03,
+              "netBottlingHours": 0.12,
+              "productivity": 1433.33
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 17276,
+              "RejectionUnderweight": 342,
+              "RejectionOverweight": 279,
+              "RejectionOtherErrors": 368,
+              "RejectionTotal": 1108,
+              "RejectionPercentage": 6.41
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 17347,
+              "RejectionTotal": 276,
+              "RejectionPercentage": 1.59
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 17603,
+              "RejectionTotal": 982,
+              "RejectionPercentage": 5.58
+            }
+          },
+          {
+            "carName": [
+              3
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 0,
+              "19kgCylinders": 0,
+              "total": 0
+            },
+            "normalHours": {
+              "production": 0,
+              "availableHours": 15.5,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "breakHours": {
+              "production": 0,
+              "availableHours": 1,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "overtimeHours": {
+              "production": 0,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionUnderweight": 0,
+              "RejectionOverweight": 0,
+              "RejectionOtherErrors": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            }
+          }
+        ]
+      },
+      {
+        "plantName": [
+          "VARANASI LPG PLANT"
+        ],
+        "cars": [
+          {
+            "carName": [
+              1
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 16310,
+              "19kgCylinders": 2443,
+              "total": 18753
+            },
+            "normalHours": {
+              "production": 18562.75,
+              "availableHours": 15.5,
+              "stoppagesHours": 2.42,
+              "netBottlingHours": 13.08,
+              "productivity": 1419.17
+            },
+            "breakHours": {
+              "production": 667,
+              "availableHours": 1,
+              "stoppagesHours": 0.46,
+              "netBottlingHours": 0.54,
+              "productivity": 1235.19
+            },
+            "overtimeHours": {
+              "production": 134,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0.11,
+              "productivity": 1218.18
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 18796,
+              "RejectionUnderweight": 992,
+              "RejectionOverweight": 490,
+              "RejectionOtherErrors": 337,
+              "RejectionTotal": 1861,
+              "RejectionPercentage": 9.9
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 18950,
+              "RejectionTotal": 510,
+              "RejectionPercentage": 2.69
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 19392,
+              "RejectionTotal": 679,
+              "RejectionPercentage": 3.5
+            }
+          },
+          {
+            "carName": [
+              2
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 17171,
+              "19kgCylinders": 0,
+              "total": 17171
+            },
+            "normalHours": {
+              "production": 16002,
+              "availableHours": 15.5,
+              "stoppagesHours": 4.14,
+              "netBottlingHours": 11.36,
+              "productivity": 1408.63
+            },
+            "breakHours": {
+              "production": 997,
+              "availableHours": 1,
+              "stoppagesHours": 0.3,
+              "netBottlingHours": 0.7,
+              "productivity": 1424.29
+            },
+            "overtimeHours": {
+              "production": 172,
+              "stoppagesHours": 0.03,
+              "netBottlingHours": 0.12,
+              "productivity": 1433.33
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 17276,
+              "RejectionUnderweight": 342,
+              "RejectionOverweight": 279,
+              "RejectionOtherErrors": 368,
+              "RejectionTotal": 1108,
+              "RejectionPercentage": 6.41
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 17347,
+              "RejectionTotal": 276,
+              "RejectionPercentage": 1.59
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 17603,
+              "RejectionTotal": 982,
+              "RejectionPercentage": 5.58
+            }
+          },
+          {
+            "carName": [
+              3
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 0,
+              "19kgCylinders": 0,
+              "total": 0
+            },
+            "normalHours": {
+              "production": 0,
+              "availableHours": 15.5,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "breakHours": {
+              "production": 0,
+              "availableHours": 1,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "overtimeHours": {
+              "production": 0,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionUnderweight": 0,
+              "RejectionOverweight": 0,
+              "RejectionOtherErrors": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            }
+          }
+        ]
+      },  {
+        "plantName": [
+          "BARHI LPG PLANT"
+        ],
+        "cars": [
+          {
+            "carName": [
+              1
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 16310,
+              "19kgCylinders": 2443,
+              "total": 18753
+            },
+            "normalHours": {
+              "production": 18562.75,
+              "availableHours": 15.5,
+              "stoppagesHours": 2.42,
+              "netBottlingHours": 13.08,
+              "productivity": 1419.17
+            },
+            "breakHours": {
+              "production": 667,
+              "availableHours": 1,
+              "stoppagesHours": 0.46,
+              "netBottlingHours": 0.54,
+              "productivity": 1235.19
+            },
+            "overtimeHours": {
+              "production": 134,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0.11,
+              "productivity": 1218.18
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 18796,
+              "RejectionUnderweight": 992,
+              "RejectionOverweight": 490,
+              "RejectionOtherErrors": 337,
+              "RejectionTotal": 1861,
+              "RejectionPercentage": 9.9
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 18950,
+              "RejectionTotal": 510,
+              "RejectionPercentage": 2.69
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 19392,
+              "RejectionTotal": 679,
+              "RejectionPercentage": 3.5
+            }
+          },
+          {
+            "carName": [
+              2
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 17171,
+              "19kgCylinders": 0,
+              "total": 17171
+            },
+            "normalHours": {
+              "production": 16002,
+              "availableHours": 15.5,
+              "stoppagesHours": 4.14,
+              "netBottlingHours": 11.36,
+              "productivity": 1408.63
+            },
+            "breakHours": {
+              "production": 997,
+              "availableHours": 1,
+              "stoppagesHours": 0.3,
+              "netBottlingHours": 0.7,
+              "productivity": 1424.29
+            },
+            "overtimeHours": {
+              "production": 172,
+              "stoppagesHours": 0.03,
+              "netBottlingHours": 0.12,
+              "productivity": 1433.33
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 17276,
+              "RejectionUnderweight": 342,
+              "RejectionOverweight": 279,
+              "RejectionOtherErrors": 368,
+              "RejectionTotal": 1108,
+              "RejectionPercentage": 6.41
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 17347,
+              "RejectionTotal": 276,
+              "RejectionPercentage": 1.59
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 17603,
+              "RejectionTotal": 982,
+              "RejectionPercentage": 5.58
+            }
+          },
+          {
+            "carName": [
+              3
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 0,
+              "19kgCylinders": 0,
+              "total": 0
+            },
+            "normalHours": {
+              "production": 0,
+              "availableHours": 15.5,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "breakHours": {
+              "production": 0,
+              "availableHours": 1,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "overtimeHours": {
+              "production": 0,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionUnderweight": 0,
+              "RejectionOverweight": 0,
+              "RejectionOtherErrors": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            }
+          }
+        ]
+      },
+      {
+        "plantName": [
+          "JATNI LPG PLANT"
+        ],
+        "cars": [
+          {
+            "carName": [
+              1
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 16310,
+              "19kgCylinders": 2443,
+              "total": 18753
+            },
+            "normalHours": {
+              "production": 18562.75,
+              "availableHours": 15.5,
+              "stoppagesHours": 2.42,
+              "netBottlingHours": 13.08,
+              "productivity": 1419.17
+            },
+            "breakHours": {
+              "production": 667,
+              "availableHours": 1,
+              "stoppagesHours": 0.46,
+              "netBottlingHours": 0.54,
+              "productivity": 1235.19
+            },
+            "overtimeHours": {
+              "production": 134,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0.11,
+              "productivity": 1218.18
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 18796,
+              "RejectionUnderweight": 992,
+              "RejectionOverweight": 490,
+              "RejectionOtherErrors": 337,
+              "RejectionTotal": 1861,
+              "RejectionPercentage": 9.9
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 18950,
+              "RejectionTotal": 510,
+              "RejectionPercentage": 2.69
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 19392,
+              "RejectionTotal": 679,
+              "RejectionPercentage": 3.5
+            }
+          },
+          {
+            "carName": [
+              2
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 17171,
+              "19kgCylinders": 0,
+              "total": 17171
+            },
+            "normalHours": {
+              "production": 16002,
+              "availableHours": 15.5,
+              "stoppagesHours": 4.14,
+              "netBottlingHours": 11.36,
+              "productivity": 1408.63
+            },
+            "breakHours": {
+              "production": 997,
+              "availableHours": 1,
+              "stoppagesHours": 0.3,
+              "netBottlingHours": 0.7,
+              "productivity": 1424.29
+            },
+            "overtimeHours": {
+              "production": 172,
+              "stoppagesHours": 0.03,
+              "netBottlingHours": 0.12,
+              "productivity": 1433.33
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 17276,
+              "RejectionUnderweight": 342,
+              "RejectionOverweight": 279,
+              "RejectionOtherErrors": 368,
+              "RejectionTotal": 1108,
+              "RejectionPercentage": 6.41
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 17347,
+              "RejectionTotal": 276,
+              "RejectionPercentage": 1.59
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 17603,
+              "RejectionTotal": 982,
+              "RejectionPercentage": 5.58
+            }
+          },
+          {
+            "carName": [
+              3
+            ],
+            "bottlingSummary": {
+              "14_2kgCylinders": 0,
+              "19kgCylinders": 0,
+              "total": 0
+            },
+            "normalHours": {
+              "production": 0,
+              "availableHours": 15.5,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "breakHours": {
+              "production": 0,
+              "availableHours": 1,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "overtimeHours": {
+              "production": 0,
+              "stoppagesHours": 0,
+              "netBottlingHours": 0,
+              "productivity": 0
+            },
+            "checkScaleSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionUnderweight": 0,
+              "RejectionOverweight": 0,
+              "RejectionOtherErrors": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            },
+            "electronicLeakDetectorSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            },
+            "O-RingTesterSummary": {
+              "TotalCylindersChecked": 0,
+              "RejectionTotal": 0,
+              "RejectionPercentage": 0
+            }
+          }
+        ]
+      }
+    ]
+  }

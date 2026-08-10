@@ -1,0 +1,139 @@
+
+/*
+*/
+
+Models:
+  (models += Model | enums += Enum)*
+;
+
+Comment:
+    /\/\/.*/
+;
+
+Model:
+  'Model' name=ID is_internal?='internal' disable_crud_operations?='crud_disable' '{'
+  (attrs += Attr |
+  indexes += Index |
+  unique += Unique |
+  references += Reference |
+  actions += Action)*
+  config = Config ?
+  '}'
+;
+
+Attr:
+    name=ID (list?='list' | unique_field?='unique_field' | optional?='optional' | primary_key?='primary_key' | index_field?='index_field')# ('default='(default=INT|default=STRING|default=BOOL|default=FLOAT))? (simpletype=BaseTypes | model_or_enum=[CustomType] | index_field=BOOL )
+;
+
+CustomType:
+    Enum | Model
+;
+
+BaseTypes:
+    IntSpec | FloatSpec | StrSpec | BoolSpec | DictSpec | EmailSpec | DatetimeWithoutTimeZone | Datetime | Date | Time | IpAddressv4 | IpAddressv6 | Secret
+;
+
+IntSpec:
+    'int' (('max='max=INT)? | ('min='min=INT)? | ('multiple='multiple=INT)?)#
+;
+
+FloatSpec:
+    'float' (('max='max=INT)? | ('min='min=INT)? )#
+;
+
+StrSpec:
+    'str' (('maxlen='maxlen=INT)? | ('minlen='minlen=INT)? | ('regex='regex=STRING)? | ('startswith='startswith=STRING)? | ('endswith='endswith=STRING)? | ('contains='contains=STRING)? )#
+;
+
+BoolSpec:
+    x='bool'
+;
+
+DictSpec:
+    x='dict'
+;
+
+EmailSpec:
+    x='email'
+;
+
+DatetimeWithoutTimeZone:
+    x='datetime_no_zone'
+;
+
+Datetime:
+    x='datetime'
+;
+
+Date:
+    x='date'
+;
+
+Time:
+    x='time'
+;
+
+IpAddressv4:
+    x='ipv4'
+;
+
+IpAddressv6:
+    x='ipv6'
+;
+
+Secret:
+    x='secret'
+;
+
+Index:
+    'Index=>' fields*=FieldOrder[',']
+;
+
+Unique:
+    'Unique=>' fields*=FieldOrder[','] entity_id?='entity_id'
+;
+
+FieldOrder:
+    field=[Attr] sort?="dsc"
+;
+
+Reference:
+    'Reference=>' optional?='optional' model=[Model] attrs*=[Attr][','] (relation='1-1' | relation='1-N' | relation='N-1' | relation='N-N') 
+;
+
+Enum:
+    'Enum' name=ID str?='str' '{'
+        fields *= EnumField
+    '}'
+;
+
+EnumField:
+    name=ID ('=' (value=STRING | value=INT))?
+;
+
+Action:
+ 'Action=>' name=ID '{'
+    params *= Attr
+ '}'
+;
+
+
+Config:
+    'Config=>' '{'
+        (
+        ('collection_name='collection_name=ID)?
+        ('crud_operations='crud_operations=STRING)?
+        ('parent_table='parent_table=STRING)?
+        ('foreign_keys='foreign_keys=STRING)?
+        ('standard_query='standard_query=STRING)?
+        ('engine_id_fields='engine_id_fields=STRING)?
+        ('search_fields='search_fields=STRING)?
+        ('access_key_mapping='access_key_mapping=STRING)?
+        ('upsert_skip_keys='upsert_skip_keys=STRING)?
+        (unique_on_entity?='unique_on_entity')?
+        (bulkcreate?='bulkcreate')?
+        (fileupload?='fileupload')?
+        (nocascadedelete?='nocascadedelete')?
+        )#
+    '}'
+;

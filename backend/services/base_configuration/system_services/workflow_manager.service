@@ -1,0 +1,16 @@
+[Unit]
+Description=WorkFlowManager
+After=syslog.target network.target
+[Service]
+Type=simple
+TimeoutStopSec=0
+KillSignal=SIGTERM
+KillMode=process
+SuccessExitStatus=143
+LimitMEMLOCK=infinity
+SendSIGKILL=no
+WorkingDirectory=/opt/ceg/algo/orchestrator/workflow
+LimitNOFILE=102642
+ExecStart=/bin/bash -c 'unbuffer /opt/ceg/venv/bin/python workflow_manager.py > /var/log/ceg_sys_logs/workflow_manager.log 2>&1'
+[Install]
+WantedBy=multi-user.target

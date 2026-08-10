@@ -1,0 +1,149 @@
+
+import { apiClient } from '@/services/apiClient';
+import axios from 'axios';
+
+interface ChartMetric {
+  expression_type: string;
+  column: {
+    column_name: string;
+    type: string;
+  };
+  aggregate: string;
+  label: string;
+}
+
+interface Filter {
+  col?: string;
+  op?: string;
+  val?: string[];
+}
+
+interface XAxisConfig {
+  name: string;
+  label: string;
+  sort_ascending: boolean;
+}
+
+interface FormData {
+  dimensions?: Array<{ id: string; name: string; label?: string }>;
+  x_axis?: XAxisConfig;
+}
+
+export const createStackedBarChartRequest = async (
+  dataset: string,
+  filters: Filter[],
+  chartMetrics: ChartMetric[] | ChartMetric | null,
+  formData: FormData,
+  defaultRowLimit: number,
+  timeGrain: string,
+  showLegend: boolean,
+  showDataZoom: boolean,
+  legendOrientation: string,
+  legendType: string
+) => {
+  // Convert chartMetrics to array if it's a single metric
+  const metricsArray: ChartMetric[] = chartMetrics
+    ? Array.isArray(chartMetrics)
+      ? chartMetrics
+      : [chartMetrics]
+    : [];
+
+  // Ensure we have at least one metric
+  if (metricsArray.length === 0) {
+    throw new Error("At least one metric is required for bar chart");
+  }
+
+  const chartRequest = {
+    "database": "hpcl_ceg",
+    "schema": "public",
+    "table": dataset,
+    "visualization_name": "stacked_bar",
+    "organization_id": 6,
+    "name": "Stacked Bar Chart",
+    "description": "",
+    "params": {
+      "queries": [
+        {
+          "filters": filters.map(filter => ({
+            col: filter.col,
+            op: filter.op,
+            val: filter.val ? filter.val.flat() : []
+          })),
+          "metrics": metricsArray.map(metric => ({
+            // Use label if available, otherwise fall back to the column name
+            label: metric.label || metric.column.column_name,
+            ...metric
+          })),
+          "orderby": metricsArray.map(metric => ({
+            order_by: false,
+            // Use label if available, otherwise fall back to the column name
+            label: metric.label || metric.column.column_name,
+            ...metric
+          })),
+          "row_limit": defaultRowLimit,
+          "series_columns": [],
+          "series_limit": 0,
+          "order_descending": false
+        }
+      ],
+      "form_data": {
+        "x_axis": formData.x_axis ? {
+          name: formData.x_axis.name,
+          // Use label if available, otherwise fall back to name
+          label: formData.x_axis.label || formData.x_axis.name,
+          sort_ascending: formData.x_axis.sort_ascending || false
+        } : {},
+        "time_grain": timeGrain,
+        "groupby": formData.dimensions?.map(dim => ({
+          name: dim.name,
+          // Use label if available, otherwise fall back to name
+          label: dim.label || dim.name
+        })) || [],
+        "query_mode": "",
+        "show_legend": showLegend,
+        "show_data_zoom": showDataZoom,
+        "legend_orientation": legendOrientation,
+        "legend_type": legendType
+      }
+    },
+    "tags": [
+      {
+        "name": "",
+        "value": ""
+      }
+    ],
+    "group_id": 0,
+    "group_name": "",
+    "type": "Manual",
+    "user_query": "",
+    "user_ai_text": "",
+    "created_by": "",
+    "hashed_value": ""
+  };
+
+  try {
+    console.log("API Request Body:", JSON.stringify(chartRequest, null, 2));
+    const response = await apiClient.post('/api/charts/chart', chartRequest);
+    console.log("API Response Body:", response.data);
+    const organizationId=chartRequest.organization_id;
+
+    if (response.data.status === true && response.data.data) {
+      return {
+        chartType: 'stacked_bar',
+        chartData: response.data.data,
+        chartRequest: chartRequest,
+        showLegend,
+        showDataZoom,
+        legendOrientation,
+        legendType,
+        organizationId
+
+      };
+    } else {
+      throw new Error("Invalid response format");
+    }
+  } catch (error) {
+    console.error("Error creating bar chart:", error);
+    throw error;
+  }
+};

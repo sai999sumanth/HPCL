@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Camunda Incident Alert(Critical)</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            h2 {
+                color: #003366;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            th,
+            td {
+                border: 1px solid #ddd;
+                text-align: left;
+                padding-top: 1px;
+                padding-bottom: 1px;
+                padding-left: 8px;
+                padding-right: 8px;
+                /* Optionally, reduce font size for even more compact rows: */
+                font-size: 12px;
+            }
+            th {
+                background-color: #003366;
+                color: white;
+                /* width: 500px; */
+            }
+        </style>
+    </head>
+
+    <body>
+       
+        <p>The Camunda incident summary:</p>
+        <p>Generated at: <b>{{ generated_time }}</b></p>
+        <table>
+            <tr>
+                <th>Server Type</th>
+                <th>Host</th>
+                <th>Port</th>
+                <th>Incident Count</th>
+            </tr>
+            {% for row in summary %}
+            <tr>
+                <td>{{ row.server_type }}</td>
+                <td>{{ row.host }}</td>
+                <td>{{ row.port }}</td>
+                <td style="text-align:center;"><b>{{ row.count }}</b></td>
+            </tr>
+            {% endfor %}
+
+
+        </table>
+
+        <br/>
+        <p>Detailed incident reports are attached in CSV and Excel formats.</p>
+    </body>
+</html>

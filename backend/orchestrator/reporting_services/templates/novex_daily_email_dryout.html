@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/astha/Downloads/novex_daily_email%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Yesterday - Sales Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #003366;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 8px;
+            padding-right: 8px;
+            /* Optionally, reduce font size for even more compact rows: */
+            font-size: 12px;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+            /* width: 500px; */
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+        .openAlert th{
+            width: 300px;
+        }
+        .logo { margin: 15px 0; }
+    </style>
+</head>
+
+<body>
+    <h2>Novex Today - Daily Report</h2>
+    <p><strong>Date:</strong> {{today_date}} | <strong>Day:</strong> {{today_week}}</p>
+    <hr>
+    <h3>Catch up on Yesterday's Marketing Sales</h3>
+    <h4>1. Marketing Sales Summary:</h4>
+    <table>
+        <tbody><tr>
+            <th style="width: 400px;"> </th>
+            <th>Current (TMT)</th>
+            <th>Historical (TMT)</th>
+            <th>Growth%</th>
+        </tr>
+        <tr>
+            <td>Volume on {{yesterday}}</td>
+            <td>{{sales_data['yesterday_current']}}</td>
+            <td>{{sales_data['yesterday_historical']}}</td>
+            <td class="growth">{{sales_data['yesterday_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>Volume ({{present_month}})</td>
+            <td>{{sales_data['present_month_current']}}</td>
+            <td>{{sales_data['present_month_historical']}}</td>
+            <td class="growth">{{sales_data['present_month_growth']}}%</td>
+        </tr>
+        <tr>
+            <td>YTPM</td>
+            <td>{{sales_data['ytpm_current']}}</td>
+            <td>{{sales_data['ytpm_historical']}}</td>
+            <td class="growth">{{sales_data['ytpm_growth']}}{% if sales_data['ytpm_growth'] != 'NA' %}%{% endif %}</td>
+        </tr>
+    </tbody></table>
+    <h3>Catch up on Dryout Report</h3>
+    <h4>2. Retail Outlet Partial Dryout (MS/HSD):</h4>
+    <table>
+        <tbody><tr>
+            <th>Date</th>
+            <th>Dryout</th>
+            <th>Indent not raised</th>
+            <th>Indent raised</th>
+        </tr>
+        <tr>
+            <td style="color: darkgreen;">{{today}} {{report_generated_time}}</td>
+            <td>{{dry_out['dry_out']}}</td>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out['indent_raised']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>2.1. Indent Not Raised - Breakup By Sales (MS/HSD):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th>Volume (> 50KLPM)</th>
+            <th>Low Volume (< 50KLPM)</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['Volume(>50KLPM)']}}</td>
+            <td>{{dry_out_details['Low Volume(<50KLPM)']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>2.2. Indent Not Raised - Breakup By Dryout Days (MS/HSD):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th><2 Days</th>
+            <th>3 to 7 Days</th>
+            <th>8 to 15 Days</th>
+            <th>>15 Days</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['<2 Days']}}</td>
+            <td>{{dry_out_details['3 to 7 Days']}}</td>
+            <td>{{dry_out_details['8 to 15 Days']}}</td>
+            <td>{{dry_out_details['> 15 Days']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>2.3. Indent Not Raised - TAR Analysis (MS/HSD):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th>< 25 Rs Lakhs</th>
+            <th>25 to 50 Rs lakhs</th>
+            <th>50 to 75 Rs Lakhs</th>
+            <th>> 75 Rs Lakhs</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['0 to 25 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['25 to 50 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['50 to 75 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['> 75 Rs Lakhs']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>2.4. Day wise trend of Partial Dryout (MS/HSD):</h5>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Dry out Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in dry_out_trends %}
+            <tr>
+                <td>{{ row['Date'] }}</td>
+                <td>{{ row['Dry out Count'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>2.5. Zone wise Date wise Listing of Partial Dry outs</h5>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Zone wise ROs</th>
+
+                {% for col in zone_columns[1:] %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                {% for col in zone_columns[1:] %}
+                    <th>{{ zone_totals[col] }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in zone_daily %}
+            <tr>
+                <td>{{ row[zone_columns[0]] }}</td>
+
+                {% for col in zone_columns[1:] %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>2.6 Monthly Loss of Sales due to Partial Dry-outs</h5>
+    <div class="logo">
+        <img src="cid:dry_out_lost" alt="HP Pay Logo" width="800" height="auto">
+    </div>
+    <h4>3. LPG Operations Summary</h4>
+    <h5>3.1. Top 3 LPG plants based on performance score ({{present_month}})</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in lpg_top_data.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in lpg_top_data.to_dict(orient='records') %}
+            <tr>
+                {% for col in lpg_top_data.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>3.2. Bottom 3 LPG plants based on performance score ({{present_month}})</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in lpg_bottom_data.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in lpg_bottom_data.to_dict(orient='records') %}
+            <tr>
+                {% for col in lpg_bottom_data.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>3.3. Open Alert Summary ({{present_month}})</h5>
+        <div class="openAlert">
+            <table>
+                <tbody>
+                <tr>
+                    <th>SBU</th>
+                    <th>Alert Category</th>
+                    <th>Critical</th>
+                    <th>High</th>
+                </tr>
+                <tr>
+                    <td rowspan="3">LPG</td>
+                    <td>VA</td>
+                    <td>{{va_critical_lpg}}</td>
+                    <td>{{va_high_lpg}}</td>
+                </tr>
+                <tr>
+                    <td>VTS ITDG Violation</td>
+                    <td>{{vts_critical_lpg}}</td>
+                    <td>{{vts_high_lpg}}</td>
+                </tr>
+                <tr>
+                    <td>Production Quality</td>
+                    <td>{{pq_critical_lpg}}</td>
+                    <td>{{pq_high_lpg}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+<h4>4. SOD Operations Summary</h4>
+<h5>4.1. Open Alert Summary ({{present_month}})</h5>
+    <div class="openAlert">
+        <table>
+            <tbody>
+            <tr>
+                <th>SBU</th>
+                <th>Alert Category</th>
+                <th>Critical</th>
+                <th>High</th>
+            </tr>
+            <tr>
+                <td rowspan="4">SOD</td>
+                <td>VA</td>
+                <td>{{va_critical_tas}}</td>
+                <td>{{va_high_tas}}</td>
+            </tr>
+            <tr>
+                <td>VTS ITDG Violation</td>
+                <td>{{vts_critical_tas}}</td>
+                <td>{{vts_high_tas}}</td>
+            </tr>
+            <tr>
+                <td>EMLock</td>
+                <td>{{emlock_critical_tas}}</td>
+                <td>{{emlock_high_tas}}</td>
+            </tr>
+            <tr>
+                <td>TAS</td>
+                <td>{{tas_critical_tas}}</td>
+                <td>{{tas_high_tas}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script>
+    window.onload = function () {
+        document.querySelectorAll(".growth").forEach(td => {
+            let value = td.textContent.trim(); // Get text inside the <td>
+            let number = parseFloat(value); // Convert to number
+
+            if (!isNaN(number)) { // Check if it’s a valid number
+                if (number > 0) {
+                    td.classList.add("positive"); // Green for positive
+                } else if (number < 0) {
+                    td.classList.add("negative"); // Red for negative
+                }
+            }
+        });
+    };
+</script>
+
+</body></html>

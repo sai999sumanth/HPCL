@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/astha/Downloads/novex_daily_email%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Yesterday - Sales Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #003366;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 8px;
+            padding-right: 8px;
+            /* Optionally, reduce font size for even more compact rows: */
+            font-size: 12px;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+            /* width: 500px; */
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+        .openAlert th{
+            width: 300px;
+        }
+        .alerts {
+            background-color: rgb(255, 255, 0);
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Novex Today - Daily Report</h2>
+    <p><strong>Date:</strong> {{today_date}} | <strong>Day:</strong> {{today_week}}</p>
+    <hr>
+    <h4>1. SOD Operations Summary</h4>
+    <h5>1.1 Average Performance Index of All SOD Plants ({{yesterday}}) – {{tas_avg_score_resp}}</h5>
+    <h5>1.2 Open Alert Summary ({{present_month}})</h5>
+        <div class="openAlert">
+            <table>
+                <tbody>
+                <tr>
+                    <th class="alerts" >SBU</th>
+                    <th class="alerts">Alert Category</th>
+                    <th class="alerts">OPEN ALERTS: Critical</th>
+                    <th class="alerts">OPEN ALERTS: High</th>
+                    <th class="alerts">TOTAL OPEN ALERTS</th>
+                    <th class="alerts">OVERALL OPEN ALERTS(Since Go live)</th>
+		        </tr>
+                <tr>
+                    <td rowspan="3">SOD</td>
+                    <td>Video Analytics</td>
+                    <td>{{va_critical_tas}}</td>
+                    <td>{{va_high_tas}}</td>
+                    <td>{{va_total_tas}}</td>
+                    <td>{{va_total_fy_tas}}</td>
+                </tr>
+                <tr>
+                    <td>EMLock</td>
+                    <td>{{emlock_critical_tas}}</td>
+                    <td>{{emlock_high_tas}}</td>
+                    <td>{{emlock_total_tas}}</td>
+                    <td>{{emlock_total_fy_tas}}</td>
+                </tr>
+                <tr>
+                    <td>TAS</td>
+                    <td>{{tas_critical_tas}}</td>
+                    <td>{{tas_high_tas}}</td>
+                    <td>{{tas_total_tas}}</td>
+                    <td>{{tas_total_fy_tas}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <h5>1.3 Monthly Average of Performance Index</h5>
+    <div class="logo">
+        <img src="cid:monthly_score_path_sod" alt="Monthly Average of Plant Score" width="1000" height="auto">
+    </div>
+    <h5>1.4 Top 3 SOD plants based on performance Index ({{present_month}})</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in sod_top_data.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in sod_top_data.to_dicts() %}
+            <tr>
+                {% for col in sod_top_data.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>1.5 Bottom 3 SOD plants based on performance Index ({{present_month}})</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in sod_bottom_data.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in sod_bottom_data.to_dicts() %}
+            <tr>
+                {% for col in sod_bottom_data.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>1.6 Location wise Average Performance Index from Month start</h5>
+    <div class="logo">
+        <img src="cid:plant_wise_score_path_sod" alt="Monthly Average of Plant Score" width="1000" height="auto">
+    </div>
+    <h4>2 SOD VTS Governance ({{present_month}})</h4>
+    <h5>2.1 ITDG Blocking</h5>
+    <table>
+            <thead>
+                <tr>
+                    <th>TTs Blocked by Novex</th>
+                    <th>TTs Manually Unblocked</th>
+                    <th>TTs unblocked as per ITDG</th>
+                    <th>TTs currently under Block</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ sod_blocked_data_resp.TTs_Blocked_by_Novex_SOD }}</td>
+                    <td>{{ sod_blocked_data_resp.TTs_Manually_Unblocked_SOD }}</td>
+                    <td>{{ sod_blocked_data_resp.TTs_Auto_Unblocked_SOD }}</td>
+                    <td>{{ sod_blocked_data_resp.TTs_currently_under_Block_SOD }}</td>
+                </tr>
+            </tbody>
+        </table>
+    <h5>2.2 ITDG Alert Break Up</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in sod_blocked_data_resp_violation.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in sod_blocked_data_resp_violation.to_dict(orient='records') %}
+            <tr>
+                {% for col in sod_blocked_data_resp_violation.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4>3. SOD TAS Analytics ({{present_month}})</h4>
+    <h5>3.1 TAS-NOVEX Integrated Locations: 15</h5>
+    <h5>3.2 TAS score Location wise</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in tas_score_location_wise.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tas_score_location_wise.to_dicts() %}
+            <tr>
+                {% for col in tas_score_location_wise.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>3.3 TAS Equipment Healthiness Report</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in tas_fault_maintenance_columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tas_fault_maintenance_resp %}
+            <tr>
+                {% for col in tas_fault_maintenance_columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>3.4 TAS Parameters Summary</h5>
+    <table>
+        <thead>
+            <tr>
+                <th>SBU</th>
+                <th>Sick TT</th>
+                <th>Local Loaded Instance</th>
+                <th>K Factor Changes</th>
+                <th>MFM Factor Changes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tas_parameters_summary.to_dict(orient='records') %}
+            <tr>
+                <td>
+                    {{ row['SBU'] }}
+                </td>
+                <td>
+                    {{ row['Sick TT'] }}
+                </td>
+                <td>
+                    {{ row['Local Loaded TT'] }}
+                </td>
+                <td>
+                    {{ row['K Factor Changes'] }}
+                </td>
+                <td>
+                    {{ row['MFM Factor Changes'] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <table>
+        <thead>
+            <tr>
+                {% for col in tas_parameters_query_resp_columns %}
+                    <th>
+                        {% if col == "Local Loaded TT" %}
+                            Local Loaded Instance
+                        {% else %}
+                            {{ col }}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tas_parameters_query_resp %}
+            <tr>
+                {% for col in tas_parameters_query_resp_columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<script>
+    window.onload = function () {
+        document.querySelectorAll(".growth").forEach(td => {
+            let value = td.textContent.trim(); // Get text inside the <td>
+            let number = parseFloat(value); // Convert to number
+
+            if (!isNaN(number)) { // Check if it’s a valid number
+                if (number > 0) {
+                    td.classList.add("positive"); // Green for positive
+                } else if (number < 0) {
+                    td.classList.add("negative"); // Red for negative
+                }
+            }
+        });
+    };
+</script>
+
+</body></html>

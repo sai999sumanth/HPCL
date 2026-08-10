@@ -1,0 +1,1129 @@
+{
+    "allowRemoteResourceManagement": true,
+    "policyEnforcementMode": "ENFORCING",
+    "decisionStrategy": "AFFIRMATIVE",
+    "resources": [
+        {
+            "name": "indentmanagement",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "IndentManagement",
+            "attributes": {},
+            "uris": [
+                "/api/indentmanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_indents_by_product_volume"
+                },
+                {
+                    "name": "get_pending_vs_executed_indents"
+                },
+                {
+                    "name": "get_cancelled_indents"
+                },
+                {
+                    "name": "get_dtp_dealers_count"
+                },
+                {
+                    "name": "get_top_dtp_customers"
+                },
+                {
+                    "name": "get_dct_indents_by_product_volume"
+                },
+                {
+                    "name": "get_trucks_failed_to_report"
+                },
+                {
+                    "name": "get_tpt_indents_vs_availability"
+                },
+                {
+                    "name": "get_indents_details"
+                },
+                {
+                    "name": "get_r3_r1_details"
+                },
+                {
+                    "name": "get_indent_details"
+                }
+            ]
+        },
+        {
+            "name": "indentmanagement_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "IndentManagement_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/indentmanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_indents_by_product_volume"
+                },
+                {
+                    "name": "get_pending_vs_executed_indents"
+                },
+                {
+                    "name": "get_cancelled_indents"
+                },
+                {
+                    "name": "get_dtp_dealers_count"
+                },
+                {
+                    "name": "get_top_dtp_customers"
+                },
+                {
+                    "name": "get_dct_indents_by_product_volume"
+                },
+                {
+                    "name": "get_trucks_failed_to_report"
+                },
+                {
+                    "name": "get_tpt_indents_vs_availability"
+                },
+                {
+                    "name": "get_indents_details"
+                },
+                {
+                    "name": "get_r3_r1_details"
+                },
+                {
+                    "name": "get_indent_details"
+                }
+            ]
+        },
+        {
+            "name": "indentmanagement_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "IndentManagement_admin",
+            "attributes": {},
+            "uris": [
+                "/api/indentmanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_indents_by_product_volume"
+                },
+                {
+                    "name": "get_pending_vs_executed_indents"
+                },
+                {
+                    "name": "get_cancelled_indents"
+                },
+                {
+                    "name": "get_dtp_dealers_count"
+                },
+                {
+                    "name": "get_top_dtp_customers"
+                },
+                {
+                    "name": "get_dct_indents_by_product_volume"
+                },
+                {
+                    "name": "get_trucks_failed_to_report"
+                },
+                {
+                    "name": "get_tpt_indents_vs_availability"
+                },
+                {
+                    "name": "get_indents_details"
+                },
+                {
+                    "name": "get_r3_r1_details"
+                },
+                {
+                    "name": "get_indent_details"
+                }
+            ]
+        },
+        {
+            "name": "dryoutmanagement",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "DryOutManagement",
+            "attributes": {},
+            "uris": [
+                "/api/dryoutmanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_dry_out_locations"
+                },
+                {
+                    "name": "get_dry_out_indent_analysis"
+                },
+                {
+                    "name": "get_dry_out_indents"
+                },
+                {
+                    "name": "get_retail_outlet_stockouts"
+                },
+                {
+                    "name": "get_loss_of_sales_volume"
+                }
+            ]
+        },
+        {
+            "name": "dryoutmanagement_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "DryOutManagement_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/dryoutmanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_dry_out_locations"
+                },
+                {
+                    "name": "get_dry_out_indent_analysis"
+                },
+                {
+                    "name": "get_dry_out_indents"
+                },
+                {
+                    "name": "get_retail_outlet_stockouts"
+                },
+                {
+                    "name": "get_loss_of_sales_volume"
+                }
+            ]
+        },
+        {
+            "name": "dryoutmanagement_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "DryOutManagement_admin",
+            "attributes": {},
+            "uris": [
+                "/api/dryoutmanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_dry_out_locations"
+                },
+                {
+                    "name": "get_dry_out_indent_analysis"
+                },
+                {
+                    "name": "get_dry_out_indents"
+                },
+                {
+                    "name": "get_retail_outlet_stockouts"
+                },
+                {
+                    "name": "get_loss_of_sales_volume"
+                }
+            ]
+        },
+        {
+            "name": "nozzle_sales_stock",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "nozzle_sales_stock",
+            "attributes": {},
+            "uris": [
+                "/api/nozzle_sales_stock/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "stock_availability"
+                },
+                {
+                    "name": "tank_utilization"
+                },
+                {
+                    "name": "nozzle_sales_analysis"
+                },
+                {
+                    "name": "nozzle_sales_comparison"
+                },
+                {
+                    "name": "nozzle_sales_prev_day_comparison"
+                },
+                {
+                    "name": "product_availability_days"
+                }
+            ]
+        },
+        {
+            "name": "nozzle_sales_stock_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "nozzle_sales_stock_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/nozzle_sales_stock/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "nozzle_sales_stock_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "nozzle_sales_stock_admin",
+            "attributes": {},
+            "uris": [
+                "/api/nozzle_sales_stock/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "stock_availability"
+                },
+                {
+                    "name": "tank_utilization"
+                },
+                {
+                    "name": "nozzle_sales_analysis"
+                },
+                {
+                    "name": "nozzle_sales_comparison"
+                },
+                {
+                    "name": "nozzle_sales_prev_day_comparison"
+                },
+                {
+                    "name": "product_availability_days"
+                }
+            ]
+        },
+        {
+            "name": "tankinventory",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "TankInventory",
+            "attributes": {},
+            "uris": [
+                "/api/tankinventory/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "stock_availability"
+                },
+                {
+                    "name": "tank_utilization"
+                }
+            ]
+        },
+        {
+            "name": "tankinventory_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "TankInventory_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/tankinventory/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "tankinventory_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "TankInventory_admin",
+            "attributes": {},
+            "uris": [
+                "/api/tankinventory/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "stock_availability"
+                },
+                {
+                    "name": "tank_utilization"
+                }
+            ]
+        },
+        {
+            "name": "nozzlesales",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "NozzleSales",
+            "attributes": {},
+            "uris": [
+                "/api/nozzlesales/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_nozzle_sales_by_product"
+                },
+                {
+                    "name": "get_nozzle_sales_day_comparison"
+                },
+                {
+                    "name": "get_product_performance"
+                },
+                {
+                    "name": "get_degrading_outlets"
+                },
+                {
+                    "name": "get_top_degrading_dealers"
+                },
+                {
+                    "name": "get_high_risk_outlets"
+                },
+                {
+                    "name": "get_zero_sales_outlets"
+                },
+                {
+                    "name": "get_outlets_by_degrowth_group"
+                },
+                {
+                    "name": "get_power_sales_growth_locations"
+                },
+                {
+                    "name": "nozzle_sales_analysis"
+                },
+                {
+                    "name": "nozzle_sales_comparison"
+                },
+                {
+                    "name": "nozzle_sales_tmt"
+                }
+            ]
+        },
+        {
+            "name": "nozzlesales_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "NozzleSales_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/nozzlesales/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_nozzle_sales_by_product"
+                },
+                {
+                    "name": "get_nozzle_sales_day_comparison"
+                },
+                {
+                    "name": "get_product_performance"
+                },
+                {
+                    "name": "get_degrading_outlets"
+                },
+                {
+                    "name": "get_top_degrading_dealers"
+                },
+                {
+                    "name": "get_high_risk_outlets"
+                },
+                {
+                    "name": "get_zero_sales_outlets"
+                },
+                {
+                    "name": "get_outlets_by_degrowth_group"
+                },
+                {
+                    "name": "get_power_sales_growth_locations"
+                }
+            ]
+        },
+        {
+            "name": "nozzlesales_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "NozzleSales_admin",
+            "attributes": {},
+            "uris": [
+                "/api/nozzlesales/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_nozzle_sales_by_product"
+                },
+                {
+                    "name": "get_nozzle_sales_day_comparison"
+                },
+                {
+                    "name": "get_product_performance"
+                },
+                {
+                    "name": "get_degrading_outlets"
+                },
+                {
+                    "name": "get_top_degrading_dealers"
+                },
+                {
+                    "name": "get_high_risk_outlets"
+                },
+                {
+                    "name": "get_zero_sales_outlets"
+                },
+                {
+                    "name": "get_outlets_by_degrowth_group"
+                },
+                {
+                    "name": "get_power_sales_growth_locations"
+                },
+                {
+                    "name": "nozzle_sales_analysis"
+                },
+                {
+                    "name": "nozzle_sales_comparison"
+                },
+                {
+                    "name": "nozzle_sales_tmt"
+                }
+            ]
+        },
+        {
+            "name": "retailsales",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "RetailSales",
+            "attributes": {},
+            "uris": [
+                "/api/retailsales/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_sales_by_product"
+                },
+                {
+                    "name": "get_lubes_arb_comparison"
+                },
+                {
+                    "name": "get_lube_sales_comparison"
+                },
+                {
+                    "name": "get_sales_comparison"
+                },
+                {
+                    "name": "get_volume_tracking"
+                }
+            ]
+        },
+        {
+            "name": "retailsales_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "RetailSales_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/retailsales/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_sales_by_product"
+                },
+                {
+                    "name": "get_lubes_arb_comparison"
+                },
+                {
+                    "name": "get_lube_sales_comparison"
+                },
+                {
+                    "name": "get_sales_comparison"
+                },
+                {
+                    "name": "get_volume_tracking"
+                }
+            ]
+        },
+        {
+            "name": "retailsales_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "RetailSales_admin",
+            "attributes": {},
+            "uris": [
+                "/api/retailsales/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_sales_by_product"
+                },
+                {
+                    "name": "get_lubes_arb_comparison"
+                },
+                {
+                    "name": "get_lube_sales_comparison"
+                },
+                {
+                    "name": "get_sales_comparison"
+                },
+                {
+                    "name": "get_volume_tracking"
+                }
+            ]
+        },
+        {
+            "name": "dealermanagement",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "DealerManagement",
+            "attributes": {},
+            "uris": [
+                "/api/dealermanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_last_transactions"
+                },
+                {
+                    "name": "get_retail_ledger_transactions"
+                },
+                {
+                    "name": "get_total_outstanding_dues"
+                },
+                {
+                    "name": "get_top_outstanding_dealers"
+                },
+                {
+                    "name": "get_outstanding_by_days_group"
+                },
+                {
+                    "name": "get_dealer_outstanding_table"
+                },
+                {
+                    "name": "get_outstanding_details"
+                },
+                {
+                    "name": "get_outstanding_dealers"
+                }
+            ]
+        },
+        {
+            "name": "dealermanagement_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "DealerManagement_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/dealermanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_last_transactions"
+                },
+                {
+                    "name": "get_retail_ledger_transactions"
+                },
+                {
+                    "name": "get_total_outstanding_dues"
+                },
+                {
+                    "name": "get_top_outstanding_dealers"
+                },
+                {
+                    "name": "get_outstanding_by_days_group"
+                },
+                {
+                    "name": "get_dealer_outstanding_table"
+                },
+                {
+                    "name": "get_outstanding_details"
+                },
+                {
+                    "name": "get_outstanding_dealers"
+                }
+            ]
+        },
+        {
+            "name": "dealermanagement_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "DealerManagement_admin",
+            "attributes": {},
+            "uris": [
+                "/api/dealermanagement/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_last_transactions"
+                },
+                {
+                    "name": "get_retail_ledger_transactions"
+                },
+                {
+                    "name": "get_total_outstanding_dues"
+                },
+                {
+                    "name": "get_top_outstanding_dealers"
+                },
+                {
+                    "name": "get_outstanding_by_days_group"
+                },
+                {
+                    "name": "get_dealer_outstanding_table"
+                },
+                {
+                    "name": "get_outstanding_details"
+                },
+                {
+                    "name": "get_outstanding_dealers"
+                }
+            ]
+        }
+    ],
+    "policies": [
+        {
+            "name": "superAdminPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"superAdmin\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "superAdminPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "all",
+                "applyPolicies": "[\"superAdminPolicy\"]"
+            }
+        },
+        {
+            "name": "readOnlyPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"readOnly\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "readOnlyPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "readOnly",
+                "applyPolicies": "[\"readOnlyPolicy\"]"
+            }
+        },
+        {
+            "name": "adminPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"admin\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "adminPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "admin",
+                "applyPolicies": "[\"adminPolicy\"]"
+            }
+        }
+    ],
+    "scopes": [
+        {
+            "name": "create",
+            "displayName": "create"
+        },
+        {
+            "name": "update",
+            "displayName": "update"
+        },
+        {
+            "name": "read",
+            "displayName": "read"
+        },
+        {
+            "name": "delete",
+            "displayName": "delete"
+        },
+        {
+            "name": "get_indents_by_product_volume",
+            "displayName": "get_indents_by_product_volume"
+        },
+        {
+            "name": "get_pending_vs_executed_indents",
+            "displayName": "get_pending_vs_executed_indents"
+        },
+        {
+            "name": "get_cancelled_indents",
+            "displayName": "get_cancelled_indents"
+        },
+        {
+            "name": "get_dtp_dealers_count",
+            "displayName": "get_dtp_dealers_count"
+        },
+        {
+            "name": "get_top_dtp_customers",
+            "displayName": "get_top_dtp_customers"
+        },
+        {
+            "name": "get_dct_indents_by_product_volume",
+            "displayName": "get_dct_indents_by_product_volume"
+        },
+        {
+            "name": "get_trucks_failed_to_report",
+            "displayName": "get_trucks_failed_to_report"
+        },
+        {
+            "name": "get_tpt_indents_vs_availability",
+            "displayName": "get_tpt_indents_vs_availability"
+        },
+        {
+            "name": "get_indents_details",
+            "displayName": "get_indents_details"
+        },
+        {
+            "name": "get_r3_r1_details",
+            "displayName": "get_r3_r1_details"
+        },
+        {
+            "name": "get_indent_details",
+            "displayName": "get_indent_details"
+        },
+        {
+            "name": "get_dry_out_locations",
+            "displayName": "get_dry_out_locations"
+        },
+        {
+            "name": "get_dry_out_indent_analysis",
+            "displayName": "get_dry_out_indent_analysis"
+        },
+        {
+            "name": "get_dry_out_indents",
+            "displayName": "get_dry_out_indents"
+        },
+        {
+            "name": "get_retail_outlet_stockouts",
+            "displayName": "get_retail_outlet_stockouts"
+        },
+        {
+            "name": "get_loss_of_sales_volume",
+            "displayName": "get_loss_of_sales_volume"
+        },
+        {
+            "name": "stock_availability",
+            "displayName": "stock_availability"
+        },
+        {
+            "name": "tank_utilization",
+            "displayName": "tank_utilization"
+        },
+        {
+            "name": "nozzle_sales_analysis",
+            "displayName": "nozzle_sales_analysis"
+        },
+        {
+            "name": "nozzle_sales_comparison",
+            "displayName": "nozzle_sales_comparison"
+        },
+        {
+            "name": "nozzle_sales_prev_day_comparison",
+            "displayName": "nozzle_sales_prev_day_comparison"
+        },
+        {
+            "name": "product_availability_days",
+            "displayName": "product_availability_days"
+        },
+        {
+            "name": "stock_availability",
+            "displayName": "stock_availability"
+        },
+        {
+            "name": "tank_utilization",
+            "displayName": "tank_utilization"
+        },
+        {
+            "name": "get_nozzle_sales_by_product",
+            "displayName": "get_nozzle_sales_by_product"
+        },
+        {
+            "name": "get_nozzle_sales_day_comparison",
+            "displayName": "get_nozzle_sales_day_comparison"
+        },
+        {
+            "name": "get_product_performance",
+            "displayName": "get_product_performance"
+        },
+        {
+            "name": "get_degrading_outlets",
+            "displayName": "get_degrading_outlets"
+        },
+        {
+            "name": "get_top_degrading_dealers",
+            "displayName": "get_top_degrading_dealers"
+        },
+        {
+            "name": "get_high_risk_outlets",
+            "displayName": "get_high_risk_outlets"
+        },
+        {
+            "name": "get_zero_sales_outlets",
+            "displayName": "get_zero_sales_outlets"
+        },
+        {
+            "name": "get_outlets_by_degrowth_group",
+            "displayName": "get_outlets_by_degrowth_group"
+        },
+        {
+            "name": "get_power_sales_growth_locations",
+            "displayName": "get_power_sales_growth_locations"
+        },
+        {
+            "name": "nozzle_sales_analysis",
+            "displayName": "nozzle_sales_analysis"
+        },
+        {
+            "name": "nozzle_sales_comparison",
+            "displayName": "nozzle_sales_comparison"
+        },
+        {
+            "name": "nozzle_sales_tmt",
+            "displayName": "nozzle_sales_tmt"
+        },
+        {
+            "name": "get_sales_by_product",
+            "displayName": "get_sales_by_product"
+        },
+        {
+            "name": "get_lubes_arb_comparison",
+            "displayName": "get_lubes_arb_comparison"
+        },
+        {
+            "name": "get_lube_sales_comparison",
+            "displayName": "get_lube_sales_comparison"
+        },
+        {
+            "name": "get_sales_comparison",
+            "displayName": "get_sales_comparison"
+        },
+        {
+            "name": "get_volume_tracking",
+            "displayName": "get_volume_tracking"
+        },
+        {
+            "name": "get_last_transactions",
+            "displayName": "get_last_transactions"
+        },
+        {
+            "name": "get_retail_ledger_transactions",
+            "displayName": "get_retail_ledger_transactions"
+        },
+        {
+            "name": "get_total_outstanding_dues",
+            "displayName": "get_total_outstanding_dues"
+        },
+        {
+            "name": "get_top_outstanding_dealers",
+            "displayName": "get_top_outstanding_dealers"
+        },
+        {
+            "name": "get_outstanding_by_days_group",
+            "displayName": "get_outstanding_by_days_group"
+        },
+        {
+            "name": "get_dealer_outstanding_table",
+            "displayName": "get_dealer_outstanding_table"
+        },
+        {
+            "name": "get_outstanding_details",
+            "displayName": "get_outstanding_details"
+        },
+        {
+            "name": "get_outstanding_dealers",
+            "displayName": "get_outstanding_dealers"
+        }
+    ]
+}

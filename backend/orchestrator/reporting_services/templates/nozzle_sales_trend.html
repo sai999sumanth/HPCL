@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/astha/Downloads/novex_daily_email%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Yesterday - Sales Report</title>
+</head>
+
+<body style="font-family:Arial, sans-serif;">
+
+    <div style="display:block;width:100%;clear:both;">
+    <p><strong>Date:</strong> {{today_date}} | <strong>Day:</strong> {{today_week}}</p>
+    <hr>
+    <h4>1. Nozzle Sales Categorized (last 6 months)</h4>
+    <div>
+
+    <table style="border-collapse:separate;border-spacing:1px;background-color:#ffffff;padding:1px;border:0.5px solid #4a4a4a;width:max-content;">
+        <thead>
+            <tr>
+                <th rowspan="2" style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;background-color:#c9cfdb;color:#000000;font-weight:bold;white-space:normal;line-height:1.25;">Category</th>
+                <th colspan="{{ periods|length }}" style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;background-color:#c9cfdb;color:#000000;font-weight:bold;white-space:normal;line-height:1.25;">Nozzle Sales in MT</th>
+            </tr>
+            <tr>
+                {% for p in periods %}
+                    <th style="border:2px solid #333;text-align:center;background-color:#c9cfdb;color:#000000;font-weight:bold;white-space:nowrap;line-height:1.2;font-size:11px;padding:6px;">
+                        {{ p.replace(' to ', ' to <br>') | safe }}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            <!-- ================= MS ================= -->
+           <tr>
+                <td style="border:2px solid #333;text-align:left;padding:6px;padding-left:10px;font-size:13px;background-color:#e2eadc;font-weight:bold;">MS-R Normal</td>
+                {% for p in periods %}
+                    <td style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;">{{ nozzle_sales_avg_df["MS-R Normal (" + p + ")"] }}</td>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <td style="border:2px solid #333;text-align:left;padding:6px;padding-left:10px;font-size:13px;background-color:#e2eadc;font-weight:bold;">MS-R Branded</td>
+                {% for p in periods %}
+                    <td style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;">{{ nozzle_sales_avg_df["MS-R Branded (" + p + ")"] }}</td>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <td style="border:2px solid #333;text-align:left;padding:6px;padding-left:10px;font-size:13px;background-color:#eef3ea;font-weight:bold;">% Conversion</td>
+                {% for p in periods %}
+                    <td style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;background-color:#eef3ea;">{{ nozzle_sales_avg_df["MS % (" + p + ")"] }}%</td>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <td style="border:2px solid #333;text-align:left;padding:6px;padding-left:10px;font-size:13px;background-color:#d9d9d9;font-weight:bold;">MS-Total</td>
+                {% for p in periods %}
+                    <td style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;background-color:#d9d9d9;font-weight:bold;">{{ nozzle_sales_avg_df["MS Total (" + p + ")"] }}</td>
+                {% endfor %}
+            </tr>
+
+            <!-- ================= HSD ================= -->
+            <tr>
+                <td style="border:2px solid #333;text-align:left;padding:6px;padding-left:10px;font-size:13px;background-color:#e2eadc;font-weight:bold;">HSD-R Normal</td>
+                {% for p in periods %}
+                    <td style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;">{{ nozzle_sales_avg_df["HSD-R Normal (" + p + ")"] }}</td>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <td style="border:2px solid #333;text-align:left;padding:6px;padding-left:10px;font-size:13px;background-color:#e2eadc;font-weight:bold;">HSD-R Branded</td>
+                {% for p in periods %}
+                    <td style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;">{{ nozzle_sales_avg_df["HSD-R Branded (" + p + ")"] }}</td>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <td style="border:2px solid #333;text-align:left;padding:6px;padding-left:10px;font-size:13px;background-color:#eef3ea;font-weight:bold;">% Conversion</td>
+                {% for p in periods %}
+                    <td style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;background-color:#eef3ea;">{{ nozzle_sales_avg_df["HSD % (" + p + ")"] }}%</td>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <td style="border:2px solid #333;text-align:left;padding:6px;padding-left:10px;font-size:13px;background-color:#d9d9d9;font-weight:bold;">HSD-Total</td>
+                {% for p in periods %}
+                    <td style="border:2px solid #333;text-align:center;padding:6px;font-size:13px;background-color:#d9d9d9;font-weight:bold;">{{ nozzle_sales_avg_df["HSD Total (" + p + ")"] }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+
+    <div style="display:block;width:100%;clear:both;">
+    <h4>2. Nozzle Sales Trend (MS Total &amp; Power sales)</h4>
+    <div style="margin:15px 0;">
+        <img src="cid:nozzle_trend_chart" alt="Daily Wise Sales data" width="1000" style="width:100%; max-width:1000px; height:auto; display:block; border:0;">
+    </div>
+    </div>
+
+    <div>
+        <h4 style="display:inline; margin:0;">
+            3. Zone Wise Monthly Power Conversion Trend
+        </h4>
+    </div>
+    <h5>3.1 Zone Wise Monthly Power Conversion Trend (last 6 months)</h5>
+    <div style="font-size:12px; color:#666; margin-bottom:5px;">
+
+    <div style="margin:15px 0;">
+        <img src="cid:power_conversion_graph" alt="Power Conversion Graph" width="1000" style="width:100%; max-width:1000px; height:auto; display:block; border:0;">
+    </div>
+    </div>
+    <div>
+    <h5>3.2 Zone Wise Monthly Power Conversion
+        <span style="font-size:10px;font-weight:normal;color:#555;">
+            (This table scrolls horizontally - swipe or drag the scrollbar below to see all zones)
+        </span>
+    </h5>
+    </div>
+    <div style="overflow-x:scroll;overflow-y:hidden;-webkit-overflow-scrolling:touch;min-width:unset;margin-top:20px;margin-right:0;margin-left:0;margin-bottom:5px;font-size:12px;color:#666;">
+            <table style="border-collapse:collapse;width:max-content;table-layout:auto;font-size:12px;text-align:center;margin-top:0;">
+            <thead>
+                <tr>
+                    {% for col in power_columns  %}
+                        <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;background-color:#003366;color:#ffffff;">{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in power_data %}
+                    <tr>
+                        {% for col in power_columns %}
+                            {% if col == 'Month' %}
+                                <td style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;">
+                                    {{ row[col] }}
+                                </td>
+                            {% else %}
+                                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">
+                                    {{ row[col] }}
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h4>4. Branded Fuel Top Performers</h4>
+    <h5>4.1 Top 3 Zones with highest Power Conversion in the month</h5>
+    <table style="width:auto;border-collapse:collapse;margin:20px 0;table-layout:auto;">
+        <thead>
+            <tr>
+                <th rowspan="2" style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;background-color:#003366;color:#ffffff;">Zone</th>
+                <th colspan="3" style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;background-color:#c9cfdb;color:#000000;border-right:1px solid #000000;">{{nozzle_present_month}}</th>
+                <th colspan="3" style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;background-color:#c9cfdb;color:#000000;">Year Till Date</th>
+            </tr>
+            <tr>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Power (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Total (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">% Conversion</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Power (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Total (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">% Conversion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in top_3_zones %}
+            <tr>
+                <td style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;">{{ row.zone }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.0f}".format(row.current_power_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.0f}".format(row.current_ms_total_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ row.current_conversion_pct | round(2) }}%</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.0f}".format(row.ytd_power_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.0f}".format(row.ytd_ms_total_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ row.ytd_conversion_pct | round(2) }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>4.2 Top 3 Regions with highest Power Conversion in the month</h5>
+    <table style="width:auto;border-collapse:collapse;margin:20px 0;table-layout:auto;">
+        <thead>
+            <tr>
+                <th rowspan="2" style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;background-color:#003366;color:#ffffff;">Zone</th>
+                <th rowspan="2" style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;background-color:#003366;color:#ffffff;">Region</th>
+                <th colspan="3" style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;background-color:#c9cfdb;color:#000000;border-right:1px solid #000000;">{{nozzle_present_month}}</th>
+                <th colspan="3" style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;background-color:#c9cfdb;color:#000000;">Year Till Date</th>
+            </tr>
+            <tr>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Power (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Total (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">% Conversion</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Power (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Total (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">% Conversion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in top_3_regions %}
+            <tr>
+                <td style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;">{{ row.zone }}</td>
+                <td style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;">{{ row.region }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.0f}".format(row.current_power_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.0f}".format(row.current_ms_total_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ row.current_conversion_pct | round(2) }}%</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.0f}".format(row.ytd_power_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.0f}".format(row.ytd_ms_total_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ row.ytd_conversion_pct | round(2) }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>4.3 Top 3 Sales Areas with highest Power Conversion in the month</h5>
+    <table style="width:auto;border-collapse:collapse;margin:20px 0;table-layout:auto;">
+        <thead>
+            <tr>
+                <th rowspan="2" style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;background-color:#003366;color:#ffffff;">Zone</th>
+                <th rowspan="2" style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;background-color:#003366;color:#ffffff;">Region</th>
+                <th rowspan="2" style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;background-color:#003366;color:#ffffff;">Sales Area</th>
+                <th colspan="3" style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;background-color:#c9cfdb;color:#000000;border-right:1px solid #000000;">{{nozzle_present_month}}</th>
+                <th colspan="3" style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;background-color:#c9cfdb;color:#000000;">Year Till Date</th>
+            </tr>
+            <tr>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Power (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Total (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">% Conversion</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Power (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">MS-Total (KL)</th>
+                <th style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;font-weight:bold;background-color:#003366;color:#ffffff;white-space:nowrap;">% Conversion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in top_3_sales_areas %}
+            <tr>
+                <td style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;">{{ row.zone }}</td>
+                <td style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;">{{ row.region }}</td>
+                <td style="border:1px solid #ddd;text-align:left;padding:1px 8px;font-size:12px;">{{ row.sales_area }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.1f}".format(row.current_power_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.1f}".format(row.current_ms_total_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ row.current_conversion_pct | round(2) }}%</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.1f}".format(row.ytd_power_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ "{:,.1f}".format(row.ytd_ms_total_kl_sum) }}</td>
+                <td style="border:1px solid #ddd;text-align:center;padding:1px 8px;font-size:12px;">{{ row.ytd_conversion_pct | round(2) }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+<script>
+    window.onload = function () {
+        // Directly set color inline (no CSS class dependency) so it survives
+        // email clients that strip <style> blocks or class-based rules.
+        document.querySelectorAll(".growth").forEach(td => {
+            let value = td.textContent.trim();
+            let number = parseFloat(value);
+
+            if (!isNaN(number)) {
+                if (number > 0) {
+                    td.style.color = "green";
+                } else if (number < 0) {
+                    td.style.color = "red";
+                }
+            }
+        });
+    };
+</script>
+
+</body></html>

@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0j2naqf" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <bpmn:process id="TASVTSViolation" name="TAS VTS Violation" isExecutable="true" camunda:historyTimeToLive="2">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_01n5gag</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_01n5gag" sourceRef="StartEvent_1" targetRef="Activity_1ucno7l" />
+    <bpmn:parallelGateway id="Gateway_0owx6mo">
+      <bpmn:incoming>Flow_11itbla</bpmn:incoming>
+      <bpmn:outgoing>Flow_1abu3qr</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0hi5j4t</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1sn2lkg</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0e1lxtn</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_1abu3qr" sourceRef="Gateway_0owx6mo" targetRef="Activity_1xx4a5p" />
+    <bpmn:sequenceFlow id="Flow_1g6nh6b" sourceRef="Activity_1xx4a5p" targetRef="Event_05n9nqd" />
+    <bpmn:intermediateCatchEvent id="Event_05n9nqd" name="Max Sleep time based on given rule or Max time for fortnight rule">
+      <bpmn:incoming>Flow_1g6nh6b</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ly63ba</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0yns62g">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">${waitTime}</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0ly63ba" sourceRef="Event_05n9nqd" targetRef="Activity_1qskjb2" />
+    <bpmn:serviceTask id="Activity_1qskjb2" name="Mark as Regular" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="class_name">CheckRegularViolation</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_regular</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">check_vts_regular</camunda:inputParameter>
+          <camunda:inputParameter name="regular">true</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ly63ba</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ltiaxw</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_11itbla" sourceRef="Activity_1ucno7l" targetRef="Gateway_0owx6mo" />
+    <bpmn:serviceTask id="Activity_1ucno7l" name="Send Notification Regarding Violation" camunda:type="external" camunda:topic="vts_workflow_consumer_2">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="mqofrole">0</camunda:inputParameter>
+          <camunda:inputParameter name="rolemailto">0</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">active</camunda:inputParameter>
+          <camunda:inputParameter name="BU">TAS</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendVTSNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification_vts</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_vts_notification</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Active Violation</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01n5gag</bpmn:incoming>
+      <bpmn:outgoing>Flow_11itbla</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0hi5j4t" sourceRef="Gateway_0owx6mo" targetRef="Event_142wwb4" />
+    <bpmn:intermediateCatchEvent id="Event_142wwb4" name="Justification">
+      <bpmn:incoming>Flow_0hi5j4t</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iojmbr</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0yt3z20" messageRef="Message_25qdrkq" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1sn2lkg" sourceRef="Gateway_0owx6mo" targetRef="Event_04hlzer" />
+    <bpmn:intermediateCatchEvent id="Event_04hlzer" name="False Violation (False Violation)">
+      <bpmn:incoming>Flow_1sn2lkg</bpmn:incoming>
+      <bpmn:outgoing>Flow_10zm46u</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0902u46" messageRef="Message_08kevsf" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Event_1olzclj" name="Approved">
+      <bpmn:incoming>Flow_0ru2vud</bpmn:incoming>
+      <bpmn:outgoing>Flow_0938ysg</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0ne37al" messageRef="Message_30q3rcl" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_0hxxrmm">
+      <bpmn:incoming>Flow_0938ysg</bpmn:incoming>
+      <bpmn:outgoing>Flow_04279ls</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0wfgnwf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0938ysg" sourceRef="Event_1olzclj" targetRef="Gateway_0hxxrmm" />
+    <bpmn:exclusiveGateway id="Gateway_0x9j8xb">
+      <bpmn:incoming>Flow_11o5ut7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1u4vcu1</bpmn:outgoing>
+      <bpmn:outgoing>Flow_15t4ne2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_11o5ut7" sourceRef="Event_1vxy78r" targetRef="Gateway_0x9j8xb" />
+    <bpmn:serviceTask id="Activity_1xx4a5p" name="Waiting Time" camunda:type="external" camunda:topic="vts_workflow_consumer_3">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="class_name">VTSViolationWaitTime</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">vts_violation_wait_time</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">wait_time</camunda:inputParameter>
+          <camunda:inputParameter name="escalate_time_block">1</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1abu3qr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1g6nh6b</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0j05ui2" sourceRef="Activity_0kzz40g" targetRef="Event_1q2e4wn" />
+    <bpmn:serviceTask id="Activity_0kzz40g" name="Create Block Alert" camunda:type="external" camunda:topic="vts_workflow_consumer_8">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="class_name">CreateVTSBlockAlert</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">block_vehicle</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">create_vts_block_alert</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0z6g4tw</bpmn:incoming>
+      <bpmn:incoming>Flow_13xs3hi</bpmn:incoming>
+      <bpmn:incoming>Flow_1ltiaxw</bpmn:incoming>
+      <bpmn:incoming>Flow_115zr02</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j05ui2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1q2e4wn">
+      <bpmn:incoming>Flow_0j05ui2</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0m85t19" />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="Event_1vxy78r" name="Approved">
+      <bpmn:incoming>Flow_07ghv5i</bpmn:incoming>
+      <bpmn:outgoing>Flow_11o5ut7</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_16fl7o4" messageRef="Message_30q3rcl" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="Activity_14trsn9" name="Rejected Justification" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="class_name">CheckRegularViolation</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_regular</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">check_vts_regular</camunda:inputParameter>
+          <camunda:inputParameter name="regular">true</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04279ls</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z6g4tw</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_04279ls" sourceRef="Gateway_0hxxrmm" targetRef="Activity_14trsn9">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0z6g4tw" sourceRef="Activity_14trsn9" targetRef="Activity_0kzz40g" />
+    <bpmn:serviceTask id="Activity_16n09lq" name="Rejected False Alert" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="class_name">CheckRegularViolation</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_regular</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">check_vts_regular</camunda:inputParameter>
+          <camunda:inputParameter name="regular">true</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1u4vcu1</bpmn:incoming>
+      <bpmn:outgoing>Flow_13xs3hi</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1u4vcu1" sourceRef="Gateway_0x9j8xb" targetRef="Activity_16n09lq">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_13xs3hi" sourceRef="Activity_16n09lq" targetRef="Activity_0kzz40g" />
+    <bpmn:sequenceFlow id="Flow_1ltiaxw" sourceRef="Activity_1qskjb2" targetRef="Activity_0kzz40g" />
+    <bpmn:serviceTask id="Activity_024et5w" name="Approved False Alert" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="class_name">CheckRegularViolation</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_regular</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">check_vts_regular</camunda:inputParameter>
+          <camunda:inputParameter name="regular">false</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15t4ne2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n1s1n3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_15t4ne2" sourceRef="Gateway_0x9j8xb" targetRef="Activity_024et5w">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0n1s1n3" sourceRef="Activity_024et5w" targetRef="Event_023z9pa" />
+    <bpmn:endEvent id="Event_023z9pa">
+      <bpmn:incoming>Flow_0n1s1n3</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_1yokyga" />
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_0ryycmm" name="Approved Justification" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="class_name">CheckRegularViolation</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_regular</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">check_vts_regular</camunda:inputParameter>
+          <camunda:inputParameter name="regular">false</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0wfgnwf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1r3qtmm</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0wfgnwf" sourceRef="Gateway_0hxxrmm" targetRef="Activity_0ryycmm">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1r3qtmm" sourceRef="Activity_0ryycmm" targetRef="Event_1qiwf0f" />
+    <bpmn:endEvent id="Event_1qiwf0f">
+      <bpmn:incoming>Flow_1r3qtmm</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_1ru6dx1" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0e1lxtn" sourceRef="Gateway_0owx6mo" targetRef="Event_1lqm6ag" />
+    <bpmn:serviceTask id="Activity_19439y3" name="Accepted Violation" camunda:type="external" camunda:topic="vts_workflow_consumer_4">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="class_name">CheckRegularViolation</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">check_regular</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">check_vts_regular</camunda:inputParameter>
+          <camunda:inputParameter name="regular">true</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1avvneu</bpmn:incoming>
+      <bpmn:outgoing>Flow_115zr02</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1avvneu" sourceRef="Event_1lqm6ag" targetRef="Activity_19439y3" />
+    <bpmn:intermediateCatchEvent id="Event_1lqm6ag" name="Accept Violation">
+      <bpmn:incoming>Flow_0e1lxtn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1avvneu</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0mxnaeh" messageRef="Message_14sju09" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_115zr02" sourceRef="Activity_19439y3" targetRef="Activity_0kzz40g" />
+    <bpmn:serviceTask id="Activity_1ci6iec" name="Notify Next Level Regarding True Violation" camunda:type="external" camunda:topic="vts_workflow_consumer_2">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="mqofrole">1</camunda:inputParameter>
+          <camunda:inputParameter name="rolemailto">1</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">notify</camunda:inputParameter>
+          <camunda:inputParameter name="BU">TAS</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendVTSNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification_vts</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_vts_notification</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Active Violation</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0iojmbr</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ru2vud</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0iojmbr" sourceRef="Event_142wwb4" targetRef="Activity_1ci6iec" />
+    <bpmn:sequenceFlow id="Flow_0ru2vud" sourceRef="Activity_1ci6iec" targetRef="Event_1olzclj" />
+    <bpmn:serviceTask id="Activity_1hi857f" name="Notify Next Level Regarding True Violation" camunda:type="external" camunda:topic="vts_workflow_consumer_2">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="mqofrole">1</camunda:inputParameter>
+          <camunda:inputParameter name="rolemailto">1</camunda:inputParameter>
+          <camunda:inputParameter name="messagetype">notify</camunda:inputParameter>
+          <camunda:inputParameter name="BU">TAS</camunda:inputParameter>
+          <camunda:inputParameter name="class_name">SendVTSNotification</camunda:inputParameter>
+          <camunda:inputParameter name="function_name">handle_task_notification_vts</camunda:inputParameter>
+          <camunda:inputParameter name="module_name">send_vts_notification</camunda:inputParameter>
+          <camunda:inputParameter name="msg_subject">Active Violation</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10zm46u</bpmn:incoming>
+      <bpmn:outgoing>Flow_07ghv5i</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_10zm46u" sourceRef="Event_04hlzer" targetRef="Activity_1hi857f" />
+    <bpmn:sequenceFlow id="Flow_07ghv5i" sourceRef="Activity_1hi857f" targetRef="Event_1vxy78r" />
+  </bpmn:process>
+  <bpmn:message id="Message_25qdrkq" name="Justification" />
+  <bpmn:message id="Message_08kevsf" name="FalseViolation" />
+  <bpmn:message id="Message_30q3rcl" name="Approved" />
+  <bpmn:message id="Message_14sju09" name="AcceptViolation" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TASVTSViolation">
+      <bpmndi:BPMNShape id="Gateway_1k64ysn_di" bpmnElement="Gateway_0owx6mo">
+        <dc:Bounds x="415" y="275" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0h27zj4_di" bpmnElement="Event_1olzclj">
+        <dc:Bounds x="872" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="866" y="325" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0x9j8xb_di" bpmnElement="Gateway_0x9j8xb" isMarkerVisible="true">
+        <dc:Bounds x="1005" y="575" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1fmnf5f_di" bpmnElement="Event_1vxy78r">
+        <dc:Bounds x="872" y="582" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="866" y="625" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hj3iex_di" bpmnElement="Activity_1ucno7l">
+        <dc:Bounds x="260" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hr0s94_di" bpmnElement="Activity_0kzz40g">
+        <dc:Bounds x="1310" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_11o21w4" bpmnElement="Activity_14trsn9">
+        <dc:Bounds x="1120" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0feuqy6" bpmnElement="Activity_16n09lq">
+        <dc:Bounds x="1130" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0rewltp" bpmnElement="Activity_024et5w">
+        <dc:Bounds x="1140" y="740" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13wgt2b_di" bpmnElement="Event_023z9pa">
+        <dc:Bounds x="1302" y="762" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zxwvzp_di" bpmnElement="Activity_1qskjb2">
+        <dc:Bounds x="1110" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0546ivg_di" bpmnElement="Event_05n9nqd">
+        <dc:Bounds x="882" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="861" y="135" width="79" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_094zm3q_di" bpmnElement="Activity_1xx4a5p">
+        <dc:Bounds x="610" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0hxxrmm_di" bpmnElement="Gateway_0hxxrmm" isMarkerVisible="true">
+        <dc:Bounds x="965" y="275" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0gbr63d" bpmnElement="Activity_0ryycmm">
+        <dc:Bounds x="940" y="410" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00e1pkb_di" bpmnElement="Event_1qiwf0f">
+        <dc:Bounds x="1152" y="432" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_099cetm_di" bpmnElement="Event_142wwb4">
+        <dc:Bounds x="542" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="531" y="263" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1n2yzoq_di" bpmnElement="Event_1q2e4wn">
+        <dc:Bounds x="1512" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1iakvjt" bpmnElement="Activity_1ci6iec">
+        <dc:Bounds x="660" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ahlh78_di" bpmnElement="Event_1lqm6ag">
+        <dc:Bounds x="572" y="902" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="551" y="945" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1qnxq8a_di" bpmnElement="Event_04hlzer">
+        <dc:Bounds x="572" y="582" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="550" y="544.5" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_115hgx1" bpmnElement="Activity_19439y3">
+        <dc:Bounds x="790" y="880" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1ngorp8" bpmnElement="Activity_1hi857f">
+        <dc:Bounds x="680" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_11itbla_di" bpmnElement="Flow_11itbla">
+        <di:waypoint x="360" y="300" />
+        <di:waypoint x="415" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1abu3qr_di" bpmnElement="Flow_1abu3qr">
+        <di:waypoint x="440" y="275" />
+        <di:waypoint x="440" y="110" />
+        <di:waypoint x="610" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hi5j4t_di" bpmnElement="Flow_0hi5j4t">
+        <di:waypoint x="465" y="300" />
+        <di:waypoint x="542" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sn2lkg_di" bpmnElement="Flow_1sn2lkg">
+        <di:waypoint x="440" y="325" />
+        <di:waypoint x="440" y="600" />
+        <di:waypoint x="572" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1g6nh6b_di" bpmnElement="Flow_1g6nh6b">
+        <di:waypoint x="710" y="110" />
+        <di:waypoint x="882" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ly63ba_di" bpmnElement="Flow_0ly63ba">
+        <di:waypoint x="918" y="110" />
+        <di:waypoint x="1110" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ltiaxw_di" bpmnElement="Flow_1ltiaxw">
+        <di:waypoint x="1210" y="110" />
+        <di:waypoint x="1360" y="110" />
+        <di:waypoint x="1360" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0938ysg_di" bpmnElement="Flow_0938ysg">
+        <di:waypoint x="908" y="300" />
+        <di:waypoint x="965" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04279ls_di" bpmnElement="Flow_04279ls">
+        <di:waypoint x="1015" y="300" />
+        <di:waypoint x="1120" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11o5ut7_di" bpmnElement="Flow_11o5ut7">
+        <di:waypoint x="908" y="600" />
+        <di:waypoint x="1005" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u4vcu1_di" bpmnElement="Flow_1u4vcu1">
+        <di:waypoint x="1055" y="600" />
+        <di:waypoint x="1130" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j05ui2_di" bpmnElement="Flow_0j05ui2">
+        <di:waypoint x="1410" y="300" />
+        <di:waypoint x="1512" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01n5gag_di" bpmnElement="Flow_01n5gag">
+        <di:waypoint x="188" y="300" />
+        <di:waypoint x="260" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z6g4tw_di" bpmnElement="Flow_0z6g4tw">
+        <di:waypoint x="1220" y="300" />
+        <di:waypoint x="1310" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13xs3hi_di" bpmnElement="Flow_13xs3hi">
+        <di:waypoint x="1230" y="600" />
+        <di:waypoint x="1340" y="600" />
+        <di:waypoint x="1340" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15t4ne2_di" bpmnElement="Flow_15t4ne2">
+        <di:waypoint x="1030" y="625" />
+        <di:waypoint x="1030" y="780" />
+        <di:waypoint x="1140" y="780" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n1s1n3_di" bpmnElement="Flow_0n1s1n3">
+        <di:waypoint x="1240" y="780" />
+        <di:waypoint x="1302" y="780" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wfgnwf_di" bpmnElement="Flow_0wfgnwf">
+        <di:waypoint x="990" y="325" />
+        <di:waypoint x="990" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r3qtmm_di" bpmnElement="Flow_1r3qtmm">
+        <di:waypoint x="1040" y="450" />
+        <di:waypoint x="1152" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e1lxtn_di" bpmnElement="Flow_0e1lxtn">
+        <di:waypoint x="440" y="325" />
+        <di:waypoint x="440" y="920" />
+        <di:waypoint x="572" y="920" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1avvneu_di" bpmnElement="Flow_1avvneu">
+        <di:waypoint x="608" y="920" />
+        <di:waypoint x="790" y="920" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_115zr02_di" bpmnElement="Flow_115zr02">
+        <di:waypoint x="890" y="920" />
+        <di:waypoint x="1370" y="920" />
+        <di:waypoint x="1370" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iojmbr_di" bpmnElement="Flow_0iojmbr">
+        <di:waypoint x="578" y="300" />
+        <di:waypoint x="660" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ru2vud_di" bpmnElement="Flow_0ru2vud">
+        <di:waypoint x="760" y="300" />
+        <di:waypoint x="872" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10zm46u_di" bpmnElement="Flow_10zm46u">
+        <di:waypoint x="608" y="600" />
+        <di:waypoint x="680" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07ghv5i_di" bpmnElement="Flow_07ghv5i">
+        <di:waypoint x="780" y="600" />
+        <di:waypoint x="872" y="600" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

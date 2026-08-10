@@ -1,0 +1,182 @@
+[
+  {
+    "menu_name": "Performance",
+    "allowed_sub_menus": [
+      {
+        "title": "Industry",
+        "allowed_sub_menus": [
+          { "title": "Industry Performance" },
+          { "title": "Retail Industry Performance" },
+          { "title": "Lpg Industry Performance" },
+          { "title": "I&C Industry Performance" }
+        ]
+      },
+      {
+        "title": "Sales Performance",
+        "allowed_sub_menus": [
+          { "title": "Marketing Summary" },
+          { "title": "Retail Insights" },
+          { "title": "LPG Insights" },
+          { "title": "I&C Insights" },
+          { "title": "I&C Campaign" },
+          { "title": "Lubes Insights" },
+          { "title": "Lubes Sales Performance" },
+          { "title": "Lubes" },
+          { "title": "Aviation Insights" },
+          { "title": "PetChem Insights" },
+          { "title": "GAS Insights" }
+        ]
+      },
+      {
+        "title": "KPI Dashboards",
+        "allowed_sub_menus": [
+          { "title": "Retail" },
+          { "title": "TAS" },
+          { "title": "LPG" }
+        ]
+      }
+    ]
+  },
+  {
+    "menu_name": "SOD Terminal",
+    "allowed_sub_menus": [
+      { "title": "Supply Chain" },
+      { "title": "Terminal Home" },
+      { "title": "Video Analytics" },
+      {
+        "title": "TAS",
+        "allowed_sub_menus": [
+          { "title": "TAS Home" },
+          { "title": "TAS Overview" },
+          { "title": "TAS Dashboard" },
+          { "title": "Tank Farm" },
+          {
+            "title": "TAS Insights",
+            "allowed_sub_menus": [
+              { "title": "BCU Dosing Alerts" },
+              { "title": "BAY Analytics" },
+              { "title": "BCU Critical Parameter" }
+            ]
+          },
+          { "title": "Bay Caliberation Module" },
+          { "title": "Help Desk Module" }
+        ]
+      }
+    ]
+  },
+  {
+    "menu_name": "Retail Outlet",
+    "allowed_sub_menus": [
+      { "title": "RO Home" },
+      { "title": "Supply Chain" },
+      { "title": "Video Analytics" },
+      {
+        "title": "Retail Governance",
+        "allowed_sub_menus": [
+          { "title": "Sanitation Compliance" }
+        ]
+      }
+    ]
+  },
+  {
+    "menu_name": "LPG",
+    "allowed_sub_menus": [
+      { "title": "LPG Plant" },
+      { "title": "Pro Dash" },
+      { "title": "Consolidated Report" },
+      { "title": "LPG Operations" },
+      { "title": "LPG Analytics" },
+      { "title": "LPG Inventory" },
+      { "title": "LPG Settings" },
+      { "title": "Video Analytics" },
+      {
+        "title": "Supply Chain",
+        "allowed_sub_menus": [
+          { "title": "Operations" },
+          { "title": "Sales" }
+        ]
+      }
+    ]
+  },
+  {
+    "menu_name": "Direct Sales",
+    "allowed_sub_menus": [
+      { "title": "VTS Insights" },
+      { "title": "Supply Chain" },
+      { "title": "I&C Insights" },
+      { "title": "I&C Campaign" }
+    ]
+  },
+  {
+    "menu_name": "VA",
+    "allowed_sub_menus": [
+      { "title": "VA Home" },
+      { "title": "RO Video Analytics" },
+      { "title": "SOD Video Analytics" },
+      { "title": "LPG Video Analytics" },
+      { "title": "VA Analytics" }
+    ]
+  },
+  {
+    "menu_name": "VTS",
+    "allowed_sub_menus": [
+      { "title": "VTS ITDG Alert Home" },
+      { "title": "Alert Manager" },
+      { "title": "Device Manager" },
+      {
+        "title": "VTS Governance",
+        "allowed_sub_menus": [
+          { "title": "VTS Dashboard" },
+          { "title": "VTS Insights" },
+          { "title": "Compliance" },
+          { "title": "VTS Unblocking" },
+          { "title": "VTS Live" },
+          { "title": "Admin Module" },
+          { "title": "Risk Score" }
+        ]
+      }
+    ]
+  },
+  {
+    "menu_name": "Ticketing",
+    "allowed_sub_menus": [
+      { "title": "Ticketing Dashboard" },
+      { "title": "PM Orders" }
+    ]
+  },
+  {
+    "menu_name": "Pipeline",
+    "allowed_sub_menus": []
+  },
+  {
+    "menu_name": "CEMS",
+    "allowed_sub_menus": [
+      { "title": "CEMS Dashboard" }
+    ]
+  },
+  {
+    "menu_name": "Settings",
+    "allowed_sub_menus": [
+      { "title": "Users" },
+      { "title": "Locations" },
+      { "title": "RO Esc Matrix" } ,
+      { "title": "Roles" }
+
+    ]
+  },
+  {
+    "menu_name": "Natural Gas",
+    "allowed_sub_menus": [
+      { "title": "NGC Analytics" },
+      { "title": "NGC Progress MIS" }
+    ]
+  },
+  {
+    "menu_name": "Audit Log",
+    "allowed_sub_menus": [
+      { "title": "Login Audit" },
+      { "title": "System Audit" }
+    ]
+  }
+]
+

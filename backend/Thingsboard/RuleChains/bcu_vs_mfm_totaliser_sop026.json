@@ -1,0 +1,272 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "BCU VS MFM Totaliser SOP026",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 10,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 301,
+          "layoutY": 511
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "BCU Totalizer  Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"DAY START TOTALIZER MISMATCH\"] != undefined && (msg[\"DAY START TOTALIZER MISMATCH\"] != metadata[\"ss_DAY START TOTALIZER MISMATCH\"])){\n    return true\n}\nreturn false\n\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 651,
+          "layoutY": 481
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "BCU Totalizer  Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Day End totaliser Mismatch\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP024\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "BCU Totalizer  Mismatch",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 656,
+          "layoutY": 554
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "BCU Totalizer  Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Day End totaliser Mismatch\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP024\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "BCU Totalizer  Mismatch"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 321,
+          "layoutY": 366
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "BCU VS MFM Totalizer",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"BCU VS MFM TOTALIZER MISMATCH\"] != undefined && (msg[\"BCU VS MFM TOTALIZER MISMATCH\"] != metadata[\"ss_BCU VS MFM TOTALIZER MISMATCH\"])){\n    return true\n}\nreturn false\n\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 60,
+          "layoutY": 350
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Telemetry filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg['DAY START TOTALIZER MISMATCH'] = metadata['DAY START TOTALIZER MISMATCH']\nmsg['BCU VS MFM TOTALIZER MISMATCH'] = metadata['BCU VS MFM TOTALIZER MISMATCH']\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1025,
+          "layoutY": 422
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 648,
+          "layoutY": 397
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "BCU VS MFM  Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"BCU vs MFM totalizer mismatch alarm\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP026\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "BCU VS MFM  Mismatch"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 653,
+          "layoutY": 323
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "BCU VS MFM  Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"BCU vs MFM totalizer mismatch alarm\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP026\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "BCU VS MFM  Mismatch",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 427,
+          "layoutY": 205
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "BCU VS MFM TOTALIZER MISMATCH",
+            "DAY START TOTALIZER MISMATCH"
+          ],
+          "latestTsKeyNames": [
+            "BCU VS MFM TOTALIZER MISMATCH",
+            "DAY START TOTALIZER MISMATCH"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 613,
+          "layoutY": 113
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"BCU Totaliser\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 301,
+          "layoutY": 110
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "False"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 5,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 5,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 6,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 5,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 5,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 9,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

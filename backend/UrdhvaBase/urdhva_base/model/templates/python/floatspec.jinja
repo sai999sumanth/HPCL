@@ -1,0 +1,13 @@
+{% extends "basedatatype" %}
+
+{% block datatype%}float{% endblock %}
+{% set kwargs = {} %}
+{% if input.min %}
+{% set _ = kwargs.update({'ge': input.min}) %}
+{% endif %}
+{% if input.max %}
+{% set _ = kwargs.update({'le': input.max}) %}
+{% endif %}
+{{kwargs.items()}}
+{%- block constraints -%}**{{kwargs}}{%- endblock -%}
+{# {%- block constraints -%}{% for k,v in args.items() %}{{k}}={{v}}{% endfor %}{%- endblock -%} #}

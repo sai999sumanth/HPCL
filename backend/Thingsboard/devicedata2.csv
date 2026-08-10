@@ -1,0 +1,11 @@
+name,type,BU,additional_info_key,additional_info_value,location_name,location_id,server_attr_key,server_attr_value
+Device_1,Sensor,BU_A,sapid,1001,Location_A,LOC_1,temperature,25.5
+Device_2,Sensor,BU_B,sapid,1002,Location_B,LOC_2,humidity,45
+Device_3,Actuator,BU_C,sapid,1003,Location_C,LOC_3,status,active
+Device_4,Camera,BU_A,metric,23,Location_A,LOC_1,resolution,1920x1080
+Device_5,Sensor,BU_D,status,active,Location_B,LOC_2,power,100W
+Device_6,Actuator,BU_E,sapid,1006,Location_F,LOC_6,load,50%
+Device_7,Camera,BU_F,temperature,35,Location_D,LOC_4,frame_rate,30fps
+Device_8,Sensor,BU_G,humidity,45,Location_G,LOC_7,signal_strength,-70dBm
+Device_9,Actuator,BU_H,pressure,1020,Location_H,LOC_8,status,inactive
+Device_10,Camera,BU_I,status,inactive,Location_I,LOC_9,network_status,online

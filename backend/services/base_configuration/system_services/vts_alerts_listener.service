@@ -1,0 +1,14 @@
+[Unit]
+Description=VTS Alerts Processor Service
+
+[Service]
+Type=simple
+# Another Type option: forking
+WorkingDirectory=/opt/ceg/algo/orchestrator/alerting/listener
+ExecStart=/bin/bash -c 'unbuffer /opt/ceg/venv/bin/python vts_alerts_listener.py vts_alerts >> /var/log/ceg_sys_logs/vts_alerts_listener.log 2>&1'
+Restart=always
+RestartSec=30s
+# Other Restart options: or always, on-abort, etc
+
+[Install]
+WantedBy=multi-user.target

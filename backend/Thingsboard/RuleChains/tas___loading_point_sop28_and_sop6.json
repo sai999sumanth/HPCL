@@ -1,0 +1,1136 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "TAS - Loading Point SOP28 and SOP6",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 31,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 584,
+          "layoutY": 1511
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "BCU Loading Status",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"BCU LOADING STATUS\"] != undefined && (msg[\"BCU LOADING STATUS\"] == metadata[\"ss_BCU LOADING STATUS\"])){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 892,
+          "layoutY": 81
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "BCU VS MFM Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"BCU vs MFM totalizer mismatch alarm\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP026\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\nreturn details;",
+          "alarmType": "BCU VS MFM Mismatch"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 903,
+          "layoutY": 555
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Unauthorized Flow Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Unauthorized Flow Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Unauthorized Flow Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 902,
+          "layoutY": 403
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Low flow Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Low Flow alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "Low Flow Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 902,
+          "layoutY": 352
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Low Flow Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Low Flow alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Low Flow Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 372,
+          "layoutY": 15
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Adding Server Scope Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "SAPID",
+            "NO FLOW STATUS OF MAIN",
+            "LOW FLOW STATUS OF MAIN",
+            "HIGH FLOW STATUS OF MAIN",
+            "UNAUTHORISE FLOW STATUS OF MAIN",
+            "METER OVERRUN STATUS OF MAIN",
+            "BLEND OVERDOSE STATUS OF MAIN",
+            "ADD OVERDOSE STATUS OF MAIN",
+            "ADD UNDERDOSE STATUS OF MAIN",
+            "LP Earthing STATUS",
+            "BLEND UNDERDOSE STATUS OF MAIN",
+            "DAY START TOTALIZER MISMATCH",
+            "BCU VS MFM TOTALIZER MISMATCH",
+            "K-FACTOR CHANGE STATUS",
+            "BCU LOADING STATUS"
+          ],
+          "latestTsKeyNames": [
+            "NO FLOW STATUS OF MAIN",
+            "LOW FLOW STATUS OF MAIN",
+            "HIGH FLOW STATUS OF MAIN",
+            "UNAUTHORISE FLOW STATUS OF MAIN",
+            "METER OVERRUN STATUS OF MAIN",
+            "BLEND OVERDOSE STATUS OF MAIN",
+            "ADD OVERDOSE STATUS OF MAIN",
+            "ADD UNDERDOSE STATUS OF MAIN",
+            "LP Earthing STATUS",
+            "BLEND UNDERDOSE STATUS OF MAIN",
+            "DAY START TOTALIZER MISMATCH",
+            "BCU VS MFM TOTALIZER MISMATCH",
+            "K-FACTOR CHANGE STATUS",
+            "BCU LOADING STATUS"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 577,
+          "layoutY": 683
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Meter Overrun",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"METER OVERRUN STATUS OF MAIN\"] != undefined && msg[\"METER OVERRUN STATUS OF MAIN\"] != metadata[\"ss_METER OVERRUN STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 903,
+          "layoutY": 505
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "High Flow Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"High Flow Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\nreturn details;",
+          "alarmType": "High Flow Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 894,
+          "layoutY": 131
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "K-Factors Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"K Factor Change_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP027\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "K-Factors Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 907,
+          "layoutY": 818
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Blendoverdose Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Blend overdose Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "Blendoverdose Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 914,
+          "layoutY": 1520
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "BCU Premissive",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"BCU Permissive Off\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028A\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "BCU Premissive"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 578,
+          "layoutY": 1134
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Add Underdose",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"ADD UNDERDOSE STATUS OF MAIN\"] != undefined && msg[\"ADD UNDERDOSE STATUS OF MAIN\"] != metadata[\"ss_ADD UNDERDOSE STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 907,
+          "layoutY": 1157
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Additive Underdose Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Additive Underdose Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "Additive Underdose Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 908,
+          "layoutY": 1420
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Dat start Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Day End totaliser Mismatch\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP024\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\nreturn details;",
+          "alarmType": "Dat start Mismatch"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 581,
+          "layoutY": 1380
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Dat start Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"DAY START TOTALIZER MISMATCH\"] != undefined && msg[\"DAY START TOTALIZER MISMATCH\"] != metadata[\"ss_DAY START TOTALIZER MISMATCH\"]) ){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 905,
+          "layoutY": 1354
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Dat start Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Day End totaliser Mismatch\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP024\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Dat start Mismatch",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 578,
+          "layoutY": 902
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Blend Underdose",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"BLEND UNDERDOSE STATUS OF MAIN\"] != undefined && msg[\"BLEND UNDERDOSE STATUS OF MAIN\"] != metadata[\"ss_BLEND UNDERDOSE STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1501,
+          "layoutY": 905
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 93,
+          "layoutY": 729
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "transformTelimetry",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg['NO FLOW STATUS OF MAIN'] = metadata['NO FLOW STATUS OF MAIN']\nmsg['LOW FLOW STATUS OF MAIN'] = metadata['LOW FLOW STATUS OF MAIN']\nmsg['HIGH FLOW STATUS OF MAIN'] = metadata['HIGH FLOW STATUS OF MAIN']\nmsg['UNAUTHORISE FLOW STATUS OF MAIN'] = metadata['UNAUTHORISE FLOW STATUS OF MAIN']\nmsg['METER OVERRUN STATUS OF MAIN'] = metadata['METER OVERRUN STATUS OF MAIN']\nmsg['BLEND OVERDOSE STATUS OF MAIN'] = metadata['BLEND OVERDOSE STATUS OF MAIN']\nmsg['BLEND UNDERDOSE STATUS OF MAIN'] = metadata['BLEND UNDERDOSE STATUS OF MAIN']\nmsg['ADD OVERDOSE STATUS OF MAIN'] = metadata['ADD OVERDOSE STATUS OF MAIN']\nmsg['ADD UNDERDOSE STATUS OF MAIN'] = metadata['ADD UNDERDOSE STATUS OF MAIN']\nmsg['LP Earthing STATUS'] = metadata['LP Earthing STATUS']\nmsg['K-FACTOR CHANGE STATUS'] = metadata['K-FACTOR CHANGE STATUS']\nmsg['DAY START TOTALIZER MISMATCH'] = metadata['DAY START TOTALIZER MISMATCH']\nmsg['BCU VS MFM TOTALIZER MISMATCH'] = metadata['BCU VS MFM TOTALIZER MISMATCH']\nmsg['BCU LOADING STATUS'] = metadata['BCU LOADING STATUS']\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 903,
+          "layoutY": 453
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "High Flow Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"High Flow Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "High Flow Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 903,
+          "layoutY": 764
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Blendoverdose Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Blend overdose Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Blendoverdose Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 581,
+          "layoutY": 48
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "BCU VS MFM Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"BCU VS MFM TOTALIZER MISMATCH\"] != undefined && msg[\"BCU VS MFM TOTALIZER MISMATCH\"] != metadata[\"ss_BCU VS MFM TOTALIZER MISMATCH\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 910,
+          "layoutY": 1470
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "BCU Premissive",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"BCU Permissive Off\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028A\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "BCU Premissive",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 904,
+          "layoutY": 988
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Additive Overdose Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Additive Overdose Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Additive Overdose Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 898,
+          "layoutY": 244
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "No flow Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"No Flow alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata['deviceType']\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\nreturn details;\n\n",
+          "useMessageAlarmData": false,
+          "alarmType": "No flow Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 578,
+          "layoutY": 1027
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Additive Overdose",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"ADD OVERDOSE STATUS OF MAIN\"] != undefined && msg[\"ADD OVERDOSE STATUS OF MAIN\"] != metadata[\"ss_ADD OVERDOSE STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 905,
+          "layoutY": 1047
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Additive Overdose Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Additive Overdose Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "Additive Overdose Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 904,
+          "layoutY": 658
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Meteroverrun Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Meter overrun Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Meteroverrun Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 904,
+          "layoutY": 713
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Meteroverrun Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Meter overrun Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "Meteroverrun Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 579,
+          "layoutY": 378
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Low Flow",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"LOW FLOW STATUS OF MAIN\"] != undefined && msg[\"LOW FLOW STATUS OF MAIN\"] != metadata[\"ss_LOW FLOW STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 903,
+          "layoutY": 609
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Unauthorized Flow Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Unauthorized Flow Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "Unauthorized Flow Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 266,
+          "layoutY": 125
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 906,
+          "layoutY": 1102
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Additive Underdose Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Additive Underdose Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"]\n\nreturn details;\n \n\n    \n\n",
+          "useMessageAlarmData": false,
+          "alarmType": "Additive Underdose Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 576,
+          "layoutY": 578
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Un-Authorized Flow",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"UNAUTHORISE FLOW STATUS OF MAIN\"] != undefined && msg[\"UNAUTHORISE FLOW STATUS OF MAIN\"] != metadata[\"ss_UNAUTHORISE FLOW STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 906,
+          "layoutY": 933
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Blend Underdose Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Blend Underdose Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "Blend Underdose Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 577,
+          "layoutY": 472
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "High Flow",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"HIGH FLOW STATUS OF MAIN\"] != undefined && msg[\"HIGH FLOW STATUS OF MAIN\"] != metadata[\"ss_HIGH FLOW STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 65,
+          "layoutY": 24
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Loading Point",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"Loading Point\"){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 577,
+          "layoutY": 161
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "K-Factors",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"K-FACTOR CHANGE STATUS\"] != undefined && msg[\"K-FACTOR CHANGE STATUS\"] != metadata[\"ss_K-FACTOR CHANGE STATUS\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 581,
+          "layoutY": 780
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Blend Overdose",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"BLEND OVERDOSE STATUS OF MAIN\"] != undefined && msg[\"BLEND OVERDOSE STATUS OF MAIN\"] != metadata[\"ss_BLEND OVERDOSE STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 577,
+          "layoutY": 272
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "No Flow",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"NO FLOW STATUS OF MAIN\"] != undefined && msg[\"NO FLOW STATUS OF MAIN\"] != metadata[\"ss_NO FLOW STATUS OF MAIN\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 902,
+          "layoutY": 299
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "No flow Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"No Flow alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "No flow Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 895,
+          "layoutY": 183
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "K-Factors Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"K Factor Change_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP027\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\nreturn details;",
+          "alarmType": "K-Factors Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 889,
+          "layoutY": 15
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "BCU VS MFM Mismatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"BCU vs MFM totalizer mismatch alarm\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP026\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "BCU VS MFM Mismatch",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 906,
+          "layoutY": 877
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Blend Underdose Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Blend Underdose Alarm_BCU\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP028\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Gantry\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Blend Underdose Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 577,
+          "layoutY": 1269
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Earthing Faliure",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"LP Earthing STATUS\"] != undefined && (msg[\"LP Earthing STATUS\"] != metadata[\"ss_LP Earthing STATUS\"])){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 903,
+          "layoutY": 1228
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Earthing Failure Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Earthing Failure Alarm\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP006\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Earthing Failure Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 904,
+          "layoutY": 1303
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Earthing Failure Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Earthing Failure Alarm\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP006\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"BCU\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\ndetails[\"additionalInfo\"][\"BCU Number\"] = additionalinfo[\"BCU Number\"] || \"N/A\"\nreturn details;",
+          "alarmType": "Earthing Failure Alarm"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 10,
+        "type": "False"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 22,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 18,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 28,
+        "type": "False"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 27,
+        "type": "True"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 32,
+        "type": "True"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 12,
+        "type": "False"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 13,
+        "type": "False"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 15,
+        "type": "True"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 34,
+        "type": "False"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 43,
+        "type": "True"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 37,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 21,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 14,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 11,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 38,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 33,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 25,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 39,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 16,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 35,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 44,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 29,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 21,
+        "toIndex": 1,
+        "type": "False"
+      },
+      {
+        "fromIndex": 21,
+        "toIndex": 42,
+        "type": "True"
+      },
+      {
+        "fromIndex": 22,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 23,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 24,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 23,
+        "type": "True"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 26,
+        "type": "False"
+      },
+      {
+        "fromIndex": 26,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 27,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 28,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 29,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 29,
+        "toIndex": 3,
+        "type": "False"
+      },
+      {
+        "fromIndex": 30,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 36,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 32,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 33,
+        "toIndex": 30,
+        "type": "False"
+      },
+      {
+        "fromIndex": 33,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 34,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 35,
+        "toIndex": 7,
+        "type": "False"
+      },
+      {
+        "fromIndex": 35,
+        "toIndex": 19,
+        "type": "True"
+      },
+      {
+        "fromIndex": 36,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 37,
+        "toIndex": 41,
+        "type": "False"
+      },
+      {
+        "fromIndex": 37,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 38,
+        "toIndex": 20,
+        "type": "True"
+      },
+      {
+        "fromIndex": 38,
+        "toIndex": 9,
+        "type": "False"
+      },
+      {
+        "fromIndex": 39,
+        "toIndex": 40,
+        "type": "False"
+      },
+      {
+        "fromIndex": 39,
+        "toIndex": 24,
+        "type": "True"
+      },
+      {
+        "fromIndex": 40,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 17,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 42,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 43,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 44,
+        "toIndex": 46,
+        "type": "False"
+      },
+      {
+        "fromIndex": 44,
+        "toIndex": 45,
+        "type": "True"
+      },
+      {
+        "fromIndex": 45,
+        "toIndex": 17,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 46,
+        "toIndex": 17,
+        "type": "Cleared"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

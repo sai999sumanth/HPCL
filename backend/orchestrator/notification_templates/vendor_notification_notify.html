@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Calibri, Arial, sans-serif; color: #000; line-height: 1.5; }
+        .header-label { font-weight: bold; text-decoration: underline; margin-bottom: 5px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 15px; margin-bottom: 15px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        .footer { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    {% if is_resolved %}
+        <div class="header-label">Resolution Mail:</div>
+        <p>Subject: {{ subject }}</p>
+        <p>Sir/Madam,</p>
+        <p>The following service request has been <b>Resolved</b> by {{ location_name }}.</p>
+    {% elif escalation_level >= 2 %}
+        <div class="header-label">Escalation Mail:</div>
+        <p>Subject: {{ subject }}</p>
+        <p>Sir/Madam,</p>
+        <p>The following Service Requests are pending without any action.</p>
+    {% else %}
+        <div class="header-label">SR Mail:</div>
+        <p>Subject: {{ subject }}</p>
+        <p>Sir/Madam,</p>
+        <p>The following service request has been raised by {{ location_name }}.</p>
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sr. No</th>
+                
+                {% if escalation_level >= 2 and not is_resolved %}
+                    <th>Location</th>
+                {% endif %}
+                
+                <th>Service Request Number</th>
+                
+                <th>{% if escalation_level >= 2 %}SR Brief Description{% else %}SR Description{% endif %}</th>
+                
+                <th>SR Logged date</th>
+                
+                {% if escalation_level >= 2 and not is_resolved %}
+                    <th>Assigned to (Email id of original recipient)</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                {% if escalation_level >= 2 and not is_resolved %}
+                    <td>{{ location_name }}</td>
+                {% endif %}
+                <td>{{ sr_number }}</td>
+                <td>{{ description }}</td>
+                <td>{{ logged_date }}</td>
+                {% if escalation_level >= 2 and not is_resolved %}
+                    <td>{{ assigned_to }}</td>
+                {% endif %}
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+         <p class="body-text">
+            The issue details can be referred on
+            <a class="portal-link" href="https://novex.hpcl.co.in/" target="_blank">
+            https://novex.hpcl.co.in/
+            </a>
+            (link on the portal). Kindly review and provide necessary support for closure of the
+            service request at the earliest.
+          </p>
+    </div>
+
+</body>
+</html>

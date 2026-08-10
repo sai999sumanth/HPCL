@@ -1,0 +1,35 @@
+{%- set symbol = ": " -%}
+{%- if input.name != 'id' -%}
+{{input.name}}{{symbol}}{%- if input.postgres_schema is defined and input.postgres_schema -%}Mapped[{%- endif -%}
+{% if input.simpletype -%}
+    {{input.simpletype.render()}}
+{%- else -%}
+    {%- if input.optional -%}
+        typing.Optional[
+    {%- endif -%}
+        {%- if input.list -%}
+        typing.List[
+    {%- endif -%}
+    {%- if input.postgres_schema is defined and input.postgres_schema -%}
+    typing.Any
+    {%- else -%}
+    {% if input.model_or_enum.__class__.__name__ == 'Enum'%}{{input.parent.fbase or input.parent.parent.fbase}}_enum.{% endif %}{{ input.model_or_enum.name}}{% if input.model_or_enum.is_internal %}Create{% endif %}{% if input.ref %}{{input.parent.name}}Ref{% endif %}
+    {%- endif -%}
+    {%- if input.list -%}
+        ]
+    {%- endif -%}
+
+    {%- if input.optional -%}
+        ]
+    {%- endif -%}
+    {%- if input.optional and (input.postgres_schema is undefined or input.postgres_schema is false) %} | None = None{%- endif %}
+{%- endif -%}
+{%- if input.postgres_schema is defined and input.postgres_schema -%}
+{%- set foreign_key = namespace(value="", type="") -%}
+{%- if input.foreign_key is defined and input.foreign_key -%}
+{%- set foreign_key.value = ", ForeignKey('" ~ input.foreign_key ~ "')" -%}
+{%- set foreign_key.type=input.foreign_key_type -%}
+{%- endif -%}
+] = mapped_column("{{input.name}}", {% if foreign_key.type == 'int' -%}BigInteger{% else -%}{% if input.simpletype.sqlalchemy_name|length>0 -%}{%- if input.list -%}ARRAY({%- endif %}{{input.simpletype.sqlalchemy_name}}{%- if input.list -%}){%- endif %}{% else -%}{%- if input.model_or_enum.__class__.__name__ == 'Enum' -%}{%- if input.model_or_enum.str -%}{%- if input.list -%}ARRAY(String){%- else -%}String{%- endif -%}{%- else -%}Integer{%- endif -%}{%- else -%}JSONB{%- endif -%}{% endif -%} {% endif -%} {{foreign_key.value}}, index={{input.index_field}}, nullable={{input.optional}}, default={%- if input.foreign_key is defined and input.foreign_key -%}None{%- else -%}{{input.default}}{%- endif -%}, primary_key={{input.primary_key}}, unique={{input.unique_field}})
+{%- endif -%}
+{%- endif -%}

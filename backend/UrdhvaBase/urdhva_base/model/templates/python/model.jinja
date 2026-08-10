@@ -1,0 +1,230 @@
+{% if input.indexes -%}
+async def {{input.name}}Index():
+    {%- for index in input.indexes %}
+    {{index.render()}}
+    {%- endfor -%}
+    {# Unique indexes created for 1-1 and 1-N relationships #}
+{# {% for ref in input.references %}
+    {{ref.render()}}
+{%- endfor -%} #}
+{%- endif %}
+
+{% if input.references -%}
+{% for ref in input.references -%}
+class {{ref.model.name}}{{input.name}}Ref(pydantic.BaseModel):
+    id: str
+    {% if ref.attrs -%}
+    {% for attr in ref.attrs -%}
+    {% set x = attr.optional -%}
+    {% set _ = attr.__dict__.update({'optional': True})-%}
+    {{attr.render()}}
+    {% set _ = attr.__dict__.update({'optional': x})-%}
+    {%- endfor %}
+
+    async def load(self):
+        data = await {{ref.model.name}}.get(self.id)
+        super().__init__(**data.dict())
+    {% endif %}
+{% endfor -%}
+{% endif %}
+
+{% if not input.is_internal and not input.disable_crud_operations and 'postgresmodel' in input.dbbase[2] -%}
+{% if not input.config.parent_table %}
+
+class {{input.name}}Schema(UrdhvaPostgresBase):
+    __tablename__ = '{{convert_snake_case(input.name)}}'
+    {% if true %}{% endif %}
+    {%- set table_args = [] -%}
+    {%- if input.config.unique_on_entity -%}{%- set x = table_args.append('UrdhvaPostgresBase.entity_id') -%}{%- endif -%}
+    {%- for attr in input.attrs %}
+    {% if true %}{% endif %}
+    {%- set optional = attr.optional -%}
+    {% set postgres_schema = True -%}
+    {% set index_field = attr.index_field -%}
+    {% set primary_key = attr.primary_key -%}
+    {% set foreign_key = namespace(value="", type="") -%}
+    {% if input.config.foreign_keys and attr.name in input.config.foreign_keys -%}
+        {% set params = input.config.foreign_keys.split(',') -%}
+        {% for param in params -%}
+            {% if param.startswith(attr.name + "=") -%}
+                {% set attr_value = (param | replace(attr.name + "=", '')).split('::') -%}
+                {% if (attr_value | length) == 2 -%}{% set foreign_key.type = attr_value[1] -%}{% endif -%}
+                {% set foreign_key.value = attr_value[0] -%}
+            {% endif -%}
+        {% endfor -%}
+    {% endif -%}
+    {%- set unique_field = attr.unique_field -%}
+    {%- if attr.unique_field -%}{%- set x = table_args.append(attr.name) -%}{%- endif -%}
+    {%- set _ = attr.__dict__.update({'optional': optional, 'index_field': index_field, 'postgres_schema': True, 'default': attr.default, 'primary_key': primary_key, 'unique_field': False, 'foreign_key': foreign_key.value, 'foreign_key_type': foreign_key.type}) -%}
+    {{attr.render()}}
+    {%- set _ = attr.__dict__.update({'postgres_schema': False, 'primary_key': False, 'foreign_key': '', 'foreign_key_type': '', 'unique_field': unique_field}) -%}
+    {% endfor -%}
+    {% if table_args | length > 0 %}
+
+    __table_args__ = (UniqueConstraint({%- for k in table_args -%}{{k }}{% if not loop.last -%}, {% endif -%}{%- endfor -%}, name="{{generate_unique_id(input.name, table_args)}}"),)
+    {%  endif %}
+{% endif %}
+{% endif %}
+{% if not input.disable_crud_operations %}
+class {{input.name}}Create({%- if not input.is_internal -%}{{input.dbbase[1]}}{%- else -%}pydantic.BaseModel{%- endif -%}):
+    {%- if not input.is_internal %}
+    __tablename__ = {% if not input.config.parent_table %}'{{convert_snake_case(input.name)}}'{% else %}'{{convert_snake_case(input.config.parent_table)}}'{% endif %}
+    {% if true %}{% endif %}
+    {%- endif %}
+    {%- for attr in input.attrs %}
+    {{attr.render()}}
+    {%- endfor %}
+
+    {% if not input.is_internal -%}{%- set upsert_keys = namespace(keys=[]) -%}
+        {%- for attr in input.attrs %}{%- if attr.unique_field %}{%- set x = upsert_keys.keys.append(attr.name) -%}{%- endif  -%}{%- endfor -%}
+    class Config:
+        collection_name = '{{input.config.collection_name or 'data_flow'}}'
+        if urdhva_base.settings.disable_api_extra_inputs:
+            extra = "forbid"  # Disallow extra fields
+        {%- if 'postgresmodel' in input.dbbase[2] %}
+        schema_class = {% if not input.config.parent_table %}{{input.name}}Schema{% else %}{{input.config.parent_table}}Schema{% endif %}
+        upsert_keys = {{upsert_keys.keys}}
+        {% if input.config.standard_query is defined and input.config.standard_query -%}
+        standard_query = "{{input.config.standard_query}}"
+        {% endif -%}
+        {% if input.config.engine_id_fields is defined and input.config.engine_id_fields -%}
+        engine_id_fields = {{input.config.engine_id_fields.split(',')}}
+        {% endif -%}
+        {% if input.config.search_fields is defined and input.config.search_fields -%}
+        search_fields = {{input.config.search_fields.split(',')}}
+        {% endif -%}
+        {% if input.config.access_key_mapping is defined and input.config.access_key_mapping -%}
+        access_key_mapping = {{input.config.access_key_mapping.split(',')}}
+        {% endif -%}
+        {% if input.config.upsert_skip_keys is defined and input.config.upsert_skip_keys -%}
+        upsert_skip_keys = {{input.config.upsert_skip_keys.split(',')}}
+        {% endif -%}
+        {% endif -%}
+    {% endif %}
+    {% if input.references -%}
+    async def load_refs(self):
+    {% set ns = namespace(noop=True) %}
+    {%- for ref in input.references -%}
+    {%- if ref.attrs and ref.relation == '1-1' %}
+    {%- set ns.noop = False %}
+        await self.{{ref.model.name.lower()}}_ref.load() if self.{{ref.model.name.lower()}}_ref else ...
+    {%- elif ref.attrs %}
+    {%- set ns.noop = False %}
+        [await x.load() for x in self.{{ref.model.name.lower()}}_ref] if {{ref.model.name.lower()}}_ref else ...
+    {% endif -%}
+    {% endfor -%}
+    {% if ns.noop == True %}
+        pass
+    {% endif %}
+    {% endif %}
+{%  endif %}
+{% if not input.is_internal -%}
+
+{% if not input.disable_crud_operations %}
+class {{input.name}}({{input.dbbase[2]}}):
+    __tablename__ = {% if not input.config.parent_table %}'{{convert_snake_case(input.name)}}'{% else %}'{{convert_snake_case(input.config.parent_table)}}'{% endif %}
+    {% if true %}{% endif %}
+    {%- for attr in input.attrs %}
+    {% set x = attr.optional -%}
+    {% set _ = attr.__dict__.update({'optional': True})-%}
+    {{attr.render()}}
+    {%- set _ = attr.__dict__.update({'optional': x})-%}
+    {%- endfor %}
+    {% if not input.is_internal %}{%- set upsert_keys = namespace(keys=[]) -%}
+        {%- for attr in input.attrs %}{%- if attr.unique_field %}{%- set x = upsert_keys.keys.append(attr.name) -%}{%- endif  -%}{%- endfor -%}
+    class Config:
+        collection_name = '{{input.config.collection_name or 'data_flow'}}'
+        if urdhva_base.settings.disable_api_extra_inputs:
+            extra = "forbid"  # Disallow extra fields
+        {%- if 'postgresmodel' in input.dbbase[2] %}
+        schema_class = {% if not input.config.parent_table %}{{input.name}}Schema{% else %}{{input.config.parent_table}}Schema{% endif %}
+        upsert_keys = {{upsert_keys.keys}}
+        {% if input.config.standard_query is defined and input.config.standard_query -%}
+        standard_query = "{{input.config.standard_query}}"
+        {% endif -%}
+        {% if input.config.engine_id_fields is defined and input.config.engine_id_fields -%}
+        engine_id_fields = {{input.config.engine_id_fields.split(',')}}
+        {% endif -%}
+        {% if input.config.search_fields is defined and input.config.search_fields -%}
+        search_fields = {{input.config.search_fields.split(',')}}
+        {% endif -%}
+        {% if input.config.access_key_mapping is defined and input.config.access_key_mapping -%}
+        access_key_mapping = {{input.config.access_key_mapping.split(',')}}
+        {% endif -%}
+        {% if input.config.upsert_skip_keys is defined and input.config.upsert_skip_keys -%}
+        upsert_skip_keys = {{input.config.upsert_skip_keys.split(',')}}
+        {% endif -%}
+        {% endif -%}
+    {% endif %}
+
+    {% if 'postgresmodel' not in input.dbbase[2] and input.references %}
+    async def load_refs(self):
+    {% set ns = namespace(noop=True) %}
+    {%- for ref in input.references %}
+    {%- if ref.attrs and ref.relation == '1-1' %}
+    {%- set ns.noop = False %}
+        await self.{{ref.model.name.lower()}}_ref.load() if self.{{ref.model.name.lower()}}_ref else ...
+    {%- elif ref.attrs %}
+    {%- set ns.noop = False %}
+        [await x.load() for x in self.{{ref.model.name.lower()}}_ref] if self.{{ref.model.name.lower()}}_ref else ...
+    {%- endif %}
+    {% endfor -%}
+    {% if ns.noop == True %}
+        pass
+    {% endif %}
+
+    {% endif -%}
+
+    {% if input.reverseRef %}
+    async def update_refs(self):
+    {% set ns = namespace(noop=True) %}
+        
+    {% for ref in input.reverseRef -%}
+    {%- for reverseref in ref.references -%}
+    {%- if reverseref.model.name == input.name and reverseref.attrs -%}
+    {%- set ns.noop = False %}
+        data = {{input.name}}{{ref.name}}Ref(id=self.id).load()
+        {% if reverseref.relation == '1-1' -%}
+        {{ref.name}}.update({ "{{input.name.lower()}}_ref.id": self.id }, {"{{input.name.lower()}}_ref": data.dict()})
+        {% else -%}
+        {{ref.name}}.update({ "{{input.name.lower()}}_ref.id": self.id }, {"{{input.name.lower()}}_ref.$":data.dict()})
+        {% endif -%}
+    {% endif -%}
+    {% endfor -%}
+    {% endfor -%}
+    {% if ns.noop == True %}
+        pass
+    {% endif %}
+    {% endif %}
+
+    {% if not input.config.nocascadedelete and input.reverseRef %}
+    def delete(self, id):
+        # Generate Cascade delete in {{input.name}} for below:
+        {% for ref in input.reverseRef -%}
+        # Delete {{ref.name}}
+        {{ref.name}}.delete_bulk({'{{input.name.lower()}}_ref.id': id})
+        {% endfor %}
+        super().delete(id)
+    {% endif %}
+
+
+class {{input.name}}GetResp(pydantic.BaseModel):
+    data: typing.List[{{input.name}}]
+    total: int = pydantic.Field(0)
+    count: int = pydantic.Field(0)
+{% endif %}
+{%- for action in input.actions %}
+
+
+class {{input.name.title()}}_{{action.name.title()}}Params(pydantic.BaseModel):
+    {% for param in action.params -%}
+    {{param.render()}}
+    {% endfor %}
+    {% if not action.params %}
+    pass
+    {% endif %}
+    class Config:
+        if urdhva_base.settings.disable_api_extra_inputs:
+            extra = "forbid"  # Disallow extra fields
+{%- endfor %}
+{% endif %}

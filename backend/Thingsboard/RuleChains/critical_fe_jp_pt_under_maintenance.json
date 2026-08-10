@@ -1,0 +1,667 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Critical-FE JP PT Under Maintenance",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 23,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 437,
+          "layoutY": 473
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "FE LLOP",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"FIRE PUMP LLOP ALARM\"] != undefined && msg[\"FIRE PUMP LLOP ALARM\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 450,
+          "layoutY": 623
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "FE HWT",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"FIRE PUMP HWT ALARM\"] != undefined && msg[\"FIRE PUMP HWT ALARM\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"]){\n    return true\n}\nreturn false\n    "
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 714,
+          "layoutY": 439
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "FE LLOP",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Fireengine_LLOP\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP019\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Fire Engine\";\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "FE LLOP",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 718,
+          "layoutY": 497
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "FE LLOP",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Fireengine_LLOP\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP019\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "FE LLOP"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 716,
+          "layoutY": 568
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "FE HWT",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"FireEngine_HWOT\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP019\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Fire Engine\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "FE HWT",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 720,
+          "layoutY": 626
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "FE HWT",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"FireEngine_HWOT\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP019\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Fire Engine\";\r\nreturn details;",
+          "alarmType": "FE HWT"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 96,
+          "layoutY": 811
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "FIRE PUMP MAINTENANCE",
+            "PT Maintenance Value"
+          ],
+          "latestTsKeyNames": [
+            "FIRE PUMP MAINTENANCE"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 479,
+          "layoutY": 1017
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "PT Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"FIRE PUMP MAINTENANCE\"] != undefined && msg[\"FIRE PUMP MAINTENANCE\"] != metadata[\"ss_FIRE PUMP MAINTENANCE\"]){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 730,
+          "layoutY": 980
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "PT Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HydrantPT_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP013\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "PT Maintenance",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 733,
+          "layoutY": 1039
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "PT Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HydrantPT_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP013\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "PT Maintenance"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 701,
+          "layoutY": 331
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "FP Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Fire engine_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP013\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Fire Engine\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "FP Maintenance",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 712,
+          "layoutY": 387
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "FP Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Fire engine_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP013\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Fire Engine\";\r\nreturn details;",
+          "alarmType": "FP Maintenance"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 442,
+          "layoutY": 360
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Fire Pump Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"FIRE PUMP MAINTENANCE\"] != undefined && (msg[\"FIRE PUMP MAINTENANCE\"] != metadata[\"ss_FIRE PUMP MAINTENANCE\"])){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 729,
+          "layoutY": 873
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "JP Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"JockeyPump_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP013\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "JP Maintenance",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 730,
+          "layoutY": 924
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "JP Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Fire protection asset undergoing maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP013\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "JP Maintenance"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 470,
+          "layoutY": 902
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Jocky Pump Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"FIRE PUMP MAINTENANCE\"] != undefined && (msg[\"FIRE PUMP MAINTENANCE\"] != metadata[\"ss_FIRE PUMP MAINTENANCE\"])){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 68,
+          "layoutY": 609
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "JOCKY PUMP FAIL TO START VALUE",
+            "FIRE PUMP MAINTENANCE"
+          ],
+          "latestTsKeyNames": [
+            "FIRE PUMP MAINTENANCE"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 474,
+          "layoutY": 797
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "JP Fail to Start",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"FIRE PUMP FAIL TO START 1\"] != undefined && msg[\"FIRE PUMP FAIL TO START 1\"] != metadata[\"ss_JOCKY PUMP FAIL TO START VALUE\"]) || msg[\"FIRE PUMP FAIL TO START 2\"] != undefined && (msg[\"FIRE PUMP FAIL TO START 2\"] != metadata[\"ss_JOCKY PUMP FAIL TO START VALUE\"])){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 725,
+          "layoutY": 760
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "JP Fail To Start",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Jockeypump_ FailtoStart\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP020\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "JP Fail To Start",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 728,
+          "layoutY": 819
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "JP Fail To Start",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Jockeypump_ FailtoStart\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP020\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "JP Fail To Start"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 445,
+          "layoutY": 252
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "FP Fault",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"FIRE PUMP FAIL TO START 1\"] != undefined && msg[\"FIRE PUMP FAIL TO START 1\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"]) || (msg[\"FIRE PUMP FAIL TO START 2\"] != undefined && msg[\"FIRE PUMP FAIL TO START 2\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"]) || (msg[\"FIRE PUMP FAIL TO START 3\"] != undefined && msg[\"FIRE PUMP FAIL TO START 3\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"]) || (msg[\"FIRE PUMP FAIL TO START 4\"] != undefined && msg[\"FIRE PUMP FAIL TO START 4\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"]) || (msg[\"FIRE PUMP FAIL TO START 5\"] != undefined && msg[\"FIRE PUMP FAIL TO START 5\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"]) ||\r\n    (msg[\"FIRE PUMP FAIL TO START 6\"] != undefined && msg[\"FIRE PUMP FAIL TO START 6\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"]) ||\r\n    (msg[\"FIRE PUMP FAIL TO START STANDBY\"] != undefined && msg[\"FIRE PUMP FAIL TO START STANDBY\"] != metadata[\"ss_FIRE PUMP FAIL TO START VALUE\"])){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 700,
+          "layoutY": 217
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "FE Fault",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Fire engine_ FailtoStart\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP019\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Fire Engine\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "FE Fault",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 704,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "FE Fault",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Fire engine_ FailtoStart\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP019\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Fire Engine\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "FE Fault"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 282,
+          "layoutY": 36
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Field",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 592,
+          "layoutY": 28
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"Fire Pump\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 48,
+          "layoutY": 290
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "FIRE PUMP FAIL TO START VALUE",
+            "FIRE PUMP MAINTENANCE"
+          ],
+          "latestTsKeyNames": [
+            "FIRE PUMP MAINTENANCE"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1124,
+          "layoutY": 387
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 3,
+        "type": "False"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 5,
+        "type": "False"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 26,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 26,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 26,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 26,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 9,
+        "type": "False"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 26,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 26,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 26,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 26,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 10,
+        "type": "True"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 11,
+        "type": "False"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 26,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 26,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 13,
+        "type": "True"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 14,
+        "type": "False"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 17,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 15,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 18,
+        "type": "True"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 19,
+        "type": "False"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 26,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 26,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 21,
+        "type": "True"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 22,
+        "type": "False"
+      },
+      {
+        "fromIndex": 21,
+        "toIndex": 26,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 22,
+        "toIndex": 26,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 23,
+        "toIndex": 24,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 24,
+        "toIndex": 25,
+        "type": "True"
+      },
+      {
+        "fromIndex": 24,
+        "toIndex": 16,
+        "type": "True"
+      },
+      {
+        "fromIndex": 24,
+        "toIndex": 6,
+        "type": "True"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 12,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 20,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 1,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

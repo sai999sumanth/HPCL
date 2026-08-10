@@ -1,0 +1,24 @@
+{%- for model in input.models -%}
+{%- if loop.first -%}
+import typing
+import datetime
+import ipaddress
+import fastapi
+import pydantic
+import shutil
+import os
+import {{model.dbbase[0]}}
+import urdhva_base.queryparams
+import urdhva_base.types
+import {{model.fbase}}_enum
+{% if 'postgresmodel' in model.dbbase[0] %}
+from sqlalchemy.dialects.postgresql import JSONB, ARRAY
+from sqlalchemy import *
+from sqlalchemy.orm import *
+from {{model.dbbase[0]}} import UrdhvaPostgresBase
+{% endif %}
+{%- endif -%}
+
+{{ model.render()}}
+
+{%- endfor %}

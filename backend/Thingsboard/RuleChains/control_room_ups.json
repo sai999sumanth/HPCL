@@ -1,0 +1,274 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Control Room UPS",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 3,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 646,
+          "layoutY": 32
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "UPS",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"UPS\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 84,
+          "layoutY": 334
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "transformTelimetry",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg['UPS FAIL'] = metadata['UPS FAIL']\nmsg['UPS ON'] = metadata['UPS ON']\nmsg['LOW BATTERY'] = metadata['LOW BATTERY']\nreturn {msg: msg, metadata: metadata, msgType: msgType};\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 719,
+          "layoutY": 206
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "UPS Fail",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "\r\nvar details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\n\r\nif (details[\"additionalInfo\"] && details[\"additionalInfo\"][\"device_name\"] === metadata['originatorName']) {\r\n    return details\r\n}\r\n\r\nvar msg_data = msg;\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]) || {};\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"UPS_Fail\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP021\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"UPS\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"UPS\";\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data;\r\n\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "UPS Fail",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 282,
+          "layoutY": 36
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Field",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 731,
+          "layoutY": 356
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Low Battery",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nif (details[\"additionalInfo\"] && details[\"additionalInfo\"][\"device_name\"] === metadata['originatorName']) {\r\n    return details\r\n}\r\n\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"UPS_Lowbattery\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP021\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Low Battery",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 399,
+          "layoutY": 282
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "UPS Fail",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "// if ((msg[\"UPS FAIL\"] != undefined && msg[\"UPS FAIL\"] != metadata[\"ss_UPS FAIL\"]) || (msg[\"UPS ON\"] != undefined && msg[\"UPS ON\"] != metadata[\"ss_UPS ON\"])){\r\n//     return true\r\n// }\r\n// return false\r\n\r\nif ((msg[\"UPS FAIL\"] != undefined && msg[\"UPS FAIL\"] != metadata[\"ss_UPS FAIL\"]) &&\r\n    (msg[\"UPS ON\"] != undefined && msg[\"UPS ON\"] != metadata[\"ss_UPS ON\"])) {\r\n    return false;\r\n}\r\n\r\nif ((msg[\"UPS FAIL\"] != undefined && msg[\"UPS FAIL\"] != metadata[\"ss_UPS FAIL\"]) || \r\n    (msg[\"UPS ON\"] != undefined && msg[\"UPS ON\"] != metadata[\"ss_UPS ON\"])) {\r\n    return true;\r\n}\r\n\r\nreturn false;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 741,
+          "layoutY": 451
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Low Battery",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"UPS_Lowbattery\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP021\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"UPS\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"UPS\";\r\nreturn details;",
+          "alarmType": "Low Battery"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 729,
+          "layoutY": 292
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "UPS Fail",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"UPS fail alarm\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP021\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"UPS\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"UPS\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "UPS Fail"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1217,
+          "layoutY": 305
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 388,
+          "layoutY": 401
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "LOW Battery",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"LOW BATTERY\"] != undefined && msg[\"LOW BATTERY\"] != metadata[\"ss_LOW BATTERY\"]){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 361,
+          "layoutY": 166
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "UPS FAIL",
+            "LOW BATTERY",
+            "UPS ON"
+          ],
+          "latestTsKeyNames": [
+            "UPS FAIL",
+            "LOW BATTERY",
+            "UPS ON"
+          ],
+          "getLatestValueWithTs": false
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 10,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 9,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 8,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 8,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 7,
+        "type": "False"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 8,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 8,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 6,
+        "type": "False"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 1,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

@@ -1,0 +1,64 @@
+{%- for model in input.models -%}
+
+{% if loop.first %}
+import {{model.dbbase[0]}}
+import urdhva_base.queryparams
+import urdhva_base.types
+from {{model.fbase}}_enum import *
+from {{model.fbase}}_model import *
+import fastapi
+router = fastapi.APIRouter()
+{% endif %}
+
+{% if not model.is_internal and not model.disable_crud_operations -%}
+{% if not model.config.crud_operations or 'create' in model.config.crud_operations.lower() %}
+@router.post('/{{model.name.lower()}}', response_model={{model.name}}, tags=['{{model.name}}'])
+async def create(inputObj: {{model.name}}Create):
+    {% if model.references %}
+    await inputObj.load_refs()
+    {% endif %}
+    return await inputObj.create()
+{% endif %}
+{% if model.config.bulkcreate %}
+@router.post('/{{model.name.lower()}}/bulkcreate', response_model={{model.name}}GetResp, tags=['{{model.name}}'])
+async def bulkcreate(inputObj: typing.List[{{model.name}}Create]):
+    return [await x.create() for x in inputObj]
+{% endif %}
+
+{% if model.config.fileupload %}
+@router.post("/{{model.name.lower()}}/upload_file", tags=['{{model.name}}'])
+async def upload_file(uploadfile: fastapi.UploadFile = fastapi.File(...)):
+    os.makedirs("/tmp/uploads", exist_ok=True)
+    with open(f"/tmp/uploads/{uploadfile.filename}", "wb") as buffer:
+        shutil.copyfileobj(uploadfile.file, buffer)
+    return {"filename": f"/tmp/uploads/{uploadfile.filename}"}
+{% endif %}
+{% if not model.config.crud_operations or 'update' in model.config.crud_operations.lower() %}
+@router.put('/{{model.name.lower()}}', response_model={{model.name}}, tags=['{{model.name}}'])
+async def update(inputObj: {{model.name}}):
+    {% if model.references %}
+    await inputObj.load_refs()
+    {% endif %}
+    {% if model.reverseRef %}
+    await inputObj.update_refs()
+    {% endif %}
+    return await inputObj.modify()
+{% endif %}
+{% if not model.config.crud_operations or 'read' in model.config.crud_operations.lower() %}
+@router.get('/{{model.name.lower()}}/{id}', response_model={{model.name}}, tags=['{{model.name}}'])
+async def get(id: str):
+    return await {{model.name}}.get(id, skip_secrets=True)
+
+
+@router.get('/{{model.name.lower()}}', response_model={{model.name}}GetResp, tags=['{{model.name}}'])
+async def get_all(response: fastapi.Response, params=fastapi.Depends(urdhva_base.queryparams.QueryParams)):
+    return await {{model.name}}.get_all(params, skip_secrets=True)
+{% endif %}
+
+{% if not model.config.crud_operations or 'delete' in model.config.crud_operations.lower() %}
+@router.delete('/{{model.name.lower()}}/{id}', tags=['{{model.name}}'])
+async def delete(id: str):
+    return await {{model.name}}.delete(id)
+{% endif %}
+{%- endif %}
+{%- endfor -%}

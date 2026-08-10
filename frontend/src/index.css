@@ -1,0 +1,641 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --custom: #67037a;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* body {
+  background: linear-gradient(
+    230deg,
+    hsl(228deg 36% 95%) 0%,
+    hsl(230deg 40% 94%) 7%,
+    hsl(232deg 43% 94%) 14%,
+    hsl(234deg 45% 94%) 21%,
+    hsl(240deg 45% 94%) 29%);
+} */
+
+/* header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0px;
+  z-index: 5;
+  background-color: rgba(255, 255, 255, .1) !important;
+  display: flex;
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid rgba(255, 255, 255, .2);
+} */
+/* header::before {
+  content: '';
+  position: relative;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .4), transparent);
+  transition: .5s;
+} */
+
+.shadowBox {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.11);
+  border-radius: 16px;
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.shadowWhiteBox {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 1);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.input-icons svg {
+  position: absolute;
+}
+
+.icons {
+  margin: 10px;
+  color: #404143;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  text-align: left;
+}
+
+.input-field::placeholder {
+  color: #404143;
+  font-weight: 300;
+}
+
+.btn {
+  display: none;
+}
+.hello:hover .btn{
+  display: block;
+} 
+
+.primary-colorr {
+  background-color: #fff !important;
+  svg {
+    color: var(--custom);
+  }
+}
+
+.primary-color-active {  
+  svg {
+    color: var(--custom);
+  }
+}
+.primary-color:hover {
+  background-color: var(--custom) !important;
+  svg {
+    color: #fff !important;
+  }
+}
+.secondary-color {
+  background-color: rgb(104 3 123 / 10%) !important;
+  svg {
+    color: rgb(104 3 123 / 80%) !important;
+  }
+}
+.primary-text-color {
+  color: #67037a !important;
+}
+.primary-text-color-100 {
+  color: rgb(104 3 123 / 60%);
+}
+
+.animate-ease-in-out {
+  transition: width .3s ease-in-out;
+}
+
+.custom-bg {
+  background-color: rgba(102, 3, 122, 0.496);
+}
+
+.custom-btn-bg {
+  background-color: #67037a !important; 
+}
+
+input::file-selector-button {
+  font-weight:bolder;
+  font-size: larger;
+  color: rgb(255, 255, 255);
+  background-color: #8c5cf6 !important;
+  padding: 0.2rem 0.4rem;
+  margin-top: 0.2rem;
+  border: thin solid grey;
+  border-radius: 3px;
+}
+
+.css-1njgyxf, .css-1yyy5eh, .css-mgkz1v, .css-a0o09j{
+  padding-top: 0px !important;
+}
+
+.css-1ccn342:hover{
+   color: #fff !important;
+}
+
+/* React Pro Sidebar: full pill shape, no gaps */
+.ps-sidebar-container {
+  padding: 4px 3px !important;
+  box-sizing: border-box !important;
+}
+.ps-sidebar-container .ps-menu-root {
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 0 !important;
+}
+.ps-menuitem-root {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.ps-sidebar-container .ps-menu-button {
+  border-radius: 9999px !important;
+  margin: 2px 0 !important;
+  padding: 0 10px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.ps-menu-root > .ps-menuitem-root > .ps-menu-button {
+  border-radius: 9999px !important;
+}
+
+.ps-submenu-content {
+  margin-left: 0 !important;
+  border-radius: 0 8px 8px 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: #fff !important;
+}
+.ps-submenu-content .ps-menu-button {
+  border-radius: 9999px !important;
+  margin: 2px 6px !important;
+}
+
+.css-1tqrhto >.ps-menu-button:hover{
+  background-color: #67037a !important;
+  color: #fff;
+}
+
+.css-1t8x7v1 >.ps-menu-button:hover{
+  background-color: #67037a !important;
+  color: #fff;
+}
+.css-16jesut >.ps-menu-button:hover{
+  background-color: #67037a !important;
+  color: #fff;
+}
+.css-1tqrhto >.ps-menu-button:active{
+  background-color: #67037a !important;
+  color: #fff;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+  border: transparent;
+}
+
+.custom-transition{
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+.bg-yellow{
+  --tw-bg-opacity: 1;
+    background-color: rgb(245 158 11 / var(--tw-bg-opacity));
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 28px 0 rgba(31, 38, 135, .17);
+}
+
+/* GRADIENT BUTTON */
+.rgb-button {
+  /* background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff); */
+  background-size: 600% 600%;
+  animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+@keyframes bubble {
+	0%,
+	100% {
+	  border-radius: 64% 46% 37% 73% / 55% 58% 42% 45%;
+	}
+  
+	25% {
+	  border-radius: 43% 47% 47% 38% / 43% 46% 64% 27%;
+	}
+  
+	50% {
+	  border-radius: 48% 72% 44% 56% / 49% 40% 60% 51%;
+	}
+  
+	75% {
+	  border-radius: 40% 60% 70% 30% / 47% 62% 38% 53%;
+	}
+}
+
+.gradient-color:hover {
+  background-image: linear-gradient(180deg, #DD9044 0%, #DD4454 100%);
+}
+
+.hover-style {
+  background-image: linear-gradient(180deg, #DD9044 0%, #DD4454 100%);
+}
+
+iframe [id="root"] main main div div main div section div header {
+  display: none !important;
+}
+
+.txt-white{
+  color: #fff !important;
+}
+
+/* Login Page */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.bounce-animation {
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.gradient-blue {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+}
+
+.animate-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotate(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+
+/* Hide scrollbars by default for all elements */
+* {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  width: 0 !important;
+  display: none !important; /* Chrome, Safari, Opera */
+}
+
+/* Only show scrollbars when actually scrolling */
+*:hover::-webkit-scrollbar { 
+  width: 8px !important;
+  display: block !important;
+}
+
+*:hover {
+  scrollbar-width: auto !important;
+  -ms-overflow-style: auto !important;
+}
+
+/* Hide scrollbars in sidebar and layout - overrides hover behavior */
+.hide-scrollbar,
+.hide-scrollbar:hover,
+.hide-scrollbar *,
+.hide-scrollbar *:hover {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.hide-scrollbar::-webkit-scrollbar,
+.hide-scrollbar:hover::-webkit-scrollbar,
+.hide-scrollbar *::-webkit-scrollbar,
+.hide-scrollbar *:hover::-webkit-scrollbar {
+  width: 0 !important;
+  display: none !important;
+}
+
+/* Customize scrollbar appearance when visible */
+*:hover::-webkit-scrollbar-track { 
+  background: #f1f1f1;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+*:hover::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Ensure body and html take full height only when needed */
+html {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body { 
+  height: auto;
+  min-height: 100%;
+}
+
+.css-1kfabtt-MuiFormLabel-root-MuiInputLabel-root { 
+  font-size: 12px !important;
+}
+.css-si86to-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input { 
+  padding: 5.5px 14px !important;
+}
+.css-12eb3rq-MuiStepLabel-label.MuiStepLabel-alternativeLabel {
+  margin-top: 6px;
+}
+
+/* AG GRID TBALE DESIGN */
+.ag-tab .ag-icon-menu,
+.ag-tab .ag-icon-filter,
+.ag-tab .ag-icon-columns {
+  color: rgba(7, 82, 140, 0.98);
+}
+.ag-tab-selected .ag-icon-filter {
+  color: rgba(7, 82, 140, 0.98);
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+.bg-size-200 {
+  background-size: 200% 200%;
+}
+
+/* Admin Module table: show vertical scrollbar (must load after .hide-scrollbar rules in this file) */
+html body main.hide-scrollbar .admin-module-dashboard .admin-module-table-scroll {
+  scrollbar-width: thin !important;
+  scrollbar-color: #9ca3af #e5e7eb !important;
+  -ms-overflow-style: scrollbar !important;
+}
+html body main.hide-scrollbar .admin-module-dashboard .admin-module-table-scroll::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  width: 10px !important;
+  display: block !important;
+}
+html body main.hide-scrollbar .admin-module-dashboard .admin-module-table-scroll::-webkit-scrollbar-thumb {
+  background: #9ca3af !important;
+  border-radius: 5px !important;
+}
+html body main.hide-scrollbar .admin-module-dashboard .admin-module-table-scroll::-webkit-scrollbar-track {
+  background: #e5e7eb !important;
+  border-radius: 5px !important;
+}
+
+/* VTS Dashboard — Alerts Summary pivot table (Route Deviation etc.): visible scrollbars */
+html body main.hide-scrollbar .vts-alerts-summary-pivot-scroll {
+  scrollbar-width: thin !important;
+  scrollbar-color: #9ca3af #e5e7eb !important;
+  -ms-overflow-style: scrollbar !important;
+  scrollbar-gutter: stable !important;
+}
+html body main.hide-scrollbar .vts-alerts-summary-pivot-scroll::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  width: 10px !important;
+  display: block !important;
+}
+
+/* Pivot inner: hide native horizontal bar — custom bar below */
+html body main.hide-scrollbar .vts-alerts-summary-pivot-h-inner {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+html body main.hide-scrollbar .vts-alerts-summary-pivot-h-inner::-webkit-scrollbar {
+  height: 0 !important;
+  display: none !important;
+}
+html body main.hide-scrollbar .vts-alerts-summary-pivot-scroll::-webkit-scrollbar-thumb {
+  background: #9ca3af !important;
+  border-radius: 5px !important;
+}
+html body main.hide-scrollbar .vts-alerts-summary-pivot-scroll::-webkit-scrollbar-track {
+  background: #e5e7eb !important;
+  border-radius: 5px !important;
+}
+html body main.hide-scrollbar .vts-alerts-summary-pivot-scroll::-webkit-scrollbar-corner {
+  background: #e5e7eb !important;
+}
+
+
+.tas-stock-utilization-scroll {
+  scrollbar-width: thin !important;
+  scrollbar-color: #9ca3af #e5e7eb !important;
+  -ms-overflow-style: scrollbar !important;
+}
+
+.tas-stock-utilization-scroll::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  width: 8px !important;
+  display: block !important;
+}
+
+.tas-stock-utilization-scroll::-webkit-scrollbar-thumb {
+  background: #9ca3af !important;
+  border-radius: 4px !important;
+}
+
+.tas-stock-utilization-scroll::-webkit-scrollbar-track {
+  background: #e5e7eb !important;
+  border-radius: 4px !important;
+}
+
+html body main.hide-scrollbar .tas-stock-utilization-scroll {
+  scrollbar-width: thin !important;
+  scrollbar-color: #9ca3af #e5e7eb !important;
+  -ms-overflow-style: scrollbar !important;
+}
+
+html body main.hide-scrollbar .tas-stock-utilization-scroll::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  width: 8px !important;
+  display: block !important;
+}
+
+/* Stock Utilization card custom scrollbar: hide native scrollbar, no gutter gap */
+.tas-stock-utilization-scroll-custom {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  scrollbar-gutter: auto !important;
+}
+
+.tas-stock-utilization-scroll-custom::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+html body main.hide-scrollbar .tas-stock-utilization-scroll.tas-stock-utilization-scroll-custom {
+  scrollbar-width: none !important;
+  scrollbar-color: auto !important;
+  -ms-overflow-style: none !important;
+}
+
+html body main.hide-scrollbar .tas-stock-utilization-scroll.tas-stock-utilization-scroll-custom::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+
+/* Ticketing2 PM Orders table: hide native bar, keep always-visible mirror bar */
+.pm-tickets-table-scroll {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+.pm-tickets-table-scroll::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+.pm-tickets-table-scroll-mirror {
+  position: relative;
+  height: 8px;
+  width: 100%;
+  background: #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.pm-tickets-table-scroll-mirror-thumb {
+  position: absolute;
+  top: 0.5px;
+  bottom: 0.5px;
+  left: 0;
+  min-width: 40px;
+  background: linear-gradient(90deg, #94a3b8 0%, #64748b 100%);
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  cursor: grab;
+}
+.pm-tickets-table-scroll-mirror-thumb:active {
+  cursor: grabbing;
+}

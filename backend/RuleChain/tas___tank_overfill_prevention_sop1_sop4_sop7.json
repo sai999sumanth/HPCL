@@ -1,0 +1,621 @@
+{
+  "ruleChain": {
+    "name": "TAS - Tank Overfill Prevention SOP1,SOP4,SOP7",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "additionalInfo": {
+      "description": ""
+    }
+  },
+  "metadata": {
+    "version": 5,
+    "firstNodeIndex": 16,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.rest.TbRestApiCallNode",
+        "name": "CreatePfAlert",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 3,
+        "configuration": {
+          "restEndpointUrlPattern": "https://iris.bpcl.in/api/create_alert",
+          "requestMethod": "POST",
+          "useSimpleClientHttpFactory": false,
+          "enableProxy": false,
+          "useSystemProxyProperties": false,
+          "proxyScheme": null,
+          "proxyHost": null,
+          "proxyPort": 0,
+          "proxyUser": null,
+          "proxyPassword": null,
+          "readTimeoutMs": 0,
+          "maxParallelRequestsCount": 0,
+          "headers": {},
+          "maxInMemoryBufferSizeInKb": 256
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 937,
+          "layoutY": 1059
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear LevelSwitch PfAlarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tank overfill prevention(ROSV)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP001\";\ndetails['additionalInfo']['verify_proof_test'] = \"True\"\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "LevelSwitch Pf Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 625,
+          "layoutY": 1141
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create LevelSwitch PfAlarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tank overfill prevention(ROSV)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP001\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails['additionalInfo']['verify_proof_test'] = \"True\"\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "LevelSwitch Pf Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 636,
+          "layoutY": 1068
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Tank Overfill Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tank overfill prevention(ROSV)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP001\";\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "Tankoverfill Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 598,
+          "layoutY": 322
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Tankoverfill MOV Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tank overfill prevention(MOV)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP007\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\n\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "TankoverfillMOV  Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 598,
+          "layoutY": 584
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Tank Overfill",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"LEVEL SWITCH\"] != undefined && (msg[\"LEVEL SWITCH\"] != metadata[\"ss_LEVEL SWITCH\"]) && (msg[\"LEVEL SWITCH\"] != \"-99\")){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 261,
+          "layoutY": 1104
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "transformTelimetry",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "msg['LEVEL SWITCH'] = metadata['LEVEL SWITCH']\nmsg['SERVO HHH'] = metadata['SERVO HHH']\nmsg['RADAR HHH'] = metadata['RADAR HHH']\nmsg['ROSOV OPEN STATUS IL'] = metadata['ROSOV OPEN STATUS IL']\nmsg['ROSOV OPEN STATUS OL'] = metadata['ROSOV OPEN STATUS OL']\nmsg['MOV STATUS IL'] = metadata['MOV STATUS IL']\nmsg['MOV STATUS OL'] = metadata['MOV STATUS OL']\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 0,
+          "layoutY": 299
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Tankoverfill MOV Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tank overfill prevention(MOV)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP007\";\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "TankoverfillMOV  Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 595,
+          "layoutY": 643
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create ESD-with-ROSOV  Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD(closure of tank ROSOVs)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP002\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "ESDROSOV  Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 595,
+          "layoutY": 898
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Tank",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"Tank\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 513,
+          "layoutY": 72
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear ESD-with-ROSOV  Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD(closure of tank ROSOVs)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP002\";\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "ESDROSOV  Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 597,
+          "layoutY": 979
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ESD with ROSOV",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if ((msg[\"ROSOV OPEN STATUS OL\"] != undefined && (msg[\"ROSOV OPEN STATUS OL\"] == -99)))\n{\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 287,
+          "layoutY": 963
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ESD with MOV",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if ((msg[\"MOV STATUS OL\"] != undefined && (msg[\"MOV STATUS OL\"] == -99)))\n{\n    return true\n}\nreturn false\n"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 295,
+          "layoutY": 769
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear ESD-with-MOV  Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD(Closure of tank MOVS)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP009\";\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "ESDMOV  Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 594,
+          "layoutY": 821
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "140.245.238.142",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 949,
+          "layoutY": 402
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Tank Overfill Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tank overfill prevention(ROSV)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP001\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\n\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "Tankoverfill Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 602,
+          "layoutY": 253
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 281,
+          "layoutY": 153
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Tank Overfill MOV",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"LEVEL SWITCH\"] != undefined && (msg[\"LEVEL SWITCH\"] != metadata[\"ss_LEVEL SWITCH\"])){\n    return true\n}\nif ((msg[\"LEVEL SWITCH\"] != undefined && (msg[\"LEVEL SWITCH\"] == metadata[\"ss_LEVEL SWITCH\"])) && ((msg[\"RADAR HHH\"] != undefined && (msg[\"RADAR HHH\"] != metadata[\"ss_RADAR HHH\"])) || (msg[\"SERVO HHH\"] != undefined && (msg[\"SERVO HHH\"] != metadata[\"ss_SERVO HHH\"])) || (msg[\"MOV STATUS IL\"] != undefined && (msg[\"MOV STATUS IL\"] == -99))))\n{\n    return true\n}\nreturn false\n"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 302,
+          "layoutY": 603
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Scope Attributes",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "SAPID",
+            "RADAR HHH",
+            "SERVO HHH",
+            "LEVEL SWITCH"
+          ],
+          "latestTsKeyNames": [
+            "LEVEL SWITCH",
+            "RADAR HHH",
+            "SERVO HHH",
+            "MOV STATUS IL",
+            "MOV STATUS OL",
+            "ROSOV OPEN STATUS IL",
+            "ROSOV OPEN STATUS OL"
+          ],
+          "getLatestValueWithTs": false,
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 748,
+          "layoutY": 120
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create ESD-with-MOV  Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD(Closure of tank MOVS)\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP009\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "ESDMOV  Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 596,
+          "layoutY": 727
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Tank Overfill",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"LEVEL SWITCH\"] != undefined && (msg[\"LEVEL SWITCH\"] != metadata[\"ss_LEVEL SWITCH\"])){\n    return true\n}\nif ((msg[\"LEVEL SWITCH\"] != undefined && (msg[\"LEVEL SWITCH\"] == metadata[\"ss_LEVEL SWITCH\"])) && ((msg[\"RADAR HHH\"] != undefined && (msg[\"RADAR HHH\"] != metadata[\"ss_RADAR HHH\"])) || (msg[\"SERVO HHH\"] != undefined && (msg[\"SERVO HHH\"] != metadata[\"ss_SERVO HHH\"])) || (msg[\"ROSOV OPEN STATUS IL\"] != undefined && (msg[\"ROSOV OPEN STATUS IL\"] == -99))))\n{\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 304,
+          "layoutY": 308
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 0,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 1,
+        "type": "False"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 11,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 12,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 17,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 20,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 18,
+        "type": "True"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 10,
+        "type": "False"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 13,
+        "type": "False"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 19,
+        "type": "True"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 9,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 7,
+        "type": "False"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 3,
+        "type": "False"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 15,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

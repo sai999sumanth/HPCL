@@ -1,0 +1,5 @@
+from {{input.parent.fbase}}_enum import *
+from {{input.parent.fbase}}_model import *
+import fastapi
+
+router = fastapi.APIRouter(prefix='/{{input.parent.parent.name.lower()}}')

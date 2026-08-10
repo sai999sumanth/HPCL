@@ -1,0 +1,452 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Operability Index",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 13,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 855,
+          "layoutY": 103
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Fire Engine OI",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg && msg[\"Water Volume\"] != undefined) {\n    return true\n} \nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 633,
+          "layoutY": 261
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Fire Engine OI Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Fire engine in local\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = \"TAS\";\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\nreturn details;",
+          "alarmType": "Fire Engine OI Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 942,
+          "layoutY": 261
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "test",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var details = {};\n\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar additionalinfo = metadata[\"additionalInfo\"] ? JSON.parse(metadata[\"additionalInfo\"]) : {};\n\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"location_id\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"location_name\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"bu_id\"] = metadata[\"tenantid\"];\ndetails[\"additionalInfo\"][\"SAPID\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"deviceType\"] = metadata[\"deviceType\"];\ndetails[\"additionalInfo\"][\"deviceName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Water Level chang data\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Water Tank\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Water Tank\";\ndetails[\"additionalInfo\"][\"customData\"] = msg;\n\nreturn {\n    msg: {\n        \"tenantId\": {\n            \"entityType\": \"TENANT\",\n            \"id\": metadata[\"tenantid\"]\n        },\n        \"type\": \"SafetyPLC Alarm\",\n        \"originator\": {\n            \"entityType\": \"DEVICE\",\n            \"id\": metadata[\"deviceId\"]\n        },\n        \"severity\": \"CRITICAL\",\n        \"status\": \"\",\n        \"startTs\": metadata[\"ts\"],\n        \"endTs\": 0,\n        \"ackTs\": 0,\n        \"clearTs\": 0,\n        \"details\": details,\n        \"propagate\": false,\n        \"propagateRelationTypes\": [],\n        \"id\": {\n            \"entityType\": \"ALARM\",\n            \"id\": metadata[\"deviceId\"]\n        },\n        \"createdTime\": metadata[\"ts\"],\n        \"name\": \"SafetyPLC Alarm\"\n    },\n    metadata: metadata\n};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 635,
+          "layoutY": 502
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Water Volume",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Water volume is below threshold\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata['deviceType']\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;\n\n",
+          "useMessageAlarmData": false,
+          "alarmType": "Water Volume",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 635,
+          "layoutY": 354
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "PT Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Hydrant Line PT is below 7 Kg\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = \"TAS\";\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\nreturn details;",
+          "alarmType": "PT Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 350,
+          "layoutY": 432
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Jockey Not in RA",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (((msg['Jockey Pump1 Remote'] != undefined && msg['Jockey Pump1 Remote'] != metadata['ss_Jockey Pump1 Remote']) || \n    (msg['Jockey Pump1 Auto'] != undefined && msg['Jockey Pump1 Auto'] != metadata['ss_Jockey Pump1 Auto'])) ||\n    ((msg['Jockey Pump2 Remote'] != undefined && msg['Jockey Pump2 Remote'] != metadata['ss_Jockey Pump2 Remote']) || \n    (msg['Jockey Pump2 Auto'] != undefined && msg['Jockey Pump2 Auto'] != metadata['ss_Jockey Pump2 Auto']))){\n    return true\n}\nreturn false\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 355,
+          "layoutY": 246
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Fire Engine OI",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var i = 0;\nvar normalMode = Number(metadata[\"ss_Fire Engine Remote Mode\"])\nvar healthyCount = Number(metadata[\"ss_Fire Engine Healthy Count\"])\n\nfor (var key in msg) {\n    if (key.startsWith(\"Fire Engine\") && msg[key] != undefined && Number(msg[key]) != normalMode) {\n        i++\n    }\n}\nif ((i > healthyCount) || (msg['Main Fire Engine not in Remote'] != undefined && msg['Main Fire Engine not in Remote'] != metadata['ss_Main Fire Engine not in Remote'])){\n    return true\n}\nreturn false\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n// var i =0\n// if ((msg[\"Fire Engine1\"] != undefined && (msg[\"Fire Engine1\"] != metadata[\"ss_Fire Engine Remote Mode\"]))){\n//     i = i+1\n// }\n// if ((msg[\"Fire Engine2\"] != undefined && (msg[\"Fire Engine2\"] != metadata[\"ss_Fire Engine Remote Mode\"]))){\n//     i = i+1\n// }\n// if ((msg[\"Fire Engine3\"] != undefined && (msg[\"Fire Engine3\"] != metadata[\"ss_Fire Engine Remote Mode\"]))){\n//     i = i+1\n// }\n// if ((msg[\"Fire Engine4\"] != undefined && (msg[\"Fire Engine4\"] != metadata[\"ss_Fire Engine Remote Mode\"]))){\n//     i = i+1\n// }\n// if ((msg[\"Fire Engine5\"] != undefined && (msg[\"Fire Engine5\"] != metadata[\"ss_Fire Engine Remote Mode\"]))){\n//     i = i+1\n// }\n// if ((msg[\"Fire Engine6\"] != undefined && (msg[\"Fire Engine6\"] != metadata[\"ss_Fire Engine Remote Mode\"]))){\n//     i = i+1\n// }\n// if ((msg[\"Fire Engine7\"] != undefined && (msg[\"Fire Engine7\"] != metadata[\"ss_Fire Engine Remote Mode\"]))){\n//     i = i+1\n// }\n// if ((msg[\"Fire Engine8\"] != undefined && (msg[\"Fire Engine8\"] != metadata[\"ss_Fire Engine Remote Mode\"]))){\n//     i = i+1\n// }\n\n// if (i > parseInt(metadata[\"ss_Fire Engine Healthy Count\"])) {\n//     return true;\n// }\n// return false;\n// return i > healthyCount"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 635,
+          "layoutY": 307
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "PT Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Hydrant Line PT is below 7 Kg\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata['deviceType']\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;\n\n",
+          "useMessageAlarmData": false,
+          "alarmType": "PT Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 632,
+          "layoutY": 212
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Fire Engine OI Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Fire engine in local\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata['deviceType']\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;\n\n",
+          "useMessageAlarmData": false,
+          "alarmType": "Fire Engine OI Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 635,
+          "layoutY": 452
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Jockey Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Jockey Pump not in Auto Remote\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = \"TAS\";\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\nreturn details;",
+          "alarmType": "Jockey Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 998,
+          "layoutY": 363
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_oi_listener",
+          "messageProperties": null,
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 637,
+          "layoutY": 556
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Water Volume",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Water volume is below threshold\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = \"TAS\";\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\nreturn details;",
+          "alarmType": "Water Volume"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 350,
+          "layoutY": 334
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Hydrant PT",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"Farthest Point Pt\"] != undefined && (parseInt(msg[\"Farthest Point Pt\"])) < 7.5) || (msg[\"Nearest Point PT\"] != undefined && (parseInt(msg[\"Nearest Point PT\"])) < 7.5)){\n    if((msg[\"Jockey Pump Run1\"] == metadata[\"Jockey Pump Run1\"] && msg[\"Jockey Pump Run2\"] == metadata[\"Jockey Pump Run2\"])){\n        return true\n    }\n}\nreturn false\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 211,
+          "layoutY": 36
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 350,
+          "layoutY": 528
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Fire Water Tank",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Water Volume\"] != undefined && (parseInt(msg[\"Water Volume\"])) < metadata['ss_Required Water Volume']){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 436,
+          "layoutY": 117
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Type Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"OI\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 42,
+          "layoutY": 378
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Telemetry",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg['Water Volume'] = metadata['Water Volume']\nmsg['Nearest Point PT'] = metadata['Nearest Point PT']\nmsg['Farthest Point Pt'] = metadata['Farthest Point Pt']\nmsg['Jockey Pump1 Remote'] = metadata['Jockey Pump1 Remote']\nmsg['Jockey Pump2 Remote'] = metadata['Jockey Pump2 Remote']\nmsg['Jockey Pump1 Auto'] = metadata['Jockey Pump1 Auto']\nmsg['Jockey Pump2 Auto'] = metadata['Jockey Pump2 Auto']\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 674,
+          "layoutY": 41
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Scope Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "Fire Engine Healthy Count",
+            "Required Water Volume",
+            "Fire Engine Remote Mode",
+            "Nearest Point PT",
+            "Farthest Point Pt",
+            "Jockey Pump Run1",
+            "Jockey Pump Run2",
+            "Main Fire Engines not in REMOTE",
+            "Jockey Pump2 Auto",
+            "Jockey Pump1 Auto",
+            "Jockey Pump2 Remote",
+            "Jockey Pump1 Remote",
+            "Water Volume"
+          ],
+          "latestTsKeyNames": [
+            "Nearest Point PT",
+            "Farthest Point Pt",
+            "Jockey Pump Run1",
+            "Jockey Pump Run2",
+            "Main Fire Engines not in REMOTE",
+            "Jockey Pump2 Auto",
+            "Jockey Pump1 Auto",
+            "Jockey Pump2 Remote",
+            "Jockey Pump1 Remote",
+            "Water Volume"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 635,
+          "layoutY": 405
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Jockey Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Jockey Pump not in Auto Remote\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP042\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata['deviceType']\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;\n\n",
+          "useMessageAlarmData": false,
+          "alarmType": "Jockey Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 10,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 10,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 10,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 18,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 9,
+        "type": "False"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 1,
+        "type": "False"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 10,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 10,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 4,
+        "type": "False"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 15,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 11,
+        "type": "False"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 17,
+        "type": "True"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 0,
+        "type": "True"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 14,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 12,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 16,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

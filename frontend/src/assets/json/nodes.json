@@ -1,0 +1,549 @@
+{
+    "status": true,
+    "message": "Success",
+    "data": [
+        {
+            "section": "Streams",
+            "components": [
+                {
+                    "key": "kafKa",
+                    "name": "kafka",
+                    "unique_id": "kafka",
+                    "image": "kafka-icon.png",
+                    "execute_action": "test_connection"
+                }
+            ]
+        },
+        {
+            "section": "Databases",
+            "components": [
+                {
+                    "key": "postgresql",
+                    "name": "PostgreSQL",
+                    "unique_id": "postgresql",
+                    "image": "postgresql-icon.png",
+                    "execute_action": "get_data"
+
+                },
+                {
+                    "key": "mysql",
+                    "name": "MySQL",
+                    "unique_id": "mysql",
+                    "image": "mysql-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "oracle",
+                    "name": "Oracle",
+                    "unique_id": "oracle",
+                    "image": "oracle-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "mssql",
+                    "name": "MsSQL",
+                    "unique_id": "mssql",
+                    "image": "mssql-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "s4hana",
+                    "name": "S4 Hana",
+                    "unique_id": "s4hana",
+                    "image": "s4hana-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "mongo_db",
+                    "name": "Mongo DB",
+                    "unique_id": "mongo",
+                    "image": "mongo-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "salesforce",
+                    "name": "Salesforce",
+                    "unique_id": "salesforce",
+                    "image": "comp-salesforce.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "amazon_s3",
+                    "name": "s3",
+                    "unique_id": "s3",
+                    "image": "s3-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "elastic_search",
+                    "name": "ElasticSearch",
+                    "unique_id": "elasticsearch",
+                    "image": "elasticsearch-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "redis",
+                    "name": "Redis",
+                    "unique_id": "redis",
+                    "image": "redis-icon.png",
+                    "execute_action": ""
+                }
+            ]
+        },
+        {
+            "section": "Files",
+            "components": [
+                {
+                    "key": "csv_loader",
+                    "name": "CSV_File",
+                    "unique_id": "csv",
+                    "image": "csv-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "excel_loader",
+                    "name": "Ms_Excel",
+                    "unique_id": "excel",
+                    "image": "excel-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "parquet_loader",
+                    "name": "Parquet File",
+                    "unique_id": "parquet",
+                    "image": "parquet-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "feather_loader",
+                    "name": "Feather File",
+                    "unique_id": "feather",
+                    "image": "feather-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "json_loader",
+                    "name": "Json File",
+                    "unique_id": "json",
+                    "image": "json-icon.png",
+                    "execute_action": ""
+                }
+            ]
+        },
+        {
+            "section": "Others",
+            "components": [
+                {
+                    "key": "masking",
+                    "name": "Masking",
+                    "unique_id": "masking",
+                    "image": "masking-icon.png",
+                    "execute_action": "mask_data"
+                },
+                {
+                    "key": "data_validation",
+                    "name": "Data Comparing",
+                    "unique_id": "data-comparing",
+                    "image": "datacomparing-icon.png",
+                    "execute_action": "compare_data"
+                }
+            ]
+        },
+        {
+            "section": "Transformations",
+            "components": [
+                {
+                    "key": "filter_executor",
+                    "name": "Filter",
+                    "unique_id": "filter",
+                    "image": "filter-icon.png",
+                    "execute_action": "execute_filter"
+                },
+                {
+                    "key": "v_lookup",
+                    "name": "Vlookup",
+                    "unique_id": "vlookup",
+                    "image": "vlookup-icon.png",
+                    "execute_action": "vlookup_data"
+                },
+                {
+                    "key": "n_way_match",
+                    "name": "NWayMatch",
+                    "unique_id": "nway_match",
+                    "image": "nwaymatch-icon.png",
+                    "execute_action": "nway_match"
+                },
+                {
+                    "key": "single_side_match",
+                    "name": "Single-Side Match",
+                    "unique_id": "single_side_match",
+                    "image": "singlesidematch-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "report",
+                    "name": "Report",
+                    "unique_id": "report",
+                    "image": "report-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "concat",
+                    "name": "Concat",
+                    "unique_id": "concat",
+                    "image": "concat-icon.png",
+                    "execute_action": "concat_data"
+                },
+                {
+                    "key": "match_criteria",
+                    "name": "MatchCriteria",
+                    "unique_id": "match_criteria",
+                    "image": "matchcriteria-icon.png",
+                    "execute_action": "process_data"
+                },
+                {
+                    "key": "master_data",
+                    "name": "MasterData",
+                    "unique_id": "master_data",
+                    "image": "masterdata-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "publishing_data",
+                    "name": "PublishingData",
+                    "unique_id": "publishing_data",
+                    "image": "publish-icon.png",
+                    "execute_action": "dump_data"
+                },
+                {
+                    "key": "add_column",
+                    "name": "AddColumn",
+                    "unique_id": "add_column",
+                    "image": "add-icon.png",
+                    "execute_action": "add_column"
+                },
+                {
+                    "key": "edit_schema",
+                    "name": "EditSchema",
+                    "unique_id": "edit_schema",
+                    "image": "edit-icon.png",
+                    "execute_action": "edit_schema"
+                },
+                {
+                    "key": "drop_column",
+                    "name": "DropColumn",
+                    "unique_id": "drop_column",
+                    "image": "drop-icon.png",
+                    "execute_action": "drop_column"
+                },
+                {
+                    "key": "drop_duplicates",
+                    "name": "DropDuplicates",
+                    "unique_id": "drop_duplicates",
+                    "image": "duplicates-icon.png",
+                    "execute_action": "drop_duplicates"
+                },
+                {
+                    "key": "pivot",
+                    "name": "Pivot",
+                    "unique_id": "pivot",
+                    "image": "pivot-icon.png",
+                    "execute_action": "pivot"
+                },
+                {
+                    "key": "compute",
+                    "name": "Compute",
+                    "unique_id": "compute",
+                    "image": "compute-icon.png",
+                    "execute_action": "compute"
+                },
+                {
+                    "key": "data_cleaning",
+                    "name": "DataCleaning",
+                    "unique_id": "data_cleaning",
+                    "image": "cleaning-icon.png",
+                    "execute_action": "data_cleaning"
+                },
+                {
+                    "key": "format_revision",
+                    "name": "FormatRevision",
+                    "unique_id": "format_revision",
+                    "image": "revision-icon.png",
+                    "execute_action": "format_revision"
+                },
+                {
+                    "key": "map_data",
+                    "name": "MapData",
+                    "unique_id": "map_data",
+                    "image": "map-icon.png",
+                    "execute_action": "map_data"
+                },
+                {
+                    "key": "data_sorting",
+                    "name": "DataSorting",
+                    "unique_id": "data_sorting",
+                    "image": "sorting-icon.png",
+                    "execute_action": "data_sorting"
+                },
+                {
+                    "key": "ordering",
+                    "name": "Ordering",
+                    "unique_id": "ordering",
+                    "image": "ordering-icon.png",
+                    "execute_action": "ordering"
+                },
+                {
+                    "key": "splitting",
+                    "name": "Splitting",
+                    "unique_id": "splitting",
+                    "image": "splitting-icon.png",
+                    "execute_action": "splitting"
+                },
+                {
+                    "key": "sql_join",
+                    "name": "SqlJoin",
+                    "unique_id": "sql_join",
+                    "image": "join-icon.png",
+                    "execute_action": "sql_join"
+                }
+            ]
+        },
+        {
+            "section": "APIGateway",
+            "components": [
+                {
+                    "key": "apigateway",
+                    "name": "APIGateway",
+                    "unique_id": "apigateway",
+                    "image": "api-icon.png",
+                    "execute_action": "get_data"
+                }
+            ]
+        },
+        {
+            "section": "SCADA Connectors",
+            "components": [
+                {
+                    "key": "abb ltd",
+                    "name": "ABB LTD",
+                    "unique_id": "abb_ltd",
+                    "image": "abb-icon.jpg",
+                    "execute_action": ""
+                },
+                {
+                    "key": "rockwell automation inc",
+                    "name": "Rockwell Automation Inc",
+                    "unique_id": "rockwell_automation_inc",
+                    "image": "rockwell-icon.jpg",
+                    "execute_action": ""
+                },
+                {
+                    "key": "schneider electric se",
+                    "name": "Schneider Electric SE",
+                    "unique_id": "schneider_electric_se",
+                    "image": "schiender-icon.jpg",
+                    "execute_action": ""
+                },
+                {
+                    "key": "emerson electric co",
+                    "name": "Emerson Electric Co",
+                    "unique_id": "emerson_electric_co",
+                    "image": "emerson-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "siemens ag",
+                    "name": "Siemens AG",
+                    "unique_id": "siemens_ag",
+                    "image": "siemens-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "alstom",
+                    "name": "Alstom",
+                    "unique_id": "alstom",
+                    "image": "alstom-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "general electric co",
+                    "name": "General Electric Co",
+                    "unique_id": "general_electric_co",
+                    "image": "general-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "mitsubishi",
+                    "name": "Mitsubishi",
+                    "unique_id": "mitsubishi",
+                    "image": "ac-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "honeywell international inc",
+                    "name": "Honeywell International Inc",
+                    "unique_id": "honeywell_international_inc",
+                    "image": "honeywell-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "omran corporation",
+                    "name": "Omran Corporation",
+                    "unique_id": "omran_corporation",
+                    "image": "omron-icon.jpg",
+                    "execute_action": ""
+                },
+                {
+                    "key": "yokogawa electric corporation",
+                    "name": "Yokogawa Electric Corporation",
+                    "unique_id": "yokogawa_electric_corporation",
+                    "image": "yokogawa-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "inductive automation",
+                    "name": "Inductive Automation",
+                    "unique_id": "inductive_automation",
+                    "image": "inductive-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "hitachi",
+                    "name": "Hitachi",
+                    "unique_id": "hitachi",
+                    "image": "hitachi-icon.png",
+                    "execute_action": ""
+                }
+            ]
+        },
+        {
+            "section": "IOT Device Connectors(Algo Edge Device)",
+            "components": [
+                {
+                    "key": "opc da",
+                    "name": "OPC DA",
+                    "unique_id": "opc_da",
+                    "image": "opcua-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "modbus tcp/ip",
+                    "name": "Modbus TCP/IP",
+                    "unique_id": "modbus_tcp_ip",
+                    "image": "modbus-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "rs-232",
+                    "name": "RS-232",
+                    "unique_id": "rs-232",
+                    "image": "rs232-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "rs-485",
+                    "name": "RS-485",
+                    "unique_id": "rs-485",
+                    "image": "rs485-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "rs-422",
+                    "name": "RS-422",
+                    "unique_id": "rs-422",
+                    "image": "rs422-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "modbus serial",
+                    "name": "Modbus Serial",
+                    "unique_id": "modbus_serial",
+                    "image": "modbus-icon.jpeg",
+                    "execute_action": ""
+                },
+                {
+                    "key": "profibus",
+                    "name": "Profibus",
+                    "unique_id": "profibus",
+                    "image": "profibus-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "can",
+                    "name": "CAN",
+                    "unique_id": "can",
+                    "image": "can-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "uart",
+                    "name": "UART",
+                    "unique_id": "uart",
+                    "image": "uart-icon.jpg",
+                    "execute_action": ""
+                },
+                {
+                    "key": "zigbee",
+                    "name": "Zigbee",
+                    "unique_id": "zigbee",
+                    "image": "zigbee-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "opc ua",
+                    "name": "OPC UA",
+                    "unique_id": "opc_ua",
+                    "image": "opcua-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "lorawan",
+                    "name": "LoRaWAN",
+                    "unique_id": "lorawan",
+                    "image": "lorawan-icon.png",
+                    "execute_action": ""
+                }
+            ]
+        },
+        {
+            "section": "IOT Network Connectors",
+            "components": [
+                {
+                    "key": "mqtt",
+                    "name": "MQTT",
+                    "unique_id": "mqtt",
+                    "image": "mqtt-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "https",
+                    "name": "HTTPs",
+                    "unique_id": "https",
+                    "image": "https-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "mqtt over websocket",
+                    "name": "MQTT over Websocket",
+                    "unique_id": "mqtt_over_websocket",
+                    "image": "mqtt-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "azure iot hub",
+                    "name": "Azure IoT Hub",
+                    "unique_id": "azure_iot_hub",
+                    "image": "azure-icon.png",
+                    "execute_action": ""
+                },
+                {
+                    "key": "azure mqtt event hub",
+                    "name": "Azure MQTT Event Hub",
+                    "unique_id": "azure_mqtt_event_hub",
+                    "image": "azure-icon.png",
+                    "execute_action": ""
+                }
+            ]
+        }
+    ]
+}

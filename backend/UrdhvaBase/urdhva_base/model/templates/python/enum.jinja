@@ -1,0 +1,12 @@
+{% if input.str %}
+class {{input.name}}(str, enum.Enum):
+    {%- for field in input.fields %}
+    {{ field.name }} = '{% if field.value %}{{ field.value }}{% else %}{{ field.name.lower() }}{% endif %}'
+    {%- endfor %}
+{% else %}
+class {{input.name}}(enum.IntEnum):
+    {%- for field in input.fields %}
+    {{ field.name }} = {{ field.value }}
+    {%- endfor %}
+{% endif %}
+

@@ -1,0 +1,182 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "LRC SwitchOver",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 1,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 982,
+          "layoutY": 311
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 278,
+          "layoutY": 63
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id ": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 571,
+          "layoutY": 51
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"LRC Switchover\") {\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 125,
+          "layoutY": 326
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "server Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "LRC SWITCHOVER 30 DAYS STATUS"
+          ],
+          "latestTsKeyNames": [
+            "LRC SWITCHOVER 30 DAYS STATUS"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 429,
+          "layoutY": 315
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "LRC Switchover",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"LRC SWITCHOVER 30 DAYS STATUS\"] !=undefined && (msg[\"LRC SWITCHOVER 30 DAYS STATUS\"] != metadata[\"ss_LRC SWITCHOVER 30 DAYS STATUS\"])){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 683,
+          "layoutY": 253
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "LRC Switchover",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"LRC Master Switchover required in 30 days\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP022\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"LRC\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"LRC\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "LRC Switchover",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 689,
+          "layoutY": 380
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "LRC Switchover",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"LRC Master Switchover required in 30 days\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"device_type\"] = metadata[\"unit_name\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP022\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"LRC\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"LRC\";\r\nreturn details;",
+          "alarmType": "LRC Switchover"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 6,
+        "type": "False"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 0,
+        "type": "Cleared"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

@@ -1,0 +1,922 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "ESD Effect SOP033",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 36,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 654,
+          "layoutY": 1288
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Barrier Gate",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Barrier Gate opened\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "TLF Gantry"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 646,
+          "layoutY": 359
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "TTL Dispatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tanks in TTL Dispatch in Dormant Mode\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "TTL Dispatch"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 353,
+          "layoutY": 829
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "All DBBV",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"All DBBVs Closed\"] != undefined && msg[\"All DBBVs Closed\"] != metadata[\"ss_All DBBVs Closed\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 650,
+          "layoutY": 978
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "All Tank Dorment",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"All Tanks in Dormant Mode\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "All Tank Dorment"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 651,
+          "layoutY": 869
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "All DBBV",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"All DBBVs Closed\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "All DBBV"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 652,
+          "layoutY": 1085
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "All TLF Product",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"All TLF Product Pumps Stopped\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "All TLF Product"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1335,
+          "layoutY": 689
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 651,
+          "layoutY": 712
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "ESD Command",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ESD Command To Process PLC\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "ESD Command",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 653,
+          "layoutY": 764
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "ESD Command",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ESD Command To Process PLC\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "ESD Command"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 654,
+          "layoutY": 814
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "All DBBV",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"All DBBVs Closed\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "All DBBV",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 654,
+          "layoutY": 920
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "All Tank Dorment",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"All Tanks in Dormant Mode\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "All Tank Dorment",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 652,
+          "layoutY": 1024
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "All TLF Product",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"All TLF Product Pumps Stopped\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "All TLF Product",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 653,
+          "layoutY": 1134
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "TLF Gantry",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"TLF Gantry Permissive Power Off\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "TLF Gantry",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 652,
+          "layoutY": 1186
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "TLF Gantry",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"TLF Gantry Permissive Power Off\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "TLF Gantry"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 652,
+          "layoutY": 1236
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Barrier Gate",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Barrier Gate opened\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Barrier Gate",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 646,
+          "layoutY": 508
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "ESD Hooter",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Hooter cum strobe for ESD activated in control room\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "ESD Hooter",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 649,
+          "layoutY": 559
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "ESD Hooter",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Hooter cum strobe for ESD activated in control room\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "ESD Hooter"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 648,
+          "layoutY": 608
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Siren Activated",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Siren Activated\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Siren Activated",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 650,
+          "layoutY": 662
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Siren Activated",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Siren Activated\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "Siren Activated"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 644,
+          "layoutY": 306
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "TTL Dispatch",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tanks in TTL Dispatch in Dormant Mode\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "TTL Dispatch",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 645,
+          "layoutY": 408
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Power ESD",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"As Power ESD Activation in Main PMCC Panel after 120 Sec\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Power ESD",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 645,
+          "layoutY": 458
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Power ESD",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"As Power ESD Activation in Main PMCC Panel after 120 Sec\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "Power ESD"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 354,
+          "layoutY": 1269
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Barrier Gate",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"Barrier Gate opened\"] != undefined && msg[\"Barrier Gate opened\"] != metadata[\"ss_Barrier Gate opened\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 352,
+          "layoutY": 1164
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "TLF Gantry Permissive",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"TLF Gantry Permissive Power Off\"] != undefined && msg[\"TLF Gantry Permissive Power Off\"] != metadata[\"ss_TLF Gantry Permissive Power Off\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 354,
+          "layoutY": 1054
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "All TLF Product",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"All TLF Product Pumps Stopped\"] != undefined && msg[\"All TLF Product Pumps Stopped\"] != metadata[\"ss_All TLF Product Pumps Stopped\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 352,
+          "layoutY": 943
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "All Tanks Dormant",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"All Tanks in Dormant Mode\"] != undefined && msg[\"All Tanks in Dormant Mode\"] != metadata[\"ss_All Tanks in Dormant Mode\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 353,
+          "layoutY": 628
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Siren Activated",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"Siren Activated\"] != undefined && msg[\"Siren Activated\"] != metadata[\"ss_Siren Activated\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 356,
+          "layoutY": 741
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ESD Command",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"ESD Command To Process PLC\"] != undefined && msg[\"ESD Command To Process PLC\"] != metadata[\"ss_ESD Command To Process PLC\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 360,
+          "layoutY": 529
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ESD Hooter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"ESD Hooter activated in control room\"] != undefined && msg[\"ESD Hooter activated in control room\"] != metadata[\"ss_ESD Hooter activated in control room\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 369,
+          "layoutY": 434
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Power ESD",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"Power ESD Activation after 120 Sec\"] != undefined && msg[\"Power ESD Activation after 120 Sec\"] != metadata[\"ss_Power ESD Activation after 120 Sec\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 371,
+          "layoutY": 334
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "TTL Dispatch",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"TTL Dispatch in Dormant Mode\"] != undefined && msg[\"TTL Dispatch in Dormant Mode\"] != metadata[\"ss_TTL Dispatch in Dormant Mode\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 26,
+          "layoutY": 286
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "TelemetryData",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg['Cause'] = metadata['Cause'];\nmsg['HCD HOOTER ACTIVATED IN CONTROL ROOM'] = metadata['HCD HOOTER ACTIVATED IN CONTROL ROOM'];\nmsg['HCD HOOTER ACTIVATED IN FIELD'] = metadata['HCD HOOTER ACTIVATED IN FIELD'];\nmsg['BARRIER GATE OPENED'] = metadata['BARRIER GATE OPENED'];\nmsg['TLF GANTRY PERMISSIVE POWER OFF'] = metadata['TLF GANTRY PERMISSIVE POWER OFF'];\nmsg['ALL TLF PRODUCT PUMPS STOPPED'] = metadata['ALL TLF PRODUCT PUMPS STOPPED'];\nmsg['ALL TANKS IN DORMANT MODE'] = metadata['ALL TANKS IN DORMANT MODE'];\nmsg['ALL DBBVS CLOSED'] = metadata['ALL DBBVS CLOSED'];\nmsg['ESD COMMAND TO PROCESS PLC'] = metadata['ESD COMMAND TO PROCESS PLC'];\nmsg['SIREN ACTIVATED'] = metadata['SIREN ACTIVATED'];\nmsg['ESD HOOTER ACTIVATED IN CONTROL ROOM'] = metadata['ESD HOOTER ACTIVATED IN CONTROL ROOM'];\nmsg['POWER ESD ACTIVATION AFTER 120 SEC'] = metadata['POWER ESD ACTIVATION AFTER 120 SEC'];\nmsg['TTL DISPATCH IN DORMANT MODE'] = metadata['TTL DISPATCH IN DORMANT MODE'];\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 475,
+          "layoutY": 8
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Type Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"ESD Effect\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 369,
+          "layoutY": 239
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "All ROSOV",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"Cause\"] !== undefined && msg[\"Cause\"] != metadata[\"ss_Cause\"]) {\n    if (msg[\"All ROSOVs closed\"] != undefined && msg[\"All ROSOVs closed\"] != metadata[\"ss_All ROSOVs closed\"]) {\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 641,
+          "layoutY": 204
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "All ROSOV Closed",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"All ROSOVs closed\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "All ROSOV Closed",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 644,
+          "layoutY": 256
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "All ROSOV Closed",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"All ROSOVs closed\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"device_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP02A\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ESD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ESD\";\r\nreturn details;",
+          "alarmType": "All ROSOV Closed"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 157,
+          "layoutY": 14
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 605,
+          "layoutY": 103
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Scope Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "Cause",
+            "All ROSOVs closed",
+            "Barrier Gate opened",
+            "TLF Gantry Permissive Power Off",
+            "All TLF Product Pumps Stopped",
+            "All Tanks in Dormant Mode",
+            "All DBBVs Closed",
+            "ESD Command To Process PLC",
+            "Siren Activated",
+            "ESD Hooter activated in control room",
+            "Power ESD Activation after 120 Sec",
+            "TTL Dispatch in Dormant Mode",
+            "SAPID",
+            "BU",
+            "plantlocation",
+            "plantlocationid"
+          ],
+          "latestTsKeyNames": [
+            "Cause",
+            "All ROSOVs closed",
+            "Barrier Gate opened",
+            "TLF Gantry Permissive Power Off",
+            "All TLF Product Pumps Stopped",
+            "All Tanks in Dormant Mode",
+            "All DBBVs Closed",
+            "ESD Command To Process PLC",
+            "Siren Activated",
+            "ESD Hooter activated in control room",
+            "Power ESD Activation after 120 Sec",
+            "TTL Dispatch in Dormant Mode"
+          ],
+          "getLatestValueWithTs": false
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 9,
+        "type": "True"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 4,
+        "type": "False"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 21,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 22,
+        "toIndex": 14,
+        "type": "True"
+      },
+      {
+        "fromIndex": 22,
+        "toIndex": 0,
+        "type": "False"
+      },
+      {
+        "fromIndex": 23,
+        "toIndex": 12,
+        "type": "True"
+      },
+      {
+        "fromIndex": 23,
+        "toIndex": 13,
+        "type": "False"
+      },
+      {
+        "fromIndex": 24,
+        "toIndex": 11,
+        "type": "True"
+      },
+      {
+        "fromIndex": 24,
+        "toIndex": 5,
+        "type": "False"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 10,
+        "type": "True"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 3,
+        "type": "False"
+      },
+      {
+        "fromIndex": 26,
+        "toIndex": 17,
+        "type": "True"
+      },
+      {
+        "fromIndex": 26,
+        "toIndex": 18,
+        "type": "False"
+      },
+      {
+        "fromIndex": 27,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 27,
+        "toIndex": 8,
+        "type": "False"
+      },
+      {
+        "fromIndex": 28,
+        "toIndex": 16,
+        "type": "False"
+      },
+      {
+        "fromIndex": 28,
+        "toIndex": 15,
+        "type": "True"
+      },
+      {
+        "fromIndex": 29,
+        "toIndex": 20,
+        "type": "True"
+      },
+      {
+        "fromIndex": 29,
+        "toIndex": 21,
+        "type": "False"
+      },
+      {
+        "fromIndex": 30,
+        "toIndex": 19,
+        "type": "True"
+      },
+      {
+        "fromIndex": 30,
+        "toIndex": 1,
+        "type": "False"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 33,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 30,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 29,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 28,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 26,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 27,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 25,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 24,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 23,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 22,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 32,
+        "toIndex": 37,
+        "type": "True"
+      },
+      {
+        "fromIndex": 33,
+        "toIndex": 34,
+        "type": "True"
+      },
+      {
+        "fromIndex": 33,
+        "toIndex": 35,
+        "type": "False"
+      },
+      {
+        "fromIndex": 34,
+        "toIndex": 6,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 35,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 36,
+        "toIndex": 32,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 37,
+        "toIndex": 31,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

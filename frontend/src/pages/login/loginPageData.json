@@ -1,0 +1,12 @@
+{
+    "logoSrc": "zolixIcon",
+    "logoAlt": "HPCL Logo",
+    "logoText": "Hindustan Petroleum Corporation Limited",
+    "signinTitle": "Welcome to HPCL",
+    "signinPlaceholder": "Enter Entity ID",
+    "checkboxLabel": "Agree Terms & Conditions",
+    "forgotPasswordText": "Forgotten your Entity ID?",
+    "signupText": "Signup",
+    "arrow":"→"
+  }
+  

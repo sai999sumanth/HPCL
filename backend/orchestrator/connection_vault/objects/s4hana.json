@@ -1,0 +1,593 @@
+{
+    "key": "s4hana",
+    "name": "S4 Hana",
+    "unique_id": "s4hana",
+    "image": "saphana-genericjdbc-channel.png",
+    "execute_action": "get_data",
+    "icon": "s4hana-icon.svg",
+    "section": "Databases",
+    "section_path": "databases",
+    "has_vault_config": true,
+    "action_configuration": {
+        "parameters": [
+            {
+                "name": "SourceName",
+                "label": "Source Name",
+                "type": "text",
+                "placeholder": "source-name",
+                "depends_on": [],
+                "key": "source",
+                "api": "",
+                "required_keys": [],
+                "params": {
+                    "method": "",
+                    "query": {},
+                    "request_body": {
+                        "name": "",
+                        "action": "",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "connectionName",
+                "label": "Connection",
+                "type": "select",
+                "placeholder": "my-connection",
+                "key": "connection_name",
+                "api": "/credentials",
+                "params": {
+                    "method": "get",
+                    "query": {
+                        "q": "cred_type like '%s4hana%'"
+                    },
+                    "request_body": {},
+                    "parameters": ""
+                },
+                "display_value": "name",
+                "callback": true,
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "Read / Write",
+                "label": "Read / Write",
+                "type": "select",
+                "placeholder": "read-write",
+                "key": "read_write",
+                "options": [
+                    {
+                        "id": "read",
+                        "display_name": "Read"
+                    },
+                    {
+                        "id": "write",
+                        "display_name": "Write"
+                    }
+                ],
+                "api": "",
+                "params": {
+                    "method": "",
+                    "query": "",
+                    "request_body": {},
+                    "parameters": ""
+                },
+                "display_value": "Read / Write",
+                "callback": true,
+                "validators": {
+                    "required": true
+                },
+                "visible": true
+            },
+            {
+                "name": "schemaType",
+                "label": "Schema",
+                "type": "select",
+                "placeholder": "my-schema",
+                "key": "schema_name",
+                "api": "/perform_action/action",
+                "params": {
+                    "required_keys": [
+                        "id"
+                    ],
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "s4hana",
+                        "action": "get_schema",
+                        "params": {
+                            "data": {
+                                "connection_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "depends_on": [
+                    "connection_name"
+                ],
+                "callback": true,
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "tableName",
+                "label": "Table",
+                "type": "select",
+                "placeholder": "my-table",
+                "depends_on": [
+                    "schema_name",
+                    "read_write"
+                ],
+                "key": "table_name",
+                "api": "/perform_action/action",
+                "required_keys": [
+                    "id",
+                    "schema_name"
+                ],
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "s4hana",
+                        "action": "table_name",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "tableName",
+                "label": "Create Table",
+                "type": "text",
+                "placeholder": "my-table",
+                "depends_on": [
+                    "schema_name",
+                    "read_write"
+                ],
+                "key": "create_table_name",
+                "api": "",
+                "required_keys": [],
+                "params": {
+                    "method": "",
+                    "query": {},
+                    "request_body": {
+                        "name": "",
+                        "action": "",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": false
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "columnNames",
+                "label": "Column Name",
+                "type": "multi-select",
+                "placeholder": "my-columns",
+                "depends_on": [
+                    "table_name"
+                ],
+                "key": "columns",
+                "api": "/perform_action/action",
+                "required_keys": [],
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "s4hana",
+                        "action": "column_names",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": "",
+                                "table_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": false
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "query",
+                "label": "SQL Query",
+                "type": "text",
+                "placeholder": "query",
+                "depends_on": [],
+                "key": "query",
+                "api": "/perform_action/action",
+                "params": {
+                    "required_keys": [
+                        "id"
+                    ],
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "s4hana",
+                        "action": "generate_sql_query",
+                        "params": {
+                            "data": {
+                                "schema_name": "",
+                                "table_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "required_keys": [
+                    "schema_name",
+                    "table_name"
+                ],
+                "execute_action": "generate_sql_query",
+                "validators": {
+                    "required": false
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "limit",
+                "label": "Limit",
+                "type": "select",
+                "placeholder": "limit",
+                "key": "limit",
+                "options": [
+                  {
+                    "id": "100",
+                    "display_name": "100"
+                  },
+                  {
+                    "id": "500",
+                    "display_name": "500"
+                  },
+                  {
+                    "id": "1000",
+                    "display_name": "1000"
+                  },
+                  {
+                    "id": "5000",
+                    "display_name": "5000"
+                  },
+                  {
+                    "id": "10000",
+                    "display_name": "10000"
+                  },
+                  {
+                    "id": "50000",
+                    "display_name": "50000"
+                  },
+                  {
+                    "id": "100000",
+                    "display_name": "100000"
+                  },
+                  {
+                    "id": "500000",
+                    "display_name": "500000"
+                  }
+                ],
+                "api": "",
+                "params": {
+                  "method": "",
+                  "query": "",
+                  "request_body": {},
+                  "parameters": ""
+                },
+                "display_value": "Read / Write",
+                "callback": true,
+                "validators": {
+                  "required": true
+                },
+                "visible": true
+            },
+            {
+                "name": "fetch",
+                "label": "Data Fetch",
+                "type": "select",
+                "placeholder": "Select the Data Fetch Type",
+                "depends_on": [],
+                "key": "data-fetch",
+                "api": "/perform_action/action",
+                "required_keys": [],
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "kafka_stream",
+                        "action": "get_kafka_form",
+                        "params": {
+                            "creds": {},
+                            "data": {}
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": false
+                },
+                "options": [
+                    "Inhouse",
+                    "kafka"
+                ],
+                "visible": true
+            }
+        ],
+        "actions": [
+            {
+                "name": "submit",
+                "label": "submit",
+                "placeholder": "submit",
+                "type": "button",
+                "depends_key": "read_write",
+                "depends_value": ["read"],
+                "depends_on": [
+                    "table_name"
+                ],
+                "execute_action": "get_data",
+                "key": "data",
+                "api": "/perform_action/action",
+                "required_keys": [
+                    "id",
+                    "schema_name",
+                    "table_name",
+                    "query",
+                    "columns",
+                    "limit"
+                ],
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "s4hana",
+                        "action": "get_data",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": "",
+                                "table_name": "",
+                                "query": "",
+                                "columns": [],
+                                "limit": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "submit-write",
+                "label": "submit-write",
+                "placeholder": "submit-write",
+                "type": "button",
+                "depends_key": "read_write",
+                "depends_value": ["write"],
+                "execute_action": "write_data",
+                "depends_on": [
+                    "table_name",
+                    "read_write"
+                ],
+                "key": "records",
+                "api": "/perform_action/action",
+                "required_keys": [
+                    "id",
+                    "schema_name",
+                    "table_name"
+                ],
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "ql",
+                        "action": "write_data",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": "",
+                                "create_table_name": "",
+                                "records": []
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "get-columns",
+                "label": "get-columns",
+                "placeholder": "get-columns",
+                "type": "button",
+                "execute_action": "column_names",
+                "depends_on": [
+                    "table_name"
+                ],
+                "key": "data",
+                "api": "/perform_action/action",
+                "required_keys": [
+                    "id",
+                    "schema_name",
+                    "table_name"
+                ],
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "s4hana",
+                        "action": "column_names",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": "",
+                                "table_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "get-primary-key",
+                "label": "get-primary-key",
+                "placeholder": "get-primary-key",
+                "type": "button",
+                "depends_on": [
+                    "table_name"
+                ],
+                "key": "data",
+                "api": "/perform_action/action",
+                "required_keys": [
+                    "id",
+                    "schema_name",
+                    "table_name"
+                ],
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "s4hana",
+                        "action": "primary_key",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": "",
+                                "table_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            }
+        ]
+    },
+    "vault_configuration": [
+        {
+            "type": "text",
+            "label": "Connection Name",
+            "name": "name",
+            "placeholder": "Connection name",
+            "required": true
+        },
+        {
+            "type": "text",
+            "label": "Host",
+            "name": "host",
+            "placeholder": "Enter the host",
+            "required": true
+        },
+        {
+            "type": "text",
+            "label": "Port",
+            "name": "port",
+            "placeholder": "Enter the port",
+            "required": true
+        },
+        {
+            "type": "text",
+            "label": "Username",
+            "name": "username",
+            "placeholder": "Enter the username",
+            "required": true
+        },
+        {
+            "type": "password",
+            "label": "Password",
+            "name": "password",
+            "placeholder": "Enter the password",
+            "required": true
+        },
+        {
+            "type": "text",
+            "label": "Database",
+            "name": "database",
+            "placeholder": "Enter the database"
+        },
+        {
+            "type": "select",
+            "label": "Database Type",
+            "name": "db_type",
+            "options": [
+                {
+                    "label": "S4Hana",
+                    "value": "s4hana"
+                }
+            ],
+            "placeholder": "Select the database type",
+            "required": true
+        },
+        {
+            "type": "checkbox",
+            "label": "Is Active",
+            "name": "is_active",
+            "default": true
+        }
+    ],
+    "display_name": "S4Hana",
+    "displayName": ""
+}

@@ -1,0 +1,738 @@
+Enum CloudProviders str {
+    AWS='AWS'
+    Azure='Azure'
+    GCP='GCP'
+    OCI='OCI'
+}
+
+Enum Types str {
+    Manual='Manual'
+    Query='Query'
+    AIText='AIText'
+}
+
+Enum DashboardStatus str {
+    Draft='Draft'
+    Published='Published'
+    Completed='Completed'
+}
+
+Enum panel_status str {
+    Pending='Pending'
+    Completed='Completed'
+}
+
+Model salesFilters internal {
+    key str
+    cond optional str
+    value optional list str
+}
+Model currencyFormatInternal internal {
+    symbolPosition optional str
+    symbol optional str
+}
+
+Model ColumnConfig internal {
+    columnName optional str
+    d3NumberFormat optional str
+    currencyFormat optional currencyFormatInternal
+}
+Model Tags internal {
+    name optional str
+    value optional str
+}
+
+Model columnInternalM internal {
+    column_name str
+    type str
+}
+
+Model columnInternal internal {
+    column_name optional str
+    type optional str
+}
+
+Model filtersInternal internal {
+    col str
+    op str
+    val list str
+}
+
+Model columnsInternal internal {
+    columnType str
+    sqlExpression str
+    label optional str
+    expressionType optional str
+}
+
+Model metricsInternal internal {
+    expressionType optional str
+    column columnInternalM
+    aggregate str
+    label optional str
+}
+
+Model orderbyInternal internal {
+    order_by optional bool
+    expressionType optional str
+    column columnInternalM
+    aggregate str
+    label optional str
+}
+
+Model groupbyInternal internal {
+    name optional str
+    label optional str
+}
+
+Model x_axisInternal internal {
+    name optional str
+    label optional str
+    sort_ascending optional bool
+    time_format optional str
+}
+
+Model queriesInternal internal {
+    filters list filtersInternal
+    metrics list metricsInternal
+    orderby list orderbyInternal
+    row_limit optional int
+    series_columns optional list str
+    series_limit optional int
+    order_descending bool
+}
+
+Model form_dataInternal internal {
+    x_axis optional x_axisInternal
+    time_grain optional str
+    groupby optional list groupbyInternal
+    query_mode optional str
+    show_legend optional bool
+    column_config optional list ColumnConfig
+}
+
+Model ChartsParams internal {
+    queries list queriesInternal
+    form_data form_dataInternal
+}
+
+Model filtered_keys internal {
+    cloud_account_id optional str
+    region optional str
+    region_name optional str
+    component optional str
+}
+
+Model WidgetFilters internal {
+    key str regex="^[a-zA-Z0-9_.\-=\" ]+$"
+    cond str
+    value optional str regex="^[a-zA-Z0-9,\/+\[\]\{\}\(\)&><#_.\-=\" ]*$"
+    val optional str regex="^[a-zA-Z0-9,\/+\[\]\{\}\(\)&><#_.\-=\" ]*$"
+}
+
+Model Charts {
+    connection_id optional str
+    database optional str
+    schema optional str
+    table str
+    organization_id int
+    visualization_name str
+    name str
+    description optional str
+    params ChartsParams
+    tags optional list Tags
+    group_id optional int
+    group_name optional str
+    type optional Types
+    user_query optional str
+    user_ai_text optional str
+    created_by optional str
+    created_user optional str
+    hashed_value optional str
+
+    Action=> get_tables {
+        connection_id optional int min=1 max=1000000
+        database str
+        schema str
+    }
+    Action=> get_columns {
+        connection_id optional int min=1 max=1000000
+        database str
+        schema str
+        table str
+    }
+    Action=> get_unique_values {
+        connection_id optional int min=1 max=1000000
+        database str
+        schema str
+        table str
+        column list str
+    }
+    Action=> drill_down_data {
+        connection_id optional int min=1 max=1000000
+        database str
+        schema str
+        table str
+        filter_mapping optional dict
+        limit optional int
+    }
+    Action=> dashboard_charts {
+
+    }
+    Action=> get_dashboard_chart_form {
+        unique_id str
+    }
+
+    Action=> get_distinct_values {
+        connection_id optional int min=1 max=1000000
+        schema str
+        table str
+        column list str
+        where_cond optional list WidgetFilters
+    }
+    Action=> get_product_values {
+        connection_id optional int max=1000000
+        schema str
+        table str
+        column list str
+        where_cond optional list dict
+    }
+
+    Action=> generate_dynamic_chart_query {
+        query_context str
+    }
+
+    Action=> save_charts {
+        connection_id optional str
+        record_id optional int
+        database optional str
+        schema optional str
+        table str
+        organization_id int
+        visualization_name str
+        name str
+        description optional str
+        params ChartsParams
+        tags optional list Tags
+        group_id optional int
+        group_name optional str
+        type optional Types
+        user_query optional str
+        user_ai_text optional str
+        created_by optional str
+        created_user optional str
+        hashed_value optional str
+    }
+
+    Action=> get_time_range {
+        text str
+    }
+
+    Action=> get_auto_complete_text {
+        prompt str
+    }
+
+    Action=> connection_vault_routing {
+        connection_id optional int min=1 max=1000000
+        action str
+    }
+
+    Action=> get_creds_details {
+        connection_id optional int min=1 max=1000000
+    }
+
+    Action=> get_schema {
+        connection_id optional int min=1 max=1000000
+        database optional str
+    }
+
+    Action=> generate_vis_data {
+        filters optional list WidgetFilters
+        action str
+        drill_state optional str
+        cross_filters optional list WidgetFilters
+        limit optional int
+        time_grain optional str
+        resp_format optional str regex="^([a-zA-Z0-9_. ]+|)$" // stacked for stacked data, else keep as empty
+        resp_level  optional str // this is to get the graphs at sbu level in industry_performance
+        payload optional dict
+    }
+
+    Action=> enable_cross_filter {
+        filters list WidgetFilters
+    }
+
+    Action=> generate_embedded_url {
+        dash_id str
+    }
+
+    Action=> previous_present_month_sales {
+        cross_filters optional list salesFilters
+        limit optional int
+        time_grain optional str
+        sort_by optional str
+    }
+
+    Action=> sales_drop_down {
+        filters optional list salesFilters
+    }
+
+    Action=> previous_present_month_sales_by_product {
+        cross_filters optional list salesFilters
+        limit optional int
+        time_grain optional str
+        sort_by optional str
+    }
+
+    Action=> previous_present_month_amount_litres {
+        cross_filters optional list salesFilters
+        limit optional int
+        time_grain optional str
+        sort_by optional str
+    }
+
+    Config=> {
+        collection_name=charts
+    }
+}
+
+Model DashboardOrderInternal internal {
+    dashboard_id int
+    display_name optional str
+}
+
+Model CurrencyformInternal internal {
+    symbolPosition optional str
+    symbol optional str
+}
+
+Model ColumnConfigInternal internal {
+    columnName optional str
+    d3NumberFormat optional str
+    currencyFormat optional CurrencyformInternal
+}
+
+Model TagsInternal internal {
+    name optional str
+    value optional str
+}
+
+Model dashboard_filter_internal internal {
+	column optional str
+	op optional str
+	val optional str
+	cond optional str
+}
+
+
+Model chart_layout internal {
+    w optional int
+    h optional int
+    x optional int
+    y optional int
+    i optional str
+    moved optional bool
+    static optional bool
+}
+
+Model OrderByInternal internal {
+    order_by optional bool
+    expressionType optional str
+    column optional columnInternal
+    aggregate optional str
+    label optional str
+}
+
+Model FiltersInternal internal {
+    col optional str
+    op optional str
+    val optional list str
+}
+
+Model ColumnInternal internal {
+    column_name optional str
+    type optional str
+}
+
+Model MetricsInternal internal {
+    expression_type optional str
+    column optional ColumnInternal
+    aggregate optional str
+    label optional str
+}
+
+Model xAxisInternal internal {
+    name optional str
+    label optional str
+}
+
+Model GroupBy internal {
+    name optional str
+    label optional str
+}
+
+Model formDataInternal internal {
+    x_axis optional xAxisInternal
+    groupby optional list GroupBy
+    order_descending optional bool
+    row_limit optional int
+    show_legend optional bool
+    column_config optional list ColumnConfigInternal
+}
+
+Model QueriesInternal internal {
+    filters optional list FiltersInternal
+    metrics optional list MetricsInternal
+    orderby optional list OrderByInternal
+    row_limit optional int
+    series_columns optional list str
+    series_limit optional int
+    order_descending optional bool
+}
+
+Model ParamsInternal internal {
+    queries optional list QueriesInternal
+    form_data optional formDataInternal
+}
+
+Model chartRequestInternal internal {
+    connection_id optional str
+    database optional str
+    schema optional str
+    table optional str
+    organization_id optional int
+    visualization_name optional str
+    name optional str
+    description optional str
+    params optional ParamsInternal
+    tags optional list TagsInternal
+    group_id optional int
+    group_name optional str
+    type optional Types
+    user_query optional str
+    user_ai_text optional str
+    created_by optional str
+    created_user optional str
+    hashed_value optional str
+}
+
+Model chartCloudData internal {
+    cloud_account_name optional str
+    cloud_account_id optional int
+}
+
+Model chartDataInternal internal{
+    chartType optional str
+    chartRequest optional chartRequestInternal
+    showLegend optional bool
+    legendOrientation optional str
+    legendType optional str
+    showLabelLines optional bool
+}
+
+Model chart_widget internal {
+    id optional str
+    name optional str
+    metric optional str
+    value optional int
+    dataset optional str
+    data optional str
+    vizType optional str
+    x optional int
+    y optional int
+    w optional int
+    h optional int
+    i optional str
+    chart_data optional chartDataInternal
+}
+
+Model DashBoards {
+	dashboard_title str
+	charts optional list int
+	changed_by optional str
+	created_by str
+	created_user optional str
+	organization_id int
+	widgets optional list chart_widget
+	layout optional list chart_layout
+	assigned_to optional list str
+	roles optional list str
+	dashboard_filter optional list dashboard_filter_internal
+	dashboard_status optional DashboardStatus
+	group_id optional list int
+	group_name optional list str
+	tags optional list TagsInternal
+
+    Action=> save_dashboards {
+        record_id optional int
+        dashboard_title str
+        charts list int
+        changed_by optional str
+        created_by str
+        created_user optional str
+        widgets optional list chart_widget
+        layout optional list chart_layout
+        assigned_to optional list str
+        roles optional list str
+        dashboard_filter optional list dashboard_filter_internal
+        dashboard_status optional DashboardStatus
+        organization_id int
+        group_id optional list int
+        group_name optional list str
+        tags optional list TagsInternal
+    }
+
+    Action=> get_dashboard_details {
+        organization_id int
+        name optional str
+        value optional str
+    }
+
+    Action=> get_dashboard_groups {
+        organization_id int
+        group_id optional int
+    }
+
+    Action=> get_dashboard_uri {
+        dashboard_name str
+    }
+
+	Config=> {
+	    collection_name=dashboards
+	}
+}
+
+Model Groups {
+    name str
+    description optional str
+    created_by optional str
+    created_user optional str
+    organization_id  int
+
+    Config=> {
+	    collection_name=groups
+	}
+}
+
+Model GroupOrder internal {
+    group_id int
+    group_order int
+}
+
+Model DashboardOrder internal {
+    dashboard_id optional int
+    display_name optional str
+}
+
+Model DashboardGroups {
+    name str
+    description optional str
+    created_by optional str
+    created_user optional str
+    dashboard_order optional list DashboardOrder
+    group_order optional int
+    organization_id  int
+
+    Action=> update_dashboard_groups {
+        record_id int
+        name str
+        description optional str
+        created_by optional str
+        created_user optional str
+        dashboard_order optional list DashboardOrder
+        group_order optional int
+        organization_id int
+    }
+
+    Action=> update_dashboard_group_order {
+        group_orders list GroupOrder
+    }
+
+    Config=> {
+        collection_name=dashboard_groups
+    }
+}
+
+Model AITexts {
+    ai_texts str
+   
+    Config=> {
+        collection_name=ai_texts
+    }
+}
+
+Model SolarPanelCleaning crud_disable {
+
+    Action=> get_solar_dashboard_summary {
+        bu str
+        action str
+        filters optional list WidgetFilters
+        drill_state optional str
+        cross_filters optional list WidgetFilters
+        limit optional int
+        time_grain optional str
+        category optional str
+        is_download optional bool
+    }
+
+
+    Config=> {
+        access_key_mapping='bu,zone,name,sap_id'
+        search_fields='bu,sap_id,name,zone'
+    }
+}
+
+
+Model SolarPanelWetDryCleaning {
+    bu  str
+    sap_id  str
+    location  str
+    zone  str
+    cleaning_type  str
+    frequency  int
+    last_cleaning_date str
+    cleaning_date str
+    panel_status  optional panel_status
+
+    Action=> create_solar_panel_cleaning_record {
+        bu str
+        sap_id str
+        location str
+        zone str
+        cleaning_type str
+        cleaning_date str
+    }
+
+    Action=> get_last_cleaning_date {
+        bu str
+        sap_id str
+        location str
+        zone str
+        cleaning_type str
+    }
+
+    Action=> get_panel_status {
+        bu str
+        sap_id str
+        location str
+        zone str
+        cleaning_type str
+    }
+
+    Action=> get_pending_completed_counts {
+        cleaning_type str
+        filters optional list WidgetFilters
+        drill_state optional str
+        cross_filters optional list WidgetFilters
+        limit optional int
+        time_grain optional str
+    }
+
+    Action=> get_all_dry_wet_cleaning_records {
+        cleaning_type str
+        filters optional list WidgetFilters
+        drill_state optional str
+        cross_filters optional list WidgetFilters
+        limit optional int
+        time_grain optional str
+
+    }
+
+    Config=> {
+        crud_operations='read'
+        access_key_mapping='bu,zone,location,sap_id'
+        search_fields='bu,sap_id,location,zone'
+    }
+}
+
+
+Model HistoricSolarPanelWetDryCleaningCreate {
+    bu  str
+    sap_id  str
+    location  str
+    zone  str
+    cleaning_type  str
+    frequency  int
+    last_cleaning_date str
+    cleaning_date str
+    panel_status  optional panel_status
+
+    Config=> {
+        crud_operations='read'
+        access_key_mapping='bu,zone,location,sap_id'
+        search_fields='bu,sap_id,location,zone'
+    }
+
+}
+
+Model SolarGenerationSummary {
+    bu index_field str
+    sap_id index_field str
+    location_name index_field str
+    zone index_field str
+    source_id index_field str
+    source_name optional str
+    source_type optional str
+    timestamp_ist str
+    capacity_kw optional str
+    solar_generation_kwh str
+    solar_generation_hrs str
+    solar_start_time str
+    solar_end_time str
+    solar_window_hrs str
+    solar_generation_hrs_day optional str
+
+
+    Config=> {
+        crud_operations='read'
+        access_key_mapping='bu,zone,location_name,sap_id,source_id'
+        search_fields='bu,sap_id,location_name,zone,source_id'
+    }
+}
+
+
+Model SolarOutageSummary {
+    bu index_field str
+    sap_id index_field str
+    location_name index_field str
+    zone index_field str
+    source_id index_field str
+    source_name optional str
+    source_type optional str
+    capacity_kw optional str
+    grid_freq str
+    timestamp_ist str
+    solar_outage_hrs str
+    outage_start_time str
+    outage_end_time str
+    solar_outage_hrs_day optional str
+
+    Config=> {
+        crud_operations='read'
+        access_key_mapping='bu,zone,location_name,sap_id,source_id'
+        search_fields='bu,sap_id,location_name,zone,source_id'
+    }
+}
+
+Model SolarPlantCapacity {
+    bu index_field str
+    sap_id index_field unique_field str
+    location_name index_field str
+    zone index_field str
+    capacity_kw index_field unique_field str
+    monitoring str
+    doc optional str
+    ref_marking optional str
+    net_metering optional str
+
+
+    Action=> upload_solar_plant_capacity {
+
+    }
+
+    Config=> {
+        crud_operations='read'
+        access_key_mapping='bu,zone,location_name,sap_id'
+        search_fields='bu,sap_id,location_name,zone'
+    }
+}

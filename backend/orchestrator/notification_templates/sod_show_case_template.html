@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: #333;
+      line-height: 1.5;
+    }
+    h2 {
+      color: #004080;
+      margin-top: 30px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 15px 0;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: left;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+    }
+    .header-block {
+      margin-bottom: 20px;
+    }
+    .header-block p {
+      margin: 2px 0;
+    }
+    .quote-block {
+      background: #f9f9f9;
+      border-left: 4px solid #004080;
+      padding: 10px;
+      margin: 20px 0;
+      font-style: italic;
+    }
+    table { table-layout: fixed; }
+    p {
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header block -->
+  <div class="header-block">
+    <p style="margin-bottom:5px; overflow:hidden;">
+        <span style="float:left;"><b>Ref:</b> HPC{{transporter_code}}</span>
+        <span style="float:right;"><b>Date:</b> {{date}}</span>
+    </p>
+    <p><b><br>To,</b><br>
+
+      <!-- Transporter Code -->
+      {% if transporter_code %}
+          {{ transporter_code }}
+      {% else %}
+          <span style="display:inline-block; width:75px;">&nbsp;</span>
+      {% endif %}
+      <br>
+  
+      <!-- Transporter Name -->
+      {% if transporter_name %}
+          {{ transporter_name }}
+      {% else %}
+          <span style="display:inline-block; width:75px;">&nbsp;</span>
+      {% endif %}
+      <br>
+  
+      <!-- Transporter Address -->
+      {% if transporter_address %}
+          {{ transporter_address }}
+      {% else %}
+          <span style="display:inline-block; width:150px;">&nbsp;</span>
+      {% endif %}
+  
+  </p>
+  <br>  
+    <p>
+      <b>Subject:</b> SHOW CAUSE NOTICE due to non-compliance of Bulk Petroleum Products Road Transportation 
+      Agreement dated :
+      {% if start_date %}
+          {{ start_date }}
+      {% else %}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {% endif %}
+      and with/without Addendum dated :
+      {% if end_date %}
+          {{ end_date }}
+      {% else %}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {% endif %}
+    </p>    
+</div>
+  <p>Dear Sir,</p>
+  <p>
+    This refers to Bulk Petroleum Products Road Transport Agreement (hereinafter referred to as the 
+    “Agreement”) dated :
+
+    <!-- Start Date -->
+    {% if start_date %}
+        {{ start_date }}
+    {% else %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {% endif %}
+
+    with/without Addendum dated :
+
+    <!-- End Date -->
+    {% if end_date %}
+        {{ end_date }}
+    {% else %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {% endif %}
+
+    entered into by and between Hindustan Petroleum Corporation Limited (hereinafter referred to as 
+    the “Corporation”) and yourself , running business as a carrier under the name 
+
+    <!-- Transporter Name -->
+    {% if transporter_name %}
+        {{ transporter_name }}
+    {% else %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {% endif %}
+
+    , whereby you have been appointed as a Transporter for transporting the petroleum products as per 
+    the terms and conditions of the said Agreement and applicable policies and guidelines of the Corporation.
+  </p>
+
+  <p>
+    Please note, that during the period from {{violation_stat_date}}  till {{violation_end_date}} there are {{count}} cases of 
+    {{violation}}s.
+    The details are given below:-
+  </p>
+  <table style="table-layout: fixed; width: 100%;">
+    <thead>
+        <tr>
+            {% for col in vts_violations_table.columns %}
+            <th style="word-wrap: break-word;">{{ col }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for row in vts_violations_table.to_dict(orient='records') %}
+        <tr>
+            {% for col in vts_violations_table.columns %}
+            <td style="word-wrap: break-word;">{{ row[col] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <p>
+    Despite regular sensitization and intimation in the past upon safety concerns like movement of 
+    the vehicle from supply location to destination on approved route, maintaining speed within the approved 
+    limits, and prohibition on unauthorized stoppages etc., still the deviations continue to happen till date. 
+  </p>
+  <div>
+    <p>
+      In this context, we wish to reproduce the following clauses of the tender:
+    </p>
+    <div class="quote-block">
+      <p><br>
+      Special Terms and Conditions, Clause 11 (Statutory Compliance), Sub-clause 8, states that;<br>
+      The Transporter carrying dangerous or hazardous product, shall follow the routes specified by the consigner.
+      <b></b><br></p>
+    </div>
+
+    {% if black_list_conditions %}
+    <p style="color:red;">
+        {{ black_list_conditions }}
+    </p>
+    {% endif %}
+    <p>
+        However, in case complicity of the Contractor is established even in first instance of malpractice, 
+        irregularity or blacklisting, the entire fleet will be blacklisted, contract shall be terminated along with
+        forfeiture of SD. 
+    </p>
+    <p>
+        The above deviations/violations committed by you on the aforementioned dates amount to
+        irregularities with respect to violations under ITDG of the TTs run by you and accordingly are liable for
+        action as per  ITDG which states as under:
+    </p>
+  </div>
+  <!-- Common penalties table -->
+  <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; font-family: Arial, sans-serif; font-size:11px;text-align:left; width:100%;">
+    <thead>
+        <tr style="text-align:center;">
+          <th rowspan="2" style="text-align:center;">Clause No.</th>
+          <th rowspan="2" style="text-align:center;">Type of malpractice / irregularity</th>
+          <th colspan="3" style="text-align:center;">Penalty against number of instances</th>
+        </tr>
+        <tr style="text-align:center;">
+          <th style="text-align:center;">First</th>
+          <th style="text-align:center;">Second</th>
+          <th style="text-align:center;">Third</th>
+        </tr>
+      </thead>
+    <tbody>
+      <tr>
+        <td>8.2.2.1</td>
+        <td>(b) Over speeding violation as per Oil Company guidelines</td>
+        <td>TT shall be suspended for 7 days</td>
+        <td>TT &amp; TT crew shall be suspended for 15 Days</td>
+        <td>TT &amp; TT crew shall be suspended for 1 month.</td>
+      </tr>
+      <tr style="text-align:center;">
+        <td colspan="5" style="text-align:center; font-weight:bold;">
+          Note - In case of fourth instance or onwards, same penalty as in case of third instance, shall be imposed.
+        </td>
+      </tr>
+      <tr>
+        <td>8.2.2.3</td>
+        <td>
+          (a) Established repetitive unauthorized stoppage enroute<br>
+          (b) Established repetitive unauthorized diversion from specified route
+        </td>
+        <td>TT &amp; TT Crew shall be suspended for 1 month.</td>
+        <td>TT &amp; TT Crew shall be suspended for 3 months.</td>
+        <td>TT &amp; TT crew shall be blacklisted.</td>
+      </tr>
+      <tr>
+        <td>8.2.2.3</td>
+        <td>
+          (a) Established repetitive unauthorized stoppage enroute<br>
+          (b) Established repetitive unauthorized diversion from specified route
+        </td>
+        <td>TT &amp; TT Crew shall be suspended for 1 month.</td>
+        <td>TT &amp; TT Crew shall be suspended for 3 months.</td>
+        <td>TT &amp; TT crew shall be blacklisted.</td>
+      </tr>
+      <tr>
+        <td>8.2.2.4</td>
+        <td>
+          (a) Established case of pilferage or short delivery of product by more than 2% of dispatched quantity without justifiable reasons.<br>
+          (b) Established case of non-delivery of product and / or delivery of product to other than the consignee
+        </td>
+        <td>TT &amp; TT Crew shall be blacklisted along with recovery of product loss from the transporter.</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>8.2.2.5</td>
+        <td>
+            Short Delivery of product having shortage more than 0.6% but less than or equal to 2% of the dispatched quantity without any justifiable reasons.
+        </td>
+        <td>TT &amp; TT Crew shall be suspended for 1 Month along with recovery of product shortage from the transporter</td>
+        <td>TT &amp; TT Crew shall be suspended for 3 Months along with recovery of product shortage from the transporter</td>
+        <td>TT &amp; TT Crew shall be suspended for 6 Months along with recovery of product shortage from the transporter</td>
+      </tr>
+      <tr style="text-align:center;">
+        <td colspan="5" style="text-align:center; font-weight:bold;">
+            Note - In case of fourth instance or onwards, same penalty as in case of third instance, shall be imposed.
+        </td>
+      </tr>
+      <tr>
+        <td>8.2.2.8</td>
+        <td>
+          (a) Established   case of tampering/ damaging of VMU.<br>
+          (b) Established   intentional disconnection of power/cable of VMU enroute.<br>
+          (c) Unauthorized removal   of VMU from original mounting.
+        </td>
+        <td>TT &amp; TT crew shall be blacklisted.</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <p>
+    YOUR TRUCKS HAVE BEEN BLOCKED AS AN URGENT PREVENTIVE MEASURE IN VIEW OF THE SERIOUS
+    RISK POSED TO PUBLIC SAFETY AND THE INTEGRITY OF THE PRODUCT. THE CONSIGNMENT INVOLVES
+    HIGHLY INFLAMMABLE AND  HAZARDOUS MATERIAL, ANY NEGLIGENCE OR VIOLATION MAY HAVE
+    THE POTENTIAL TO ENDANGER HUMAN LIFE AND PROPERTY AND CAUSE SEVERE CONSEQUENCES. IN
+    THESE CIRCUMSTANCES, IMMEDIATE ACTION WAS NECESSARY.
+  </p>
+  <p>You are hereby given an opportunity to submit your explanation as early as possible and not later than
+    seven (07) days from the date of receipt of this notice, as to why action should not be initiated against
+    you under the provisions of the Transport Agreement and the ITDG (Industry Transport Discipline
+    Guidelines version 5.0).</p>  
+  <p>
+    In the event that no satisfactory explanation/reply is received within the stipulated period, it shall be
+    presumed that you have no explanation to offer in the matter, and appropriate action shall be
+    initiated.
+  </p>
+  <p>
+    This notice is issued without prejudice to the rights under the Transport Agreement, the Transport
+    Discipline Guidelines, and the policy guidelines of the Corporation.
+  </p>
+  <br>
+  <p>
+    Thanking you,<br>
+    Very truly yours,<br>
+    <b><br>{{officer_name}}</b><br>
+    {{officer_designation}}<br>
+    {{location}}<br>
+  </p>
+  <p>
+    This notice has been automatically generated by the system, no separate communication will be issued in this regard. The action indicated herein is final and binding as per the provisions of the ITDG.
+  </p>
+</body>
+</html>

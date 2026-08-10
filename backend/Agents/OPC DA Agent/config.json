@@ -1,0 +1,33 @@
+{
+  "location_id": "",
+  "conn_host": "",
+  "conn_port": "5672",
+  "conn_channel": "command_listener",
+  "conn_write": "command_write",
+  "conn_exchange": "",
+  "full_dump": false,
+  "log_debug": true,
+  "opc_simulator_file": "",
+  "conn_user": "hpcl_ceg",
+  "conn_vhost": "hpcl_ceg",
+  "conn_secret": "",
+  "OpcDaIpAddresses": [
+    [ "", "" ],
+    [ "", "" ]
+  ],
+  "ProgramId": "",
+  "FullDumpIntervalMinutes": 30,
+  "ActivePeriodStart": "8:00",
+  "ActivePeriodEnd": "18:00",
+  "ActivePollingSeconds": 10,
+  "InactivePollingSeconds": 30,
+  "esd_value": "1",
+  "status_url": "",
+  "api_key":  "",
+  "service_status_time": 1,
+  "comm_status_time": 4,
+  "esd_sensor_name": "ESD Active",
+  "device_json_url": "",
+  "MaxLogFileSizeMB": 500,
+  "LogRetentionDays": 15
+}

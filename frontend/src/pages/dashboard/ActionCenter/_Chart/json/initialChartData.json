@@ -1,0 +1,23 @@
+{
+    "metrics": [
+      {
+        "column": "amount",
+        "aggregate": "COUNT",
+        "type": "numeric"
+      }
+    ],
+    "dimensions": [
+      {
+        "column": "cloud_account_id",
+        "type": "character varying"
+      }
+    ],
+    "filters": [
+      {
+        "column": "region_name",
+        "operator": "NOT IN",
+        "value": ["in central", "US East (N. Virginia)", "EU (London)"],
+        "type": "character varying"
+      }
+    ]
+  }

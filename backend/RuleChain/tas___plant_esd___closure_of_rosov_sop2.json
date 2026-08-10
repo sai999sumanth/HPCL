@@ -1,0 +1,335 @@
+{
+  "ruleChain": {
+    "name": "TAS - Plant ESD - Closure of ROSOV SOP2",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "additionalInfo": {
+      "description": ""
+    }
+  },
+  "metadata": {
+    "version": 4,
+    "firstNodeIndex": 8,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.rest.TbRestApiCallNode",
+        "name": "CreatePfAlert",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 3,
+        "configuration": {
+          "restEndpointUrlPattern": "https://iris.bpcl.in/api/create_alert",
+          "requestMethod": "POST",
+          "useSimpleClientHttpFactory": false,
+          "enableProxy": false,
+          "useSystemProxyProperties": false,
+          "proxyScheme": null,
+          "proxyHost": null,
+          "proxyPort": 0,
+          "proxyUser": null,
+          "proxyPassword": null,
+          "readTimeoutMs": 0,
+          "maxParallelRequestsCount": 0,
+          "headers": {},
+          "maxInMemoryBufferSizeInKb": 256
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 876,
+          "layoutY": 477
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Esd Pf Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"ESD STATUS\"] != undefined && (msg[\"ESD STATUS\"] != metadata[\"ss_ESD STATUS\"]) && (msg[\"ESD STATUS\"] != \"-99\")){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 266,
+          "layoutY": 509
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ESD",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"ESD\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 459,
+          "layoutY": 59
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Scope Attributes",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "SAPID",
+            "ESD STATUS"
+          ],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false,
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 626,
+          "layoutY": 153
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ESD",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"ESD\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 26,
+          "layoutY": 306
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "ESD PF Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD Closer\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP002\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['verify_proof_test'] = \"True\"\ndetails['additionalInfo']['customData'] = msg_data\n\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "ESD PF Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 562,
+          "layoutY": 482
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check ESD",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"ESD STATUS\"] != undefined && (msg[\"ESD STATUS\"] != metadata[\"ss_ESD STATUS\"])){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 285,
+          "layoutY": 307
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Plant ESD Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD Closer\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP002\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "Plant ESD Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 576,
+          "layoutY": 251
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 314,
+          "layoutY": 151
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "ESD PF Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD Closer\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP002\";\ndetails['additionalInfo']['verify_proof_test'] = \"True\"\nreturn details;",
+          "alarmType": "ESD PF Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 559,
+          "layoutY": 579
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "localhost",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 874,
+          "layoutY": 315
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Plant ESD Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Plant ESD Closer\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP002\";\nreturn details;",
+          "alarmType": "Plant ESD Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 578,
+          "layoutY": 377
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 9,
+        "type": "False"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 6,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 11,
+        "type": "False"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 10,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 10,
+        "type": "Cleared"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

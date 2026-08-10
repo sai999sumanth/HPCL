@@ -1,0 +1,37 @@
+{
+  "oracle": {
+      "port": 1521,
+      "sid": "ORCL",
+      "user_name": "hostdncinterface",
+      "password": "dnc#25hpcl"
+  },
+  "opcdaipmapp": {
+      "10.1.83.130": "10.1.83.130",
+      "10.1.83.194": "10.1.83.194",
+      "10.1.83.131": "10.1.83.131",
+      "10.1.83.195": "10.1.83.195"
+  },
+  "opcdaservicepath": "C:\Users\Administrator\Downloads\add_ips\Release\connected_ip.txt",
+  "oracle_tables": [
+      "HOST_SICKTTS", "HOST_CANCELLEDTTS", "HOST_KFACTORCHANGES",
+      "HOST_LOCALLOADEDTTS", "HOST_BAYREASSIGNMENT", "HOST_MANUALBAYASSIGNED",
+      "HOST_MANUALFANPRINTED", "HOST_UNAUTHORIZEDFLOW", "HOST_OVERLOADEDTTS", "HOST_MFMKFACTOR", "MASTER_STATUS"],
+
+
+  "conn_host": "10.90.38.167",
+  "conn_port": "5672",
+  "conn_user": "hpcl_ceg",
+  "conn_secret": "algo#ceg@4321",
+  "conn_channel": "test_sync",
+  "conn_vhost": "hpcl_ceg",
+
+  "postgresql": {
+      "host": "10.90.38.162",
+      "port": 5432,
+      "user_name": "ceg_user",
+      "password": "TTNqetkiJLPM50jC",
+      "database_name": "hpcl_ceg"
+  },
+
+  "sap_id": "1128"
+}

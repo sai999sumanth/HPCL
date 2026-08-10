@@ -1,0 +1,346 @@
+Model WidgetFilters internal {
+    key str
+    cond str
+    value optional str
+    values optional list str
+}
+
+// Level filter: sales_area | region | zone | plant | dealer (dynamic hierarchy)
+Model LevelFilter internal {
+    level optional str regex="^(sales_area|region|zone|plant|dealer)$"
+}
+
+// Drill target: locations | dealers | outlets | dealer_tank
+Model DrillFilter internal {
+    drill_to optional str regex="^(locations|dealers|outlets|dealer_tank)$"
+}
+
+// ========== IMS (Indent Management System) - Dev Phase 1 ==========
+Model IndentManagement crud_disable {
+    // Total Indents Placed by Product and Volume; drill to locations
+    Action=> get_indents_by_product_volume {
+        data WidgetFilters
+        level_filter optional LevelFilter
+        drill_filter optional DrillFilter
+    }
+
+    // Pending Vs Executed Indents; drill to locations
+    Action=> get_pending_vs_executed_indents {
+        data WidgetFilters
+        level_filter optional LevelFilter
+        drill_filter optional DrillFilter
+    }
+
+    // Cancelled Indents; drill to locations
+    Action=> get_cancelled_indents {
+        data WidgetFilters
+        level_filter optional LevelFilter
+        drill_filter optional DrillFilter
+    }
+
+    // Total DTP dealers count; drill to dealer level
+    Action=> get_dtp_dealers_count {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Top DTP customers with sales cutoff (e.g. < 5kl per month); drill to dealer
+    Action=> get_top_dtp_customers {
+        data WidgetFilters
+        sales_cutoff_kl optional float
+        top_count optional default=10 int
+        drill_filter optional DrillFilter
+    }
+
+    // Total Indents placed by DCT customers by product and volume; drill to dealers
+    Action=> get_dct_indents_by_product_volume {
+        data WidgetFilters
+        level_filter optional LevelFilter
+        drill_filter optional DrillFilter
+    }
+
+    // Trucks failed to report; drill to dealers
+    Action=> get_trucks_failed_to_report {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Total TPT indents vs trucks availability; drill to dealers
+    Action=> get_tpt_indents_vs_availability {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Backward compatible: same as get_indents_by_product_volume
+    Action=> get_indents_details {
+        data WidgetFilters
+        level_filter optional LevelFilter
+        drill_filter optional DrillFilter
+    }
+
+    // Average R3 - R1 data; plant wise
+    Action=> get_r3_r1_details {
+       action str
+       drill_state str
+       filters list WidgetFilters
+       cross_filters list WidgetFilters
+    }
+
+    // For LPG Dryout pattern
+    Action=> get_indent_details {
+        bu optional str // LPG, TAS, DS
+        table_data optional bool // This will decide whether data required or counts required
+        action str
+        filters list WidgetFilters
+        cross_filters optional list WidgetFilters
+        skip optional default=0 int // For skip
+        limit optional default=20 int // Records per page
+    }
+}
+
+// ========== Dry-Out (Novex) - Dev Phase 1 ==========
+// dry_out_type has to pass in WidgetFilters as 0 (dry-out) or 1 (Intra dry-out)
+Model DryOutManagement crud_disable {
+    // Total dry-out locations; by product; drill to locations
+    Action=> get_dry_out_locations {
+        data WidgetFilters
+        by_product optional bool
+        drill_filter optional DrillFilter
+    }
+
+    // Dry-out indent analysis: with indent / without indent by product; Pending vs Executed; drill to locations
+    Action=> get_dry_out_indent_analysis {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Backward compatible: same as get_dry_out_indent_analysis
+    Action=> get_dry_out_indents {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Zone Wise Dry Out Trends
+    Action=> get_retail_outlet_stockouts {
+        filters optional list WidgetFilters
+        action str
+        drill_state optional str
+        cross_filters optional list WidgetFilters
+        limit optional int
+        time_grain optional str
+        resp_format optional str regex="^([a-zA-Z0-9_. ]+|)$" // stacked for stacked data, else keep as empty
+        resp_level  optional str // this is to get the graphs at sbu level in industry_performance
+        payload optional dict
+    }
+
+    // Lost Of Sales Volume
+    Action=> get_loss_of_sales_volume {
+        filters optional list WidgetFilters
+        action str
+        drill_state optional str
+        cross_filters optional list WidgetFilters
+        limit optional int
+        time_grain optional str
+        resp_format optional str regex="^([a-zA-Z0-9_. ]+|)$" // stacked for stacked data, else keep as empty
+        resp_level  optional str // this is to get the graphs at sbu level in industry_performance
+        payload optional dict
+    }
+}
+
+// ========== CRIS (combined) - backward compatibility; use TankInventory / NozzleSales for new use ==========
+Model nozzle_sales_stock crud_disable {
+    Action=> stock_availability {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+    Action=> tank_utilization {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+    Action=> nozzle_sales_analysis {
+        data WidgetFilters
+    }
+    Action=> nozzle_sales_comparison {
+        data WidgetFilters
+    }
+    Action=> nozzle_sales_prev_day_comparison {
+        data WidgetFilters
+    }
+    Action=> product_availability_days {
+        filters optional list WidgetFilters
+        cross_filters optional list WidgetFilters
+        level_filter optional LevelFilter
+        action str
+        drill_state optional str
+    }
+}
+
+// ========== Tank Inventory (CRIS) - Dev Phase 1 ==========
+Model TankInventory crud_disable {
+    // Stock availability by product; drill to dealer and tank level
+    Action=> stock_availability {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Tank utilization by product (Capacity vs Quantity); drill to dealer and tank level
+    Action=> tank_utilization {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+}
+
+// ========== Nozzle Sales (CRIS) - Dev Phase 1 ==========
+Model NozzleSales crud_disable {
+    // Nozzle sales by product; drill to outlet and products
+    Action=> get_nozzle_sales_by_product {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Today's vs Yesterday's sales by product
+    Action=> get_nozzle_sales_day_comparison {
+        data WidgetFilters
+    }
+
+    // MS vs Power / HSD vs Turbo sales performance
+    Action=> get_product_performance {
+        data WidgetFilters
+    }
+
+    // No of outlets degrading and percentage of degrading by product; drill to outlet
+    Action=> get_degrading_outlets {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Top dealers with degrading sales overall and by product
+    Action=> get_top_degrading_dealers {
+        data WidgetFilters
+        top_count optional default=10 int
+        by_product optional bool
+    }
+
+    // High risk outlets (dealers where sales drop was high)
+    Action=> get_high_risk_outlets {
+        data WidgetFilters
+    }
+
+    // Zero sales outlets from last 1 week / 15 days / month based on selection; drill to outlet
+    Action=> get_zero_sales_outlets {
+        data WidgetFilters
+        period optional str regex="^(1_week|15_days|1_month)$"
+        drill_filter optional DrillFilter
+    }
+
+    // Outlets grouping by degrowth percentage (e.g. 5-10%, 10-20%, ...)
+    Action=> get_outlets_by_degrowth_group {
+        data WidgetFilters
+    }
+
+    // Top locations where Power sales growing rapidly; drill to location
+    Action=> get_power_sales_growth_locations {
+        data WidgetFilters
+        top_count optional default=10 int
+        drill_filter optional DrillFilter
+    }
+
+    // Legacy / linked: MTD, Today, by product (reuse filters)
+    Action=> nozzle_sales_analysis {
+        data WidgetFilters
+    }
+
+    // Present year vs last year comparison
+    Action=> nozzle_sales_comparison {
+        data WidgetFilters
+    }
+    
+    Action=> nozzle_sales_tmt {
+        filters optional list WidgetFilters
+        level_filter optional LevelFilter
+        cross_filters optional list WidgetFilters
+        segregation optional list str
+        ms_products optional list str
+        hsd_products optional list str
+        action str
+    }
+}
+
+// ========== Retail Sales (Single Store, including Lubes) - Dev Phase 1 ==========
+Model RetailSales crud_disable {
+    // Sales of all products in sales area, bifurcated by product; drill to dealer wise sales by product
+    Action=> get_sales_by_product {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Sales comparison for lubes and ARB sales; drill to dealer and product
+    Action=> get_lubes_arb_comparison {
+        data WidgetFilters
+        drill_filter optional DrillFilter
+    }
+
+    // Lube sales comparison
+    Action=> get_lube_sales_comparison {
+        data WidgetFilters
+    }
+
+    // Sales comparison: Yesterday | MTD | YTD | Historical
+    Action=> get_sales_comparison {
+        data WidgetFilters
+        comparison_type str regex="^(yesterday|mtd|ytd|historical)$"
+    }
+
+    // Volume tracking
+    Action=> get_volume_tracking {
+        data WidgetFilters
+    }
+}
+
+// ========== Dealer Management (Ledger and Tar Analysis) - Dev Phase 1 ==========
+Model DealerManagement crud_disable {
+    // Last N transactions in sales area; dealer level filters supported
+    Action=> get_last_transactions {
+        data WidgetFilters
+        transaction_count optional default=20 int
+        dealer_specific optional bool
+    }
+
+    // Alias: same as get_last_transactions (last 20 by dealer)
+    Action=> get_retail_ledger_transactions {
+        data WidgetFilters
+        transaction_count optional default=20 int
+    }
+
+    // Total outstanding dues / Total outstanding as of today
+    Action=> get_total_outstanding_dues {
+        data WidgetFilters
+    }
+
+    // Top dealers having outstanding
+    Action=> get_top_outstanding_dealers {
+        data WidgetFilters
+        top_count optional int
+    }
+
+    // Outstanding group by days: 0-1 day, 2-4 days, 5 days, 5-10, 10-15, >15 days
+    Action=> get_outstanding_by_days_group {
+        data WidgetFilters
+    }
+
+    // Dealer wise table for pending outstanding and days outstanding
+    Action=> get_dealer_outstanding_table {
+        data WidgetFilters
+    }
+
+    // Overdue dealers count and amount (legacy)
+    Action=> get_outstanding_details {
+        data WidgetFilters
+    }
+
+    // Get outstanding dealers list (legacy); top_count=0 or omitted => all
+    Action=> get_outstanding_dealers {
+        data WidgetFilters
+        top_count optional int
+    }
+}

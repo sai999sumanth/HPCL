@@ -1,0 +1,312 @@
+{
+  "key": "s4hana",
+  "name": "S4 Hana",
+  "unique_id": "s4hana",
+  "image": "saphana-genericjdbc-channel.png",
+  "execute_action": "get_data",
+  "parameters": [
+    {
+      "name": "SourceName",
+      "label": "Source Name",
+      "type": "text",
+      "placeholder": "source-name",
+      "depends_on": [],
+      "key": "source",
+      "api": "",
+      "required_keys": [],
+      "params": {
+        "method": "",
+        "query": {},
+        "request_body": {
+          "name": "",
+          "action": "",
+          "params": {
+            "creds": {},
+            "data": {
+              "connection_name": "",
+              "schema_name": ""
+            }
+          }
+        },
+        "parameters": ""
+      },
+      "validators": {
+        "required": true
+      },
+      "options": [],
+      "visible": true
+    },
+    {
+      "name": "connectionName",
+      "label": "Connection",
+      "type": "select",
+      "placeholder": "my-connection",
+      "key": "connection_name",
+      "api": "/credentials",
+      "params": {
+        "method": "get",
+        "query": {
+          "q": "cred_type like '%postgres%'"
+        },
+        "request_body": {},
+        "parameters": ""
+      },
+      "display_value": "name",
+      "callback": true,
+      "validators": {
+        "required": true
+      },
+      "options": [
+        {
+          "label": "S4 Hana",
+          "value": "2"
+        }
+      ],
+      "visible": true
+    },
+    {
+      "name": "Read / Write",
+      "label": "Read / Write",
+      "type": "select",
+      "placeholder": "read-write",
+      "key": "read_write",
+      "options": [
+        {
+          "id": "read",
+          "display_name": "Read"
+        },
+        {
+          "id": "write",
+          "display_name": "Write"
+        }
+      ],
+      "api": "",
+      "params": {
+        "method": "",
+        "query": "",
+        "request_body": {},
+        "parameters": ""
+      },
+      "display_value": "Read / Write",
+      "callback": true,
+      "validators": {
+        "required": true
+      },
+      "visible": true
+    },
+    {
+      "name": "schemaType",
+      "label": "Schema",
+      "type": "select",
+      "placeholder": "my-schema",
+      "key": "schema_name",
+      "api": "/perform_action/action",
+      "params": {
+        "required_keys": [
+          "id"
+        ],
+        "method": "post",
+        "query": {},
+        "request_body": {
+          "name": "postgresql",
+          "action": "get_schema",
+          "params": {
+            "data": {
+              "connection_name": ""
+            }
+          }
+        },
+        "parameters": ""
+      },
+      "depends_on": [
+        "connection_name"
+      ],
+      "callback": true,
+      "validators": {
+        "required": true
+      },
+      "options": [
+        "public"
+      ],
+      "visible": true
+    },
+    {
+      "name": "tableName",
+      "label": "Table",
+      "type": "select",
+      "placeholder": "my-table",
+      "depends_on": [
+        "schema_name",
+        "read_write"
+      ],
+      "key": "table_name",
+      "api": "/perform_action/action",
+      "required_keys": [
+        "id",
+        "schema_name"
+      ],
+      "params": {
+        "method": "post",
+        "query": {},
+        "request_body": {
+          "name": "postgresql",
+          "action": "table_name",
+          "params": {
+            "creds": {},
+            "data": {
+              "connection_name": "",
+              "schema_name": ""
+            }
+          }
+        },
+        "parameters": ""
+      },
+      "validators": {
+        "required": true
+      },
+      "options": [
+        "Employee_Details_Mask",
+        "60caf786d1279a0043066e88"
+      ],
+      "visible": true
+    },
+    {
+      "name": "tableName",
+      "label": "Create Table",
+      "type": "text",
+      "placeholder": "my-table",
+      "depends_on": [
+        "schema_name",
+        "read_write"
+      ],
+      "key": "create_table_name",
+      "api": "",
+      "required_keys": [],
+      "params": {
+        "method": "",
+        "query": {},
+        "request_body": {
+          "name": "",
+          "action": "",
+          "params": {
+            "creds": {},
+            "data": {
+              "connection_name": "",
+              "schema_name": ""
+            }
+          }
+        },
+        "parameters": ""
+      },
+      "validators": {
+        "required": false
+      },
+      "options": [],
+      "visible": true
+    },
+    {
+      "name": "columnNames",
+      "label": "Column Name",
+      "type": "multi-select",
+      "placeholder": "my-columns",
+      "depends_on": [
+        "table_name"
+      ],
+      "key": "column_name",
+      "api": "/perform_action/action",
+      "required_keys": [],
+      "params": {
+        "method": "post",
+        "query": {},
+        "request_body": {
+          "name": "postgresql",
+          "action": "column_names",
+          "params": {
+            "creds": {},
+            "data": {
+              "connection_name": "",
+              "schema_name": "",
+              "table_name": ""
+            }
+          }
+        },
+        "parameters": ""
+      },
+      "validators": {
+        "required": false
+      },
+      "options": [],
+      "visible": true
+    },
+    {
+      "name": "query",
+      "label": "SQL Query",
+      "type": "text",
+      "placeholder": "query",
+      "depends_on": [],
+      "key": "query",
+      "api": "/perform_action/action",
+      "params": {
+        "required_keys": [
+          "id"
+        ],
+        "method": "post",
+        "query": {},
+        "request_body": {
+          "name": "postgresql",
+          "action": "generate_sql_query",
+          "params": {
+            "data": {
+              "schema_name": "",
+              "table_name": ""
+            }
+          }
+        },
+        "parameters": ""
+      },
+      "required_keys": [
+        "schema_name",
+        "table_name"
+      ],
+      "execute_action": "generate_sql_query",
+      "validators": {
+        "required": false
+      },
+      "options": [],
+      "visible": true
+    },
+    {
+      "name": "fetch",
+      "label": "Data Fetch",
+      "type": "select",
+      "placeholder": "Select the Data Fetch Type",
+      "depends_on": [],
+      "key": "data-fetch",
+      "api": "/perform_action/action",
+      "required_keys": [],
+      "params": {
+        "method": "post",
+        "query": {},
+        "request_body": {
+          "name": "kafka_stream",
+          "action": "get_kafka_form",
+          "params": {
+            "creds": {},
+            "data": {}
+          }
+        },
+        "parameters": ""
+      },
+      "validators": {
+        "required": false
+      },
+      "options": [
+        "Inhouse",
+        "kafka"
+      ],
+      "visible": true
+    }
+  ],
+  "icon": "s4hana-icon.svg",
+  "unique_uuid": "0626fbfd-baea-4af8-8d7f-2d547a39fdfe"
+}

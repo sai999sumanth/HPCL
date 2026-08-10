@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ticket Notification</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #ffffff; padding: 30px; color: #000000; }
+    .wrapper { max-width: 600px; margin: 0 auto; }
+    .main-message { font-size: 14px; line-height: 1.85; color: #000000; }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="main-message">
+    Ticket (<strong>{{ ticket_id }}</strong>)  has been Returned by OCC Team pertaining to {{ "location" if location_name else "zone" }}
+    (<strong>{{ location_name or zone_name }}</strong>)for <strong>"{{ category }}"</strong> — <strong>"{{ sub_category }}"</strong>
+    as observation submitted was found non satisfactory.  
+    Please reinvestigate observations further more in detail & resubmit response within  <strong>{{ response_days }} Day(s)</strong> and 
+    also initiative taken to avoid such observations repeating in future.
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# ── VCS / meta ────────────────────────────────────────────────────────────────
+.git
+.github
+.gitignore
+.dockerignore
+*.md
+*.MD
+
+# ── Node / frontend build artifacts ───────────────────────────────────────────
+frontend/node_modules
+frontend/dist
+frontend/.vite
+**/node_modules
+**/*.tsbuildinfo
+
+# ── Python ────────────────────────────────────────────────────────────────────
+**/__pycache__
+**/*.py[cod]
+**/.venv
+**/venv
+**/env
+
+# ── Secrets — MUST NOT be injected into the image build context ───────────────
+# .alg_env / .env files are delivered at RUNTIME via a read-only volume mount
+backend/**/.alg_env
+backend/.alg_env
+**/.alg_env
+backend/**/.env
+backend/**/.env.*
+backend/.env
+backend/.env.*
+**/.env.local
+**/.env.*.local
+
+# ── Local / OS garbage ────────────────────────────────────────────────────────
+.DS_Store
+*.log
+.idea
+.vscode

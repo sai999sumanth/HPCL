@@ -1,0 +1,285 @@
+{
+    "key": "mysqldb",
+    "name": "MySQL",
+    "unique_id": "mysqldb",
+    "image": "mysql-icon.png",
+    "execute_action": "",
+    "icon": "mysql-icon.svg",
+    "section": "Databases",
+    "section_path": "databases",
+    "has_vault_config": true,
+    "action_configuration": {
+        "parameters": [
+            {
+                "name": "SourceName",
+                "label": "Source Name",
+                "type": "text",
+                "placeholder": "source-name",
+                "depends_on": [],
+                "key": "source",
+                "api": "",
+                "required_keys": [],
+                "params": {
+                    "method": "",
+                    "query": {},
+                    "request_body": {
+                        "name": "",
+                        "action": "",
+                        "params": {
+                            "creds": {},
+                            "data": {
+                                "connection_name": "",
+                                "schema_name": ""
+                            }
+                        }
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "connectionName",
+                "label": "Connection",
+                "type": "select",
+                "placeholder": "my-connection",
+                "key": "connection_name",
+                "api": "/credentials",
+                "params": {
+                    "method": "get",
+                    "query": {
+                        "cred_type": "mysql"
+                    },
+                    "request_body": {},
+                    "parameters": ""
+                },
+                "callback": true,
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "schemaType",
+                "label": "Schema",
+                "type": "select",
+                "placeholder": "my-schema",
+                "key": "schema_name",
+                "api": "/perform_action/action",
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "mysql",
+                        "action": "get_schema",
+                        "params": {}
+                    },
+                    "parameters": ""
+                },
+                "depends_on": [
+                    "connection_name"
+                ],
+                "callback": true,
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "tableName",
+                "label": "Table",
+                "type": "select",
+                "placeholder": "my-table",
+                "depends_on": [
+                    "schema_name"
+                ],
+                "key": "table_name",
+                "api": "/perform_action/action",
+                "params": {
+                    "method": "post",
+                    "query": {},
+                    "request_body": {
+                        "name": "mysql",
+                        "action": "table_name",
+                        "params": {}
+                    },
+                    "parameters": ""
+                },
+                "validators": {
+                    "required": true
+                },
+                "options": [],
+                "visible": true
+            },
+            {
+                "name": "sourceType",
+                "label": "Source Type",
+                "type": "select",
+                "placeholder": "Select the source type",
+                "key": "source-type",
+                "options": [
+                    {
+                        "id": "source",
+                        "display_name": "Source"
+                    },
+                    {
+                        "id": "master_data",
+                        "display_name": "Master Data"
+                    }
+                ],
+                "depends_on": [
+                    "read_write"
+                ],
+                "api": "",
+                "params": {
+                    "method": "",
+                    "query": "",
+                    "request_body": {},
+                    "parameters": ""
+                },
+                "display_value": "Source Type",
+                "callback": true,
+                "validators": {
+                    "required": true
+                },
+                "visible": true
+            }
+        ],
+        "actions": null
+    },
+    "vault_configuration": [
+        {
+            "type": "text",
+            "label": "Connection Name",
+            "name": "name",
+            "placeholder": "Enter Connection name",
+            "required": true
+        },
+        {
+            "type": "text",
+            "label": "Host",
+            "name": "host",
+            "placeholder": "Enter the host",
+            "required": true
+        },
+        {
+            "type": "text",
+            "label": "Port",
+            "name": "port",
+            "placeholder": "Enter the port",
+            "required": true
+        },
+        {
+            "type": "text",
+            "label": "Username",
+            "name": "username",
+            "placeholder": "Enter the username",
+            "required": true
+        },
+        {
+            "type": "password",
+            "label": "Password",
+            "name": "password",
+            "placeholder": "Enter the password",
+            "required": true
+        },
+        {
+            "type": "text",
+            "label": "Database",
+            "name": "database",
+            "placeholder": "Enter the database"
+        },
+        {
+            "type": "select",
+            "label": "Database Type",
+            "name": "db_type",
+            "options": [
+                {
+                    "label": "PostgreSQL",
+                    "value": "postgres"
+                }
+            ],
+            "placeholder": "Select the database type",
+            "required": true
+        },
+        {
+            "type": "checkbox",
+            "label": "Is Active",
+            "name": "is_active",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "label": "Use SSH Tunnel",
+            "name": "is_ssh_tunnel",
+            "default": false
+        },
+        {
+            "type": "text",
+            "label": "SSH Host",
+            "name": "ssh_tunnel.host",
+            "placeholder": "Enter the host",
+            "required": false,
+            "depends_on": [
+                "is_ssh_tunnel"
+            ],
+            "visible": true,
+            "depends_value": true
+        },
+        {
+            "type": "text",
+            "label": "SSH Port",
+            "name": "ssh_tunnel.port",
+            "placeholder": "Enter the port",
+            "required": false,
+            "depends_on": [
+                "is_ssh_tunnel"
+            ],
+            "visible": true,
+            "depends_value": true
+        },
+        {
+            "type": "text",
+            "label": "SSH Username",
+            "name": "ssh_tunnel.user_name",
+            "placeholder": "Enter the username",
+            "required": false,
+            "depends_on": [
+                "is_ssh_tunnel"
+            ],
+            "visible": true,
+            "depends_value": true
+        },
+        {
+            "type": "password",
+            "label": "SSH Password",
+            "name": "ssh_tunnel.password",
+            "placeholder": "Enter the password",
+            "required": false,
+            "depends_on": [
+                "is_ssh_tunnel"
+            ],
+            "visible": true,
+            "depends_value": true
+        },
+        {
+            "type": "upload",
+            "label": "SSH Private Key",
+            "name": "ssh_tunnel.private_key",
+            "placeholder": "Enter the private key",
+            "required": false,
+            "depends_on": [
+                "is_ssh_tunnel"
+            ],
+            "visible": true,
+            "depends_value": true
+        }
+    ],
+    "display_name": "MySQL",
+    "displayName": ""
+}

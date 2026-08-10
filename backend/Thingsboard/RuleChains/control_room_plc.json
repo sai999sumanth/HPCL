@@ -1,0 +1,292 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Control Room PLC",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 7,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 105,
+          "layoutY": 408
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "transformTelimetry",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg['PLC A IS MASTER'] = metadata['PLC A IS MASTER']\nmsg['PLC B IS MASTER'] = metadata['PLC B IS MASTER']\nmsg['PLC A COOMUNCIATION'] = metadata['PLC A COOMUNCIATION']\nmsg['PLC A FAIL SAFE'] = metadata['PLC A FAIL SAFE']\nmsg['PLC B COOMUNCIATION'] = metadata['PLC B FAIL SAFE']\nmsg['PLC B FAIL SAFE'] = metadata['PLC B FAIL SAFE']\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 809,
+          "layoutY": 388
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "test",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var details = {};\n\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar additionalinfo = metadata[\"additionalInfo\"] ? JSON.parse(metadata[\"additionalInfo\"]) : {};\n\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"location_id\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"location_name\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"bu_id\"] = metadata[\"tenantid\"];\ndetails[\"additionalInfo\"][\"SAPID\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"deviceType\"] = metadata[\"deviceType\"];\ndetails[\"additionalInfo\"][\"deviceName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"PLC B is Master\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP046\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"PLC\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"PLC\";\ndetails[\"additionalInfo\"][\"customData\"] = msg;\n\nreturn {\n    msg: {\n        \"tenantId\": {\n            \"entityType\": \"TENANT\",\n            \"id\": metadata[\"tenantid\"]\n        },\n        \"type\": \"SafetyPLC Alarm\",\n        \"originator\": {\n            \"entityType\": \"DEVICE\",\n            \"id\": metadata[\"deviceId\"]\n        },\n        \"severity\": \"CRITICAL\",\n        \"status\": \"\",\n        \"startTs\": metadata[\"ts\"],\n        \"endTs\": 0,\n        \"ackTs\": 0,\n        \"clearTs\": 0,\n        \"details\": details,\n        \"propagate\": false,\n        \"propagateRelationTypes\": [],\n        \"id\": {\n            \"entityType\": \"ALARM\",\n            \"id\": metadata[\"deviceId\"]\n        },\n        \"createdTime\": metadata[\"ts\"],\n        \"name\": \"SafetyPLC Alarm\"\n    },\n    metadata: metadata\n};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 822,
+          "layoutY": 302
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "test",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var details = {};\n\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar additionalinfo = metadata[\"additionalInfo\"] ? JSON.parse(metadata[\"additionalInfo\"]) : {};\n\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"location_id\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"location_name\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"bu_id\"] = metadata[\"tenantid\"];\ndetails[\"additionalInfo\"][\"SAPID\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"deviceType\"] = metadata[\"deviceType\"];\ndetails[\"additionalInfo\"][\"deviceName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"PLC A is Master\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP046\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"PLC\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"PLC\";\ndetails[\"additionalInfo\"][\"customData\"] = msg;\n\nreturn {\n    msg: {\n        \"tenantId\": {\n            \"entityType\": \"TENANT\",\n            \"id\": metadata[\"tenantid\"]\n        },\n        \"type\": \"SafetyPLC Alarm\",\n        \"originator\": {\n            \"entityType\": \"DEVICE\",\n            \"id\": metadata[\"deviceId\"]\n        },\n        \"severity\": \"CRITICAL\",\n        \"status\": \"\",\n        \"startTs\": metadata[\"ts\"],\n        \"endTs\": 0,\n        \"ackTs\": 0,\n        \"clearTs\": 0,\n        \"details\": details,\n        \"propagate\": false,\n        \"propagateRelationTypes\": [],\n        \"id\": {\n            \"entityType\": \"ALARM\",\n            \"id\": metadata[\"deviceId\"]\n        },\n        \"createdTime\": metadata[\"ts\"],\n        \"name\": \"SafetyPLC Alarm\"\n    },\n    metadata: metadata\n};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 454,
+          "layoutY": 323
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "SPLC",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"PLC A IS MASTER\"] != undefined && msg[\"PLC A IS MASTER\"] == metadata[\"ss_PLC A IS MASTER\"]) && (msg[\"PLC B IS MASTER\"] != undefined && msg[\"PLC B IS MASTER\"] != metadata[\"ss_PLC B IS MASTER\"])){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 460,
+          "layoutY": 410
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "PPLC",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"PLC A IS MASTER\"] != undefined && msg[\"PLC A IS MASTER\"] != metadata[\"ss_PLC A IS MASTER\"]) && (msg[\"PLC B IS MASTER\"] != undefined && msg[\"PLC B IS MASTER\"] == metadata[\"ss_PLC B IS MASTER\"])){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 504,
+          "layoutY": 114
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "PLC A IS MASTER",
+            "PLC B IS MASTER",
+            "PLC A FAIL SAFE",
+            "PLC A COOMUNCIATION",
+            "PLC B COOMUNCIATION",
+            "PLC B FAIL SAFE"
+          ],
+          "latestTsKeyNames": [
+            "PLC B IS MASTER",
+            "PLC A IS MASTER",
+            "PLC A COOMUNCIATION",
+            "PLC B COOMUNCIATION",
+            "PLC A FAIL SAFE",
+            "PLC B FAIL SAFE"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 458,
+          "layoutY": 517
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "SPLC Fault",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"PLC A FAIL SAFE\"] != undefined && msg[\"PLC A FAIL SAFE\"] != metadata[\"ss_PLC A FAIL SAFE\"]) || (msg[\"PLC B FAIL SAFE\"] != undefined && msg[\"PLC B FAIL SAFE\"] != metadata[\"ss_PLC B FAIL SAFE\"]) || (msg[\"PLC B COOMUNCIATION\"] != undefined && msg[\"PLC B COOMUNCIATION\"] != metadata[\"ss_PLC B COOMUNCIATION\"]) || (msg[\"PLC A COOMUNCIATION\"] != undefined && msg[\"PLC A COOMUNCIATION\"] != metadata[\"ss_PLC A COOMUNCIATION\"])){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 282,
+          "layoutY": 36
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Field",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 798,
+          "layoutY": 481
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "SPLC Fault",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"SafetyPLC_Communication fail\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP021\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"PLC\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"PLC\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "SPLC Fault",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 799,
+          "layoutY": 562
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "SPLC Fault",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"SafetyPLC_Communication fail\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP021\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Process\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"PLC\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"PLC\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "SPLC Fault"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 592,
+          "layoutY": 28
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"PLC\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1264,
+          "layoutY": 369
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 11,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 11,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 9,
+        "type": "False"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 10,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 11,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 11,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 5,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

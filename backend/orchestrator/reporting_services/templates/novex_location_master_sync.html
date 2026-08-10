@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Location details sync report</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px;
+            color: #222;
+        }
+        h2 {
+            color: #003366;
+            margin-bottom: 0.25em;
+        }
+        .meta {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        table {
+            width: 100%;
+            max-width: 1100px;
+            border-collapse: collapse;
+            margin: 16px 0 24px 0;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #003366;
+            color: #fff;
+            font-weight: bold;
+        }
+        tr:nth-child(even) td {
+            background-color: #f7f9fc;
+        }
+        .status-ok { color: #1e7e34; font-weight: bold; }
+        .status-fail { color: #c82333; font-weight: bold; }
+        .status-skip { color: #856404; font-weight: bold; }
+        .err-box {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            background: #fff5f5;
+            border: 1px solid #f5c6cb;
+            padding: 8px;
+            margin-top: 4px;
+            max-height: 220px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>Novex Location master sync — summary</h2>
+    <p class="meta">
+        <strong>Sync Environment:</strong> {{ environment }}<br>
+        <strong>Sync start (IST):</strong> {{ sync_start_ist }}<br>
+        <strong>Sync end (IST):</strong> {{ sync_end_ist }}
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>BU</th>
+                <th>Status</th>
+                <th>Old auto count</th>
+                <th>New auto count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in report_rows %}
+            <tr>
+                <td><strong>{{ row.bu }}</strong></td>
+                <td>
+                    {% if row.status == 'success' %}
+                        <span class="status-ok">success</span>
+                    {% elif row.status == 'failed' %}
+                        <span class="status-fail">failed</span>
+                    {% elif row.status == 'skipped' %}
+                        <span class="status-skip">skipped</span>
+                    {% else %}
+                        {{ row.status }}
+                    {% endif %}
+                </td>
+                <td>{{ row.old_synced_count }}</td>
+                <td>{{ row.new_synced_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,66 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+*.whl
+
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+
+# ── Secret / credential files ─────────────────────────────────────────────────
+# backend/api_manager/.alg_env contains live DB/SMTP/ThingsBoard credentials
+# and an encryption key. It must NEVER be committed. Provide it at deploy
+# time only (runtime volume mount from a secrets store / CI secret).
+backend/api_manager/.alg_env
+**/.alg_env
+*.alg_env.production
+*.alg_env.local
+.db_creds_env
+*.pem
+*.key
+*.p12
+*.pfx
+.env.local
+.env.*.local
+
+# ── Node / frontend ────────────────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# (docker-compose.override.yml may have local secrets)
+docker-compose.override.yml
+
+# ── OS / editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Coverage / test artifacts ─────────────────────────────────────────────────
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

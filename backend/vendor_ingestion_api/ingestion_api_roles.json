@@ -1,0 +1,1016 @@
+{
+    "allowRemoteResourceManagement": true,
+    "policyEnforcementMode": "ENFORCING",
+    "decisionStrategy": "AFFIRMATIVE",
+    "resources": [
+        {
+            "name": "ongoingtripsvts",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "OngoingTripsVts",
+            "attributes": {},
+            "uris": [
+                "/api/ongoingtripsvts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "trip_not_closed"
+                },
+                {
+                    "name": "trip_without_route"
+                },
+                {
+                    "name": "route_deviation_more_than_two_km"
+                },
+                {
+                    "name": "trip_unauthorised_stoppage"
+                }
+            ]
+        },
+        {
+            "name": "ongoingtripsvts_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "OngoingTripsVts_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/ongoingtripsvts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "ongoingtripsvts_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "OngoingTripsVts_admin",
+            "attributes": {},
+            "uris": [
+                "/api/ongoingtripsvts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "trip_not_closed"
+                },
+                {
+                    "name": "trip_without_route"
+                },
+                {
+                    "name": "route_deviation_more_than_two_km"
+                },
+                {
+                    "name": "trip_unauthorised_stoppage"
+                }
+            ]
+        },
+        {
+            "name": "vts",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "VTS",
+            "attributes": {},
+            "uris": [
+                "/api/vts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                },
+                {
+                    "name": "ingest_event_data"
+                },
+                {
+                    "name": "ingest_trip_data"
+                },
+                {
+                    "name": "ingest_data_blocked_trucks"
+                },
+                {
+                    "name": "ingest_data_un_blocked_trucks"
+                }
+            ]
+        },
+        {
+            "name": "vts_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "VTS_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/vts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "vts_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "VTS_admin",
+            "attributes": {},
+            "uris": [
+                "/api/vts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                },
+                {
+                    "name": "ingest_event_data"
+                },
+                {
+                    "name": "ingest_trip_data"
+                },
+                {
+                    "name": "ingest_data_blocked_trucks"
+                },
+                {
+                    "name": "ingest_data_un_blocked_trucks"
+                }
+            ]
+        },
+        {
+            "name": "va",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "VA",
+            "attributes": {},
+            "uris": [
+                "/api/va/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                },
+                {
+                    "name": "ingest_data_score"
+                },
+                {
+                    "name": "ingest_data_close"
+                },
+                {
+                    "name": "ro_no_video_upload_list"
+                },
+                {
+                    "name": "ro_no_video_upload_list_status"
+                }
+            ]
+        },
+        {
+            "name": "va_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "VA_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/va/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "va_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "VA_admin",
+            "attributes": {},
+            "uris": [
+                "/api/va/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                },
+                {
+                    "name": "ingest_data_score"
+                },
+                {
+                    "name": "ingest_data_close"
+                },
+                {
+                    "name": "ro_no_video_upload_list"
+                },
+                {
+                    "name": "ro_no_video_upload_list_status"
+                }
+            ]
+        },
+        {
+            "name": "cris",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "CRIS",
+            "attributes": {},
+            "uris": [
+                "/api/cris/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                },
+                {
+                    "name": "api_ack"
+                }
+            ]
+        },
+        {
+            "name": "cris_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "CRIS_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/cris/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "cris_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "CRIS_admin",
+            "attributes": {},
+            "uris": [
+                "/api/cris/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                },
+                {
+                    "name": "api_ack"
+                }
+            ]
+        },
+        {
+            "name": "ims",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "IMS",
+            "attributes": {},
+            "uris": [
+                "/api/ims/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                }
+            ]
+        },
+        {
+            "name": "ims_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "IMS_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/ims/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "ims_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "IMS_admin",
+            "attributes": {},
+            "uris": [
+                "/api/ims/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                }
+            ]
+        },
+        {
+            "name": "emlock",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "EMLock",
+            "attributes": {},
+            "uris": [
+                "/api/emlock/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                }
+            ]
+        },
+        {
+            "name": "emlock_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "EMLock_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/emlock/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "emlock_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "EMLock_admin",
+            "attributes": {},
+            "uris": [
+                "/api/emlock/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                }
+            ]
+        },
+        {
+            "name": "taslistener",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "TasListener",
+            "attributes": {},
+            "uris": [
+                "/api/taslistener/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_data"
+                }
+            ]
+        },
+        {
+            "name": "taslistener_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "TasListener_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/taslistener/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_data"
+                }
+            ]
+        },
+        {
+            "name": "taslistener_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "TasListener_admin",
+            "attributes": {},
+            "uris": [
+                "/api/taslistener/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_data"
+                }
+            ]
+        },
+        {
+            "name": "tasagentcommstatus",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "TasAgentCommStatus",
+            "attributes": {},
+            "uris": [
+                "/api/tasagentcommstatus/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "tasagentcommstatus_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "TasAgentCommStatus_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/tasagentcommstatus/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "tasagentcommstatus_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "TasAgentCommStatus_admin",
+            "attributes": {},
+            "uris": [
+                "/api/tasagentcommstatus/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "tas_location_listener",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "TAS_Location_Listener",
+            "attributes": {},
+            "uris": [
+                "/api/tas_location_listener/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_agent_service_status"
+                },
+                {
+                    "name": "get_agent_comm_status"
+                }
+            ]
+        },
+        {
+            "name": "tas_location_listener_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "TAS_Location_Listener_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/tas_location_listener/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_agent_service_status"
+                },
+                {
+                    "name": "get_agent_comm_status"
+                }
+            ]
+        },
+        {
+            "name": "tas_location_listener_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "TAS_Location_Listener_admin",
+            "attributes": {},
+            "uris": [
+                "/api/tas_location_listener/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_agent_service_status"
+                },
+                {
+                    "name": "get_agent_comm_status"
+                }
+            ]
+        },
+        {
+            "name": "emlockstatus",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "EMLockStatus",
+            "attributes": {},
+            "uris": [
+                "/api/emlockstatus/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                }
+            ]
+        },
+        {
+            "name": "emlockstatus_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "EMLockStatus_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/emlockstatus/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "emlockstatus_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "EMLockStatus_admin",
+            "attributes": {},
+            "uris": [
+                "/api/emlockstatus/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                }
+            ]
+        },
+        {
+            "name": "hyperlocal",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "HyperLocal",
+            "attributes": {},
+            "uris": [
+                "/api/hyperlocal/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                }
+            ]
+        },
+        {
+            "name": "hyperlocal_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "HyperLocal_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/hyperlocal/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "hyperlocal_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "HyperLocal_admin",
+            "attributes": {},
+            "uris": [
+                "/api/hyperlocal/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "ingest_data"
+                }
+            ]
+        }
+    ],
+    "policies": [
+        {
+            "name": "superAdminPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"superAdmin\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "superAdminPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "all",
+                "applyPolicies": "[\"superAdminPolicy\"]"
+            }
+        },
+        {
+            "name": "readOnlyPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"readOnly\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "readOnlyPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "readOnly",
+                "applyPolicies": "[\"readOnlyPolicy\"]"
+            }
+        },
+        {
+            "name": "adminPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"admin\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "adminPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "admin",
+                "applyPolicies": "[\"adminPolicy\"]"
+            }
+        }
+    ],
+    "scopes": [
+        {
+            "name": "create",
+            "displayName": "create"
+        },
+        {
+            "name": "update",
+            "displayName": "update"
+        },
+        {
+            "name": "read",
+            "displayName": "read"
+        },
+        {
+            "name": "delete",
+            "displayName": "delete"
+        },
+        {
+            "name": "trip_not_closed",
+            "displayName": "trip_not_closed"
+        },
+        {
+            "name": "trip_without_route",
+            "displayName": "trip_without_route"
+        },
+        {
+            "name": "route_deviation_more_than_two_km",
+            "displayName": "route_deviation_more_than_two_km"
+        },
+        {
+            "name": "trip_unauthorised_stoppage",
+            "displayName": "trip_unauthorised_stoppage"
+        },
+        {
+            "name": "ingest_data",
+            "displayName": "ingest_data"
+        },
+        {
+            "name": "ingest_event_data",
+            "displayName": "ingest_event_data"
+        },
+        {
+            "name": "ingest_trip_data",
+            "displayName": "ingest_trip_data"
+        },
+        {
+            "name": "ingest_data_blocked_trucks",
+            "displayName": "ingest_data_blocked_trucks"
+        },
+        {
+            "name": "ingest_data_un_blocked_trucks",
+            "displayName": "ingest_data_un_blocked_trucks"
+        },
+        {
+            "name": "ingest_data",
+            "displayName": "ingest_data"
+        },
+        {
+            "name": "ingest_data_score",
+            "displayName": "ingest_data_score"
+        },
+        {
+            "name": "ingest_data_close",
+            "displayName": "ingest_data_close"
+        },
+        {
+            "name": "ro_no_video_upload_list",
+            "displayName": "ro_no_video_upload_list"
+        },
+        {
+            "name": "ro_no_video_upload_list_status",
+            "displayName": "ro_no_video_upload_list_status"
+        },
+        {
+            "name": "ingest_data",
+            "displayName": "ingest_data"
+        },
+        {
+            "name": "api_ack",
+            "displayName": "api_ack"
+        },
+        {
+            "name": "ingest_data",
+            "displayName": "ingest_data"
+        },
+        {
+            "name": "ingest_data",
+            "displayName": "ingest_data"
+        },
+        {
+            "name": "get_data",
+            "displayName": "get_data"
+        },
+        {
+            "name": "get_agent_service_status",
+            "displayName": "get_agent_service_status"
+        },
+        {
+            "name": "get_agent_comm_status",
+            "displayName": "get_agent_comm_status"
+        },
+        {
+            "name": "ingest_data",
+            "displayName": "ingest_data"
+        },
+        {
+            "name": "ingest_data",
+            "displayName": "ingest_data"
+        }
+    ]
+}

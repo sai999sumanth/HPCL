@@ -1,0 +1,182 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "CEG - Tank Rim Seal",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 3,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 912,
+          "layoutY": 238
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "RimSeal Fault Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Rim Seal system_Fault activated\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP004\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"RIMSEAL\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"RIMSEAL\";\nreturn details;",
+          "alarmType": "RimSeal Fault Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 759,
+          "layoutY": 6
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Attributs",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "RIMSEAL FAULT ALARM",
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid"
+          ],
+          "latestTsKeyNames": [
+            "RIMSEAL FAULT ALARM"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 519,
+          "layoutY": 10
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Tank",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"Tank\"){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 275,
+          "layoutY": 9
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 458,
+          "layoutY": 216
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Rim Seal",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"RIMSEAL FAULT ALARM\"] != undefined && (msg[\"RIMSEAL FAULT ALARM\"] != metadata[\"ss_RIMSEAL FAULT ALARM\"])) {\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 906,
+          "layoutY": 297
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "RimSeal Fault Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"Rim Seal system_Fault activated\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"deviceId\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP004\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"RIMSEAL\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"RIMSEAL\";\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "RimSeal Fault Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1187,
+          "layoutY": 270
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 0,
+        "type": "False"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Created"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

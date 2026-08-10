@@ -1,0 +1,222 @@
+{
+  "ruleChain": {
+    "name": "TAS-OI-Check",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null,
+    "additionalInfo": {
+      "description": "OI Validation"
+    }
+  },
+  "metadata": {
+    "version": 4,
+    "firstNodeIndex": 5,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Adding Server Scope Attributes",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "fetchTo": "METADATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "Water Volume",
+            "Foam Volume",
+            "Jockey Pump_1",
+            "Jockey Pump_2",
+            "Fire Engine_1",
+            "Fire Engine_2",
+            "Fire Engine_3",
+            "Fire Engine_4",
+            "Fire Engine_5",
+            "PT Farthest"
+          ],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 959,
+          "layoutY": 154
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "140.245.238.142",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1095,
+          "layoutY": 310
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "OI Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Operability Index\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = \"TAS\";\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP023\";\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "Dyke Alarm"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 716,
+          "layoutY": 372
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "OI Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\n\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Operability Index\";\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\ndetails[\"additionalInfo\"][\"bu\"] = \"TAS\";\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP023\";\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\n\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "OI Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 712,
+          "layoutY": 276
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Verify OI",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "var i =0\nif ((msg[\"Fire Engine_1\"] != undefined && (msg[\"Fire Engine_1\"] != metadata[\"ss_FireEngine Normal Mode\"]))){\n    i = i+1\n}\nif ((msg[\"Fire Engine_2\"] != undefined && (msg[\"Fire Engine_2\"] != metadata[\"ss_FireEngine Normal Mode\"]))){\n    i = i+1\n}\nif ((msg[\"Fire Engine_3\"] != undefined && (msg[\"Fire Engine_3\"] != metadata[\"ss_FireEngine Normal Mode\"]))){\n    i = i+1\n}\nif ((msg[\"Fire Engine_4\"] != undefined && (msg[\"Fire Engine_4\"] != metadata[\"ss_FireEngine Normal Mode\"]))){\n    i = i+1\n}\nif ((msg[\"Fire Engine_5\"] != undefined && (msg[\"Fire Engine_5\"] != metadata[\"ss_FireEngine Normal Mode\"]))){\n    i = i+1\n}\nif ((msg[\"Fire Engine_6\"] != undefined && (msg[\"Fire Engine_6\"] != metadata[\"ss_FireEngine Normal Mode\"]))){\n    i = i+1\n}\n\nif ((msg[\"Foam Volume\"] != undefined && (parseInt(msg[\"Foam Volume\"]) < parseInt(metadata[\"ss_RequiredFoamVol\"]))) || (msg[\"Water Volume\"] != undefined && (parseInt(msg[\"Water Volume\"]) < metadata[\"ss_RequiredWaterVol\"])) || (msg[\"PT Farthest\"] != undefined && (parseInt(msg[\"PT Farthest\"])) < 7)|| (i > parseInt(metadata[\"ss_FireEngineHealthyCount\"]))){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 361,
+          "layoutY": 323
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 320,
+          "layoutY": 151
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check OI",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "if (metadata[\"deviceType\"] == \"OI Tags\"){\n    return true\n}\nreturn false",
+          "tbelScript": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 653,
+          "layoutY": 153
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 1,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 1,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 2,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 0,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

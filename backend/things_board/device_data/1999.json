@@ -1,0 +1,1187 @@
+{
+    "data": [
+        {
+            "device_name": "TK-01",
+            "device_id": "7168f360-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "bnWUSMJ5mIg52Rq7NXW9",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0101",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0102",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0102_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0101_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0102_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0101_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.MS_TK_1.INLET.MOV_0104_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.MS_TK_1.OUTLET.MOV_102_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.TK1_RS_FIRE",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.TK1_RS_FAULT",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-02",
+            "device_id": "716c75d0-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "AEoHnWzA8LM83zkXvkip",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0102",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0104",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0104_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0103_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0104_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0103_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.MS_TK_2.INLET.MOV_0108_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.MS_TK_2.OUTLET.MOV_0106_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.TK2_RS_FIRE",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.TK2_RS_FAULT",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-03",
+            "device_id": "717660e0-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "6m246yL5uEth2q3K4BeH",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0103",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0106",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0106_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0105_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0106_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0105_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.MS_TK_3.IL.MOV_0112_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.MS_TK_3.OL.MOV_0110_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.TK3_RS_FIRE",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.TK3_RS_FAULT",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-04",
+            "device_id": "71857c10-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "WyXPQJTF9YNQWnJqogWD",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0104",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0108",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0108_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0107_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0108_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0107_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.MS_TK_4.IL.MOV_0116_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.MS_TK_4.OL.MOV_0114_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.TK4_RS_FIRE",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.TK4_RS_FAULT",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-05",
+            "device_id": "7194be50-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "6WpL0eCkuEVwJgw9rKpE",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0201",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0202",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0202_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0201_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0202_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0201_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.HSD_TK_5.IL.MOV_0204_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.HSD_TK_5.OL.MOV_0202_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-06",
+            "device_id": "71a40090-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "4N5KtagKNzhJIAUc4WuB",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0202",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0204",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0203_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0204_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0203_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0204_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.HSD_TK_6.IL.MOV_0208_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.HSD_TK_6.OL.MOV_0206_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-07",
+            "device_id": "71b369e0-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "zzZUi3WAzAAIsNJqpmhZ",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0203",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0206",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0206_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0205_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0206_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0205_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.HSD_TK_7.IL.MOV_0212_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.HSD_TK_7.OL.MOV_0210_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-08",
+            "device_id": "71c25e00-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "IOG0IBwT1BpBdZIwItpN",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0204",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0208",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0208_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0207_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0208_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0207_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.HSD_TK_8.IL.MOV_0216_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.HSD_TK_8.OL.MOV_0214_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-09",
+            "device_id": "71d1a040-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "wopCYxZCHD8ZIHOKAMDo",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0301",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0302",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0302_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0301_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0302_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0301_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SKO_TK_9.IL.MOV_0304_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SKO_TK_9.OL.MOV_0302_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-10",
+            "device_id": "71e10990-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "dZPpEcMYNT9ujSEc9Z8Z",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0302",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0304",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0304_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0303_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0304_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0303_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SKO_TK_10.IL.MOV_0308_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SKO_TK_10.OL.MOV_0306_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-11",
+            "device_id": "71f04bd0-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "51YVnMpSBQJLhwpnhWjI",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0303",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0306",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0306_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0305_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0306_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0305_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SKO_TK_11.IL.MOV_0312_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SKO_TK_11.OL.MOV_0310_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-12",
+            "device_id": "71ff3ff0-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "lBx3Aqe68xBp9BNFQv1g",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0304",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0308",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0308_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0307_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0308_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0307_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SKO_TK_12.IL.MOV_0316_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SKO_TK_12.OL.MOV_0314_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-13",
+            "device_id": "720ea940-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "MJjZL3CGhQZsYdzNS0R4",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0401",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0402",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0402_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0401_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0402_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0401_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.INTF_A_TK_13.IL.MOV_0403_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.INTF_A_TK_13.OL.MOV_0402_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-14",
+            "device_id": "721deb80-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "JOCBxRbHXmnFNQnfSh5l",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0402",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0404",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0404_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0403_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0404_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0403_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.INTF_B_TK_14.IL.MOV_0406_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.INTF_B_TK_14.OL.MOV_0405_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-15",
+            "device_id": "722d2dc0-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "ao0RIQqPRxCODTHashBH",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0501",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0502",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0501_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0501_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SLOP_A_TK_15.IL.MOV_0503_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SLOP_A_TK_15.OL.MOV_0502_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-16",
+            "device_id": "723c7000-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "9VBBsw3OxjjBe9HQHvWs",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0502",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0504",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0503_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0503_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SLOP_B_TK_16.IL.MOV_0506_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.SLOP_B_TK_16.OL.MOV_0505_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-17",
+            "device_id": "724bd950-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "iqg3KXUpK55wlD47hVz7",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0601",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0602",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0602_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0601_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0602_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0601_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.ETH_TK_17.IL.MOV_0602_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.ETH_TK_17.OL.MOV_0601_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-18",
+            "device_id": "725b69b0-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "e3fBagH0CTn4JmbVnTEB",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0602",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0604",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0604_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0603_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0604_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0603_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.ETH_TK_18.IL.MOV_0604_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.ETH_TK_18.OL.MOV_0603_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-19",
+            "device_id": "726a36c0-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "pzIfbAq2t3PKyB1ou9tz",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0701",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0702",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0702_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0701_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0702_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0701_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.BD_TK_19.IL.MOV_0702_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.BD_TK_19.OL.MOV_0701_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        },
+        {
+            "device_name": "TK-20",
+            "device_id": "72797900-c525-11ef-89d8-8bef67f22d63",
+            "device_type": "Tank",
+            "device_key": "paM881UMvyb0w4X0JIQm",
+            "entity_id": "799da970-bab4-11ef-89d8-8bef67f22d63",
+            "sensors": [
+                {
+                    "sensor_name": "LEVEL SWITCH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LSHHH0702",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "RADAR HHH",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.LAHHH0704",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0704_ZSH",
+                    "normal_value": "1"
+                },
+                {
+                    "sensor_name": "ROSOV OPEN STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0703_ZSH",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS IL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0704_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "ROSOV CLOSE STATUS OL",
+                    "sensor_tag": "SAFETY_PLC.SCS0101.RSV0703_ZSL",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS IL",
+                    "sensor_tag": "PROCESS_PLC.MOV.BD_TK_20.IL.MOV_0704_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "MOV CLOSE STATUS OL",
+                    "sensor_tag": "PROCESS_PLC.MOV.BD_TK_20.OL.MOV_0703_STS",
+                    "normal_value": "3"
+                },
+                {
+                    "sensor_name": "RIMSEAL FIRE ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                },
+                {
+                    "sensor_name": "RIMSEAL FAULT ALARM",
+                    "sensor_tag": "",
+                    "normal_value": "0"
+                }
+            ]
+        }
+    ],
+    "location_id": "1999",
+    "bu": "TAS",
+    "location_name": "Dharmapuri"
+}

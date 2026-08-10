@@ -1,0 +1,205 @@
+{
+  "ruleChain": {
+    "name": "LPG_Fire engine AM",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null,
+    "additionalInfo": {
+      "description": "LPG_Fire engine AM"
+    }
+  },
+  "metadata": {
+    "version": 2,
+    "firstNodeIndex": 1,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "check PLC status",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "//if (msg[\"Fire Engine AM\"] != undefined && (msg[\"Fire Engine AM\"] != //metadata[\"ss_Fire Engine AM\"])){\n    //return true\n//}\n//return false\n\n\nif (msg[\"Fire Engine AM\"] !== -99 && msg[\"Fire Engine AM\"] !== metadata[\"ss_Fire Engine AM\"]) {\n    return true;\n}\nreturn false;"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 457,
+          "layoutY": 431
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "add",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "tenantId": "tenantId",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 334,
+          "layoutY": 173
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "localhost",
+          "port": 5672,
+          "virtualHost": "/hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1037,
+          "layoutY": 420
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Adding Server Scope Attributes",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "sapid",
+            "Fire Engine AM"
+          ],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false,
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 628,
+          "layoutY": 185
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check device type",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"Fireengine\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 117,
+          "layoutY": 374
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create PLC Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nvar msg_data = msg;\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nif (metadata[\"additionalInfo\"] != undefined) {\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Engine\";\ndetails[\"additionalInfo\"][\"message\"] = \"Fire Engine in Manual mode\";\ndetails[\"additionalInfo\"][\"unit_name\"] = additionalinfo[\"PLC Name\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"raw_data\"] = {\"alertingModel\": \"Fire Engine in Manual mode\"};\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP033\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;\n",
+          "useMessageAlarmData": false,
+          "alarmType": "FireEngine AM",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 788,
+          "layoutY": 351
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear PLC Alaram",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nvar msg_data = msg;\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nif (metadata[\"additionalInfo\"] != undefined) {\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Engine\";\ndetails[\"additionalInfo\"][\"message\"] = \"Fire Engine in Manual mode\";\ndetails[\"additionalInfo\"][\"unit_name\"] = additionalinfo[\"PLC Name\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"raw_data\"] = {\"alertingModel\": \"Fire Engine in Manual mode\"};\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP033\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;\n",
+          "alarmType": "FireEngine AM"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 780,
+          "layoutY": 500
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "False"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 0,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 2,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 2,
+        "type": "Cleared"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

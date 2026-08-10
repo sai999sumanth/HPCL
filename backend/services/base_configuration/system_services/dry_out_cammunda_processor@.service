@@ -1,0 +1,14 @@
+[Unit]
+Description=DRY-OUT Cammunda Processor Service %I
+
+[Service]
+Type=simple
+# Another Type option: forking
+WorkingDirectory=/opt/ceg/algo/orchestrator/alerting/listener
+ExecStart=/bin/bash -c 'unbuffer /opt/ceg/venv/bin/python dry_out_camunda_listener.py %i >> /var/log/ceg_sys_logs/cammunda_dry_out_listener.log 2>&1'
+Restart=always
+RestartSec=30s
+# Other Restart options: or always, on-abort, etc
+
+[Install]
+WantedBy=multi-user.target

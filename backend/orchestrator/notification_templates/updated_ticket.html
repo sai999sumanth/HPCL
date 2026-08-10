@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ticket Notification</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #ffffff; padding: 30px; color: #000000; }
+    .wrapper { max-width: 600px; margin: 0 auto; }
+    .main-message { font-size: 14px; line-height: 1.85; color: #000000; }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="main-message">
+    A ticket (<strong>{{ ticket_id }}</strong>) has been updated pertaining to {{ "location" if location_name else "zone" }}
+    (<strong>{{ location_name or zone_name }}</strong>)for  
+    <strong>"{{ category }}"</strong> — <strong>"{{ sub_category }}"</strong>. 
+    Review the same on priority and check whether updated details are found satisfactory. 
+    After doing necessary detailed investigation, mark the ticket as reviewed or else If not satisfied by initiator response,
+    please return back ticket for further detailed analysis and resubmission.  
+
+  </div>
+</div>
+</body>
+</html>

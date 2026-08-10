@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/astha/Downloads/novex_daily_email%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Yesterday - Sales Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #003366;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 8px;
+            padding-right: 8px;
+            /* Optionally, reduce font size for even more compact rows: */
+            font-size: 12px;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+            /* width: 500px; */
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+        .openAlert th{
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>RO Toilet Cleanliness - Daily Report</h2>
+    <p><strong>Date:</strong> {{today_date}} | <strong>Day:</strong> {{today_week}}</p>
+    <hr>
+    <h3>Zone wise MIS of Toilet Cleanliness picture upload at RO as on {{yesterday}}</h3>
+    <table>
+        <thead>
+            <tr>
+                {% for col in ro_va_cleanliness_df.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ro_va_cleanliness_rows %}
+            <tr {% if row['Zone'] == 'TOTAL' %}style="font-weight:bold; background-color:#f2f2f2;"{% endif %}>
+                {% for col in ro_va_cleanliness_df.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<script>
+    window.onload = function () {
+        document.querySelectorAll(".growth").forEach(td => {
+            let value = td.textContent.trim(); // Get text inside the <td>
+            let number = parseFloat(value); // Convert to number
+
+            if (!isNaN(number)) { // Check if it’s a valid number
+                if (number > 0) {
+                    td.classList.add("positive"); // Green for positive
+                } else if (number < 0) {
+                    td.classList.add("negative"); // Red for negative
+                }
+            }
+        });
+    };
+</script>
+
+</body></html>

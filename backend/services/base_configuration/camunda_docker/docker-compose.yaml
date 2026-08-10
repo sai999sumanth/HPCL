@@ -1,0 +1,278 @@
+version: '3'
+
+services:
+  camunda_worker_base:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.162:5432/camunda_hpcl
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.162:5432
+    ports:
+        - "8080:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_01:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_01
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9080:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_02:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_02
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9081:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_03:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_03
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9082:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_04:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_04
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9083:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_05:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_05
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9084:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_06:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_06
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9085:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_07:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_07
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9086:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_08:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_08
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9087:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_09:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_09
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9088:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_worker_10:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+        - DB_DRIVER=org.postgresql.Driver
+        - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_dryout_10
+        - DB_USERNAME=camunda_user
+        - DB_PASSWORD=7yUy9T5UGMBh
+        - DB_VALIDATE_ON_BORROW=true
+        - WAIT_FOR=10.90.38.163:5432
+    ports:
+        - "9089:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+        - postgres
+  camunda_va_worker_1:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+      - DB_DRIVER=org.postgresql.Driver
+      - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_va_1
+      - DB_USERNAME=camunda_user
+      - DB_PASSWORD=7yUy9T5UGMBh
+      - DB_VALIDATE_ON_BORROW=true
+      - WAIT_FOR=10.90.38.163:5432
+    ports:
+      - "9090:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+      - postgres
+  camunda_va_worker_2:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+      - DB_DRIVER=org.postgresql.Driver
+      - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_va_2
+      - DB_USERNAME=camunda_user
+      - DB_PASSWORD=7yUy9T5UGMBh
+      - DB_VALIDATE_ON_BORROW=true
+      - WAIT_FOR=10.90.38.163:5432
+    ports:
+      - "9091:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+      - postgres
+  camunda_vts_worker_tas:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+      - DB_DRIVER=org.postgresql.Driver
+      - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_vts_tas
+      - DB_USERNAME=camunda_user
+      - DB_PASSWORD=7yUy9T5UGMBh
+      - DB_VALIDATE_ON_BORROW=true
+      - WAIT_FOR=10.90.38.163:5432
+    ports:
+      - "9092:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+      - postgres
+  camunda_vts_worker_lpg:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+      - DB_DRIVER=org.postgresql.Driver
+      - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_vts_lpg
+      - DB_USERNAME=camunda_user
+      - DB_PASSWORD=7yUy9T5UGMBh
+      - DB_VALIDATE_ON_BORROW=true
+      - WAIT_FOR=10.90.38.163:5432
+    ports:
+      - "9093:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+      - postgres
+  camunda_tas_worker_1:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+      - DB_DRIVER=org.postgresql.Driver
+      - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_tas_db_1
+      - DB_USERNAME=camunda_user
+      - DB_PASSWORD=7yUy9T5UGMBh
+      - DB_VALIDATE_ON_BORROW=true
+      - WAIT_FOR=10.90.38.163:5432
+    ports:
+      - "9094:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+      - postgres
+  camunda_tas_worker_2:
+    image: camunda/camunda-bpm-platform:${DISTRO:-latest}
+    environment:
+      - DB_DRIVER=org.postgresql.Driver
+      - DB_URL=jdbc:postgresql://10.90.38.163:5432/camunda_tas_db_2
+      - DB_USERNAME=camunda_user
+      - DB_PASSWORD=7yUy9T5UGMBh
+      - DB_VALIDATE_ON_BORROW=true
+      - WAIT_FOR=10.90.38.163:5432
+    ports:
+      - "9095:8080"
+    volumes:
+      - /DATA/camunda_docker/bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+    restart: unless-stopped
+    networks:
+      - postgres
+networks:
+  postgres:
+

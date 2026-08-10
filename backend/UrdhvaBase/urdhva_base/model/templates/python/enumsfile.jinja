@@ -1,0 +1,9 @@
+{%- for enum in input.enums -%}
+{% if loop.first %}
+import enum
+{% endif %}
+
+{{ enum.render()}}
+
+
+{% endfor %}

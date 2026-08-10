@@ -1,0 +1,335 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "ESD_TANK_ROSOV",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 16,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 540,
+          "layoutY": 447
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ROSOV IL1",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"LEVEL SWITCH\"] != undefined && (msg[\"LEVEL SWITCH\"] != metadata[\"ss_LEVEL SWITCH\"])) || (msg[\"RADAR HHH\"] != undefined && (msg[\"RADAR HHH\"] != metadata[\"ss_RADAR HHH\"]))){\n    if (msg[\"ROSOV OPEN STATUS IL1\"] != undefined && msg[\"ROSOV OPEN STATUS IL1\"] != metadata[\"ss_ROSOV OPEN STATUS IL1\"]){\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 840,
+          "layoutY": 289
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Tankoverfill MOV1",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"MOV_Close Status\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP01A\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV IL1\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\nreturn details;\n",
+          "alarmType": "Tankoverfill MOV1"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 841,
+          "layoutY": 473
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Tankoverfill ROSOV1",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"ROSOV_Close Status\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP01A\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV IL1\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\nreturn details;",
+          "alarmType": "Tankoverfill ROSOV1"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 839,
+          "layoutY": 244
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Tankoverfill MOV1",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"MOV_Close Status\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"deviceId\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP01A\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV IL1\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Tankoverfill MOV1",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 540,
+          "layoutY": 357
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "MOV IL2",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"LEVEL SWITCH\"] != undefined && msg[\"LEVEL SWITCH\"] != metadata[\"ss_LEVEL SWITCH\"]) || (msg[\"RADAR HHH\"] != undefined && msg[\"RADAR HHH\"] != metadata[\"ss_RADAR HHH\"])){\n    if (msg[\"MOV STATUS IL2\"] !=undefined && msg[\"MOV STATUS IL2\"] != metadata[\"ss_MOV STATUS IL2\"]){\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 532,
+          "layoutY": 544
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ROSOV IL2",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"LEVEL SWITCH\"] != undefined && msg[\"LEVEL SWITCH\"] != metadata[\"ss_LEVEL SWITCH\"]) || \n    (msg[\"RADAR HHH\"] != undefined && msg[\"RADAR HHH\"] != metadata[\"ss_RADAR HHH\"])) {\n    if (msg[\"ROSOV OPEN STATUS IL2\"] != undefined && msg[\"ROSOV OPEN STATUS IL2\"] != metadata[\"ss_ROSOV OPEN STATUS IL2\"]) {\n        return true;\n    }\n}\nreturn false;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 539,
+          "layoutY": 279
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "MOV IL1",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((msg[\"LEVEL SWITCH\"] != undefined && msg[\"LEVEL SWITCH\"] != metadata[\"ss_LEVEL SWITCH\"]) || (msg[\"RADAR HHH\"] != undefined && msg[\"RADAR HHH\"] != metadata[\"ss_RADAR HHH\"])){\n    if (msg[\"MOV STATUS IL1\"] != undefined && msg[\"MOV STATUS IL1\"] != metadata[\"ss_MOV STATUS IL1\"]){\n        return true\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 840,
+          "layoutY": 426
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Tankoverfill ROSOV1",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"ROSOV_Close Status\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"deviceId\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP01A\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV IL1\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Tankoverfill ROSOV1",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 840,
+          "layoutY": 564
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Tankoverfill ROSOV2",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"ROSOV_Close Status\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP01A\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV IL2\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\nreturn details;",
+          "alarmType": "Tankoverfill ROSOV2"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 840,
+          "layoutY": 518
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Tankoverfill ROSOV2",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "if (msg.hasOwnProperty(\"ROSOV OPEN STATUS IL2\") && msg[\"ROSOV OPEN STATUS IL2\"] != metadata[\"ss_ROSOV OPEN STATUS IL2\"]){\n\n    var details = {};\n    if (metadata.prevAlarmDetails) {\n        details = JSON.parse(metadata.prevAlarmDetails);\n    }\n    var msg_data = msg\n    var additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlockName\"] = \"ROSOV_Close Status\";\n    details[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\n    details[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\n    details[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\n    details[\"additionalInfo\"][\"deviceId\"] = metadata[\"deviceId\"];\n    details[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"sopid\"] = \"SOP01A\";\n    details[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\n    details[\"additionalInfo\"][\"severity\"] = \"Critical\";\n    details[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV IL2\";\n    details[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\n    details['additionalInfo']['deviceId'] = metadata['deviceId']\n    details['additionalInfo']['deviceName'] = metadata['originatorName']\n    details['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\n    details['additionalInfo']['customData'] = msg_data\n    return details;\n}\nreturn false",
+          "useMessageAlarmData": false,
+          "alarmType": "Tankoverfill ROSOV2",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 839,
+          "layoutY": 381
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Tankoverfill MOV2",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"MOV_Close Status\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP01A\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV IL2\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\nreturn details;\n",
+          "alarmType": "Tankoverfill MOV2"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 840,
+          "layoutY": 334
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Tankoverfill MOV2",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar msg_data = msg\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlockName\"] = \"MOV_Close Status\";\ndetails[\"additionalInfo\"][\"unitName\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"deviceId\"] = metadata[\"deviceId\"];\ndetails[\"additionalInfo\"][\"sapid\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"BU\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sopid\"] = \"SOP01A\";\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV IL2\";\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\ndetails['additionalInfo']['deviceId'] = metadata['deviceId']\ndetails['additionalInfo']['deviceName'] = metadata['originatorName']\ndetails['additionalInfo']['deviceType'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\n\nreturn details;\n",
+          "useMessageAlarmData": false,
+          "alarmType": "Tankoverfill MOV2",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 589,
+          "layoutY": 67
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Tank ESD",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if ((metadata[\"deviceType\"] == \"testtank\" || metadata[\"deviceType\"] == \"TestESD\")) {\n    return true;\n}\nreturn false;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 172,
+          "layoutY": 591
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ROSOV Valve Check",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg['direction'] === \"IN\" && msg['ESD STATUS'] === 1) {\n    if (msg['ROSOV OPEN STATUS IL1'] !== undefined && msg['ROSOV OPEN STATUS IL1'] !== metadata['ss_ROSOV OPEN STATUS IL1']){\n        return true;\n    }\n}\nreturn false;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 358,
+          "layoutY": 186
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Tank and ESD fields",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "ROSOV OPEN STATUS IL1",
+            "ESD STATUS",
+            "Tank Mode"
+          ],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 142,
+          "layoutY": 380
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Tank ESD",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "// if (msg['ROSOV OPEN STATUS IL1'] != undefined && msg['ROSOV OPEN STATUS IL1'] != metadata['ss_ROSOV OPEN STATUS IL1']){\n//     if (msg['Tank Mode'] != undefined && msg['Tank Mode'] == metadata['ss_Tank Mode']) {\n//         if (msg['ESD STATUS'] != undefined && msg['ESD STATUS'] != metadata['ss_ESD STATUS']) {\n//         return true\n//         }\n//     }\n// }\n// return false\n\n\n\n\n\n\n\n\n\n\n\nif (msg['ESD STATUS'] != undefined && msg['ESD STATUS'] != metadata['ss_ESD STATUS']) {\n    if (msg['Tank Mode'] != undefined && msg['Tank Mode'] == metadata['ss_Tank Mode']) {\n        if (msg['ROSOV OPEN STATUS IL1'] != undefined && msg['ROSOV OPEN STATUS IL1'] != metadata['ss_ROSOV OPEN STATUS IL1']){\n        return true;\n        }\n    }\n}\nreturn false;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n// if (\n//             (msg['ROSOV OPEN STATUS IL1'] !== undefined && msg['ROSOV OPEN STATUS IL1'] !== metadata['ss_ROSOV OPEN STATUS IL1']) ||\n//             (msg['ROSOV OPEN STATUS IL2'] !== undefined && msg['ROSOV OPEN STATUS IL2'] !== metadata['ss_ROSOV OPEN STATUS IL2']) ||\n//             (msg['ROSOV OPEN STATUS OL'] !== undefined && msg['ROSOV OPEN STATUS OL'] !== metadata['ss_ROSOV OPEN STATUS OL']) ||\n//             (msg['ROSOV OPEN STATUS RCL'] !== undefined && msg['ROSOV OPEN STATUS RCL'] !== metadata['ss_ROSOV OPEN STATUS RCL'])\n//         ) {\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 287,
+          "layoutY": 68
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "False"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 11,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 10,
+        "type": "False"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 9,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 8,
+        "type": "False"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 1,
+        "type": "False"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 14,
+        "type": "True"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 15,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 12,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

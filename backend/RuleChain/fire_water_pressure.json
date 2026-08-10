@@ -1,0 +1,263 @@
+{
+  "ruleChain": {
+    "name": "Fire Water Pressure",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "additionalInfo": {
+      "description": "Healthiness of Water Pressure in Fire Line"
+    }
+  },
+  "metadata": {
+    "version": 2,
+    "firstNodeIndex": 1,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nvar msg_data = msg;\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nif (metadata[\"additionalInfo\"] != undefined) {\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Water Pressure in Fire Line\";\ndetails[\"additionalInfo\"][\"message\"] = \"Healthiness of Water Pressure in Fire Line - Pressure level \" + msg[\"PT Tag (FWPH. Farthest Point)\"];\ndetails[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN005\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP005\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\ndetails['additionalInfo']['customData'] = msg_data\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Healthiness of Water Pressure in Fire Line",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 709,
+          "layoutY": 237
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "add",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "tenantId": "tenantid",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 264,
+          "layoutY": 65
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Adding Server Scope Attributes",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "sapid"
+          ],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false,
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 538,
+          "layoutY": 64
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "check Fire Water Pressure",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "data = JSON.parse(metadata['PT Tag (FWPH. Farthest Point)'])\ncreateAlert = true\n\nfor (i = 0; i < data.length; i++) {\n    var obj = data[i];\n    if (obj['value'] > 5.0) {\n        createAlert = false\n        break;\n    }\n}\n\nif (createAlert) {\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 356,
+          "layoutY": 355
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "clear alarm",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata[\"additionalInfo\"] != undefined) {\n    var additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Water Pressure in Fire Line\";\n    details[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN005\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"raw_data\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP005\";\n}\nreturn details;",
+          "alarmType": "Healthiness of Water Pressure in Fire Line"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 709,
+          "layoutY": 381
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "check current pressure",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if ((msg[\"PT Tag (FWPH. Farthest Point)\"] < 5.0) && (msg[\"PT Tag (FWPH. Farthest Point)\"] != \"-99\")){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 411,
+          "layoutY": 237
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetTelemetryNode",
+        "name": "check Pressure",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "latestTsKeyNames": [
+            "PT Tag (FWPH. Farthest Point)"
+          ],
+          "fetchMode": "ALL",
+          "orderBy": "ASC",
+          "limit": 1000,
+          "useMetadataIntervalPatterns": false,
+          "startInterval": 10,
+          "startIntervalTimeUnit": "MINUTES",
+          "endInterval": 1,
+          "endIntervalTimeUnit": "MILLISECONDS",
+          "startIntervalPattern": "1000",
+          "endIntervalPattern": "1000000"
+        },
+        "additionalInfo": {
+          "description": "Get All telemetry data in last 10 min ",
+          "layoutX": 44,
+          "layoutY": 357
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Is PT",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"Pressure Transmitter\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 52,
+          "layoutY": 260
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "localhost",
+          "port": 5672,
+          "virtualHost": "/hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1042,
+          "layoutY": 296
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 8,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 4,
+        "type": "False"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 8,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 0,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 4,
+        "type": "False"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 6,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

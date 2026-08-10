@@ -1,0 +1,75 @@
+Device Type,Equipments(sensor_type),Equipments(sensor_name),InterlockName,
+Tank,Primary Radar,Primary Gauge HIGH,"Primary Radar Guage_H alarm
+Primary Radar Guage_HH alarm",2
+,VFT,LEVEL SWITCH,"HHH alarm from VFT
+Proof Test_VFT_Failed
+Proof Test_VFT_Sucess
+VFT_Under Maintenance",4
+,Secondary Radar,RADAR HHH,"HHH alarm from Secondary Radar guage
+Proof Test_Secondary Radar Guage_Failed
+Proof Test_Secondary Radar Guage_Sucess
+Secondary Radar_Under Maintenance",4
+,ROSOV STATUS,ROSOV OPEN STATUS IL1,"ROSOV_Close Status
+ROSOV_FailtoClose",1
+,ROSOV STATUS,ROSOV OPEN STATUS IL2,"ROSOV_Close Status
+ROSOV_FailtoClose",1
+,ROSOV STATUS,ROSOV OPEN STATUS OL,"ROSOV_Close Status
+ROSOV_FailtoClose",1
+,ROSOV STATUS,ROSOV OPEN STATUS RCL,"ROSOV_Close Status
+ROSOV_FailtoClose",1
+,MOV STATUS,MOV STATUS IL1,MOV_Close Status,1
+,MOV STATUS,MOV STATUS IL2,MOV_Close Status,1
+,MOV STATUS,MOV STATUS OL,MOV_Close Status,1
+,MOV STATUS,MOV STATUS RCL,MOV_Close Status,1
+,RimSeal,RIMSEAL FAULT ALARM,Rim Seal system_Under Maintenance,1
+ESD,ESD,ESD,"Plant ESD activated
+ESD Push button_Under Maintenance
+All Tanks in Dormant Mode
+All DBBVs Closed
+All TLF Product Pumps Stopped
+ESD Command To Process PLC
+TLF Gantry Permissive Power Off
+Barrier Gate opened
+Hooter cum strobe for ESD activated in control room
+Siren Activated
+Tanks in TTL Dispatch in Dormant Mode
+Power ESD Activation in Main PMCC Panel after 120 Sec
+All ROSOVs closed",13
+Dyke,Dyke,Dyke,Dykevalve_Activated,1
+Barrier Gate,Barrier Gate,Barrier Gate,Barrier Gate opened,1
+HCD,HCD,HCD,"HCD_40% LEL activated
+HCD_20% LEL activated
+HCD_Under Maintenance
+HCD_Fault activated",4
+Hooter,Hooter,Hooter,Hooter cum strobe for ESD activated in control room,1
+LRC Switchover,LRC Switchover,LRC Switchover,"LRCA_Master
+LRCB_Master",2
+Loading Point,Loading Point,Loading Point,"BCU vs MFM totalizer mismatch alarm
+K Factor Change_BCU
+K Factor Change_MFM
+Blend Underdose Alarm_BCU
+No Flow alarm_BCU
+Additive Overdose Alarm_BCU
+Meter overrun Alarm_BCU
+Additive Underdose Alarm_BCU
+Unauthorized Flow Alarm_BCU
+High Flow Alarm_BCU
+Blend overdose Alarm_BCU
+Low Flow alarm_BCU
+Day End totaliser Mismatch
+Earthing Failure Alarm",14
+PLC,PLC,PLC A IS MASTER,SafetyPLC_Communication fail,1
+,PLC,PLC B IS MASTER,ProcessPLC_Communication fail,1
+Pump,Pump,Pump,All TLF Product Pumps Stopped,1
+UPS,UPS,UPS,"UPS_Fail
+UPS_Lowbattery",2
+Fire Pump,Fire Pump,Fire Pump,"Gantry Permissive Off
+Firefighting system parameter
+All TLF Product Pumps Stopped
+TLF Header Line MOV Close
+All BCU permissive Fail",5
+Fire Engine,Fire Engine,,,65
+Jockey Pump,Jockey Pump,,,
+PT Hydrant,PT Hydrant,,,
+Air Compressor,Air Compressor,,,
+BCU,BCU,,,

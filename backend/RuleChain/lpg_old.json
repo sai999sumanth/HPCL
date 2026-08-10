@@ -1,0 +1,638 @@
+{
+  "ruleChain": {
+    "name": "LPG OLD",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "additionalInfo": {
+      "description": ""
+    }
+  },
+  "metadata": {
+    "version": 3,
+    "firstNodeIndex": 14,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "localhost",
+          "port": 5672,
+          "virtualHost": "/hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1590,
+          "layoutY": 524
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Adding Server Scope Attributes",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "sapid"
+          ],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false,
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 642,
+          "layoutY": 54
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Quality Of Cylinders In OLD\";\ndetails[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN009\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP009\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Quality Of Cylinders In OLD",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 884,
+          "layoutY": 483
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Quality Of Cylinders In Old Machine",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"TST-LPG-UCN009\"] != undefined && msg[\"TST-LPG-UCN009\"] != \"\") {\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 423,
+          "layoutY": 466
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"OLD Bypass\";\ndetails[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN007\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP007\";\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "OLD Bypass",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 901,
+          "layoutY": 186
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Checking Of OLD\";\ndetails[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN008\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP008\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "Checking Of OLD",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 884,
+          "layoutY": 342
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Unity CHECK",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"OLD_VLD\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 27,
+          "layoutY": 503
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Quality of Cylinders in VLD Machine\";\ndetails[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN012\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP012\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "Quality of Cylinders in VLD Machine",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 906,
+          "layoutY": 860
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Checking of VLD\";\ndetails[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN011\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP011\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "Checking of VLD",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 897,
+          "layoutY": 742
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = {};\nif (metadata.additionalInfo){\n  additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Checking of VLD\";\n    details[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN011\";\n    details[\"additionalInfo\"][\"sapi_d\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"raw_data\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP011\";\n}\nreturn details;",
+          "alarmType": "Checking of VLD"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 905,
+          "layoutY": 801
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Checking Of OLD",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"TST-LPG-UCN008\"] != undefined && msg[\"TST-LPG-UCN008\"] != \"\") {\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 424,
+          "layoutY": 385
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Alarm",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = {};\nif (metadata.additionalInfo){\n  additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Checking of VLD Bypass\";\n    details[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN010\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"staticData\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\n}\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "Checking of VLD Bypass"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 883,
+          "layoutY": 672
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "clear alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = {};\nif (metadata.additionalInfo){\n  additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"OLD Bypass\";\n    details[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN007\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"staticData\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP007\";\n}\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "OLD Bypass"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 893,
+          "layoutY": 271
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = {};\nif (metadata.additionalInfo){\n  additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Quality of Cylinders in VLD Machine\";\n    details[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN012\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"staticData\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP012\";\n}\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "Quality of Cylinders in VLD Machine"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 909,
+          "layoutY": 929
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 298,
+          "layoutY": 56
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Checking of VLD Bypass",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"TST-LPG-UCN010\"] != undefined && msg[\"TST-LPG-UCN010\"] != \"\") {\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 423,
+          "layoutY": 543
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Checking of VLD Bypass\";\ndetails[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN010\";\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"]\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "Checking of VLD Bypass",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 880,
+          "layoutY": 608
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Checking of VLD",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"TST-LPG-UCN011\"] != undefined && msg[\"TST-LPG-UCN011\"] != \"\") {\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 422,
+          "layoutY": 627
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = {};\nif (metadata.additionalInfo){\n  additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Quality Of Cylinders In OLD\";\n    details[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN009\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"staticData\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP009\";\n}\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "Quality Of Cylinders In OLD"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 884,
+          "layoutY": 546
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Clear Alarm",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = {};\nif (metadata.additionalInfo){\n  additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Checking Of OLD\";\n    details[\"additionalInfo\"][\"unit_name\"] = \"TST-LPG-UCN008\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"staticData\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP008\";\n}\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "Checking Of OLD"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 886,
+          "layoutY": 412
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Unity OLD ByPass",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"TST-LPG-UCN007\"] != undefined && msg[\"TST-LPG-UCN007\"] != \"\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 426,
+          "layoutY": 306
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Quality of Cylinders in VLD Machine",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (msg[\"TST-LPG-UCN012\"] != undefined && msg[\"TST-LPG-UCN012\"] != \"\") {\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 424,
+          "layoutY": 706
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 18,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 10,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 15,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 17,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 20,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 21,
+        "type": "True"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 0,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 19,
+        "type": "False"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 0,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 0,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 0,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 11,
+        "type": "False"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 16,
+        "type": "True"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 0,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 9,
+        "type": "False"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 0,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 0,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 12,
+        "type": "False"
+      },
+      {
+        "fromIndex": 21,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 21,
+        "toIndex": 13,
+        "type": "False"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

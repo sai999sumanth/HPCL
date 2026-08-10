@@ -1,0 +1,157 @@
+{
+    "allowRemoteResourceManagement": true,
+    "policyEnforcementMode": "ENFORCING",
+    "decisionStrategy": "AFFIRMATIVE",
+    "resources": [
+        {
+            "name": "dbcredsmodel",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "DBCredsModel",
+            "attributes": {},
+            "uris": [
+                "/api/dbcredsmodel/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "load_dbcreds"
+                }
+            ]
+        },
+        {
+            "name": "dbcredsmodel_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "DBCredsModel_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/dbcredsmodel/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "dbcredsmodel_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "DBCredsModel_admin",
+            "attributes": {},
+            "uris": [
+                "/api/dbcredsmodel/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "load_dbcreds"
+                }
+            ]
+        }
+    ],
+    "policies": [
+        {
+            "name": "superAdminPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"superAdmin\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "superAdminPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "all",
+                "applyPolicies": "[\"superAdminPolicy\"]"
+            }
+        },
+        {
+            "name": "readOnlyPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"readOnly\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "readOnlyPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "readOnly",
+                "applyPolicies": "[\"readOnlyPolicy\"]"
+            }
+        },
+        {
+            "name": "adminPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"admin\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "adminPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "admin",
+                "applyPolicies": "[\"adminPolicy\"]"
+            }
+        }
+    ],
+    "scopes": [
+        {
+            "name": "create",
+            "displayName": "create"
+        },
+        {
+            "name": "update",
+            "displayName": "update"
+        },
+        {
+            "name": "read",
+            "displayName": "read"
+        },
+        {
+            "name": "delete",
+            "displayName": "delete"
+        },
+        {
+            "name": "load_dbcreds",
+            "displayName": "load_dbcreds"
+        }
+    ]
+}

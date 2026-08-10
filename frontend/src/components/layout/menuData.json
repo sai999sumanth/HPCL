@@ -1,0 +1,610 @@
+{
+  "menuItems": [
+    {
+      "title": "Performance",
+      "icon": "IconChartBar",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "Industry",
+          "icon": "IconLayoutDashboard",
+          "path": "/industryperformance",
+          "type": "submenu",
+          "children": [
+            {
+              "title": "Industry Performance",
+              "icon": "IconLayoutDashboard",
+              "path": "/industryperformance",
+              "type": "item"
+            },
+            {
+              "title": "Retail Industry Performance",
+              "icon": "IconLayoutDashboard",
+              "path": "/retail-industry-performance",
+              "type": "item"
+            },
+            {
+              "title": "Lpg Industry Performance",
+              "icon": "IconLayoutDashboard",
+              "path": "/lpg-industry-performance",
+              "type": "item"
+            },
+            {
+              "title": "I&C Industry Performance",
+              "icon": "IconLayoutDashboard",
+              "path": "/i&c-industry-performance",
+              "type": "item"
+            }
+          ]
+        },
+        {
+          "title": "Sales Performance",
+          "icon": "IconLayoutDashboard",
+          "type": "submenu",
+          "children": [
+            {
+              "title": "Marketing Summary",
+              "icon": "IconLayoutDashboard",
+              "path": "/marketing-summary",
+              "type": "item"
+            },
+            {
+              "title": "Retail Insights",
+              "icon": "IconLayoutDashboard",
+              "path": "/retail-performance",
+              "type": "item"
+            },
+            {
+              "title": "LPG Insights",
+              "icon": "IconLayoutDashboard",
+              "path": "/lpg-performance",
+              "type": "item"
+            },
+            {
+              "title": "I&C Insights",
+              "icon": "IconLayoutDashboard",
+              "path": "/i&c-performance",
+              "type": "item"
+            },
+            {
+              "title": "I&C Campaign",
+              "icon": "IconLayoutDashboard",
+              "path": "/i&c-Insights-SalesArea-Analytics",
+              "type": "item"
+            },
+            {
+              "title": "Lubes Insights",
+              "icon": "IconLayoutDashboard",
+              "path": "/lubes-performance",
+              "type": "item"
+            },
+            {
+              "title": "Lubes Bazaar",
+              "icon": "IconLayoutDashboard",
+              "path": "/sales-lubes",
+              "type": "item"
+            },
+            {
+              "title": "Lubes Consumer",
+              "icon": "IconLayoutDashboard",
+              "path": "/lubes",
+              "type": "item"
+            },
+            {
+              "title": "Aviation Insights",
+              "icon": "IconLayoutDashboard",
+              "path": "/aviation-performance",
+              "type": "item"
+            },
+            {
+              "title": "PetChem Insights",
+              "icon": "IconLayoutDashboard",
+              "path": "/petchem-performance",
+              "type": "item"
+            },
+            {
+              "title": "GAS Insights",
+              "icon": "IconLayoutDashboard",
+              "path": "/gas-performance",
+              "type": "item"
+            }
+          ]
+        },
+        {
+          "title": "KPI Dashboards",
+          "icon": "IconLayoutDashboard",
+          "type": "submenu",
+          "children": [
+            {
+              "title": "Retail",
+              "icon": "IconLayoutDashboard",
+              "path": "/kpi-dashboards/retail-stockouts",
+              "type": "item"
+            },
+            {
+              "title": "TAS",
+              "icon": "IconLayoutDashboard",
+              "path": "/kpi-dashboards/tas",
+              "type": "item"
+            },
+            {
+              "title": "LPG",
+              "icon": "IconLayoutDashboard",
+              "path": "/kpi-dashboards/lpg",
+              "type": "item"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "SOD Terminal",
+      "icon": "IconBrandDrops",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "Terminal Home",
+          "icon": "IconSmartHome",
+          "path": "/sodTerminal/terminalHome",
+          "type": "item"
+        },
+        {
+          "title": "Supply Chain",
+          "icon": "IconLayoutDashboard",
+          "path": "/sodTerminal/sodSupplychain",
+          "type": "item"
+        },
+        {
+          "title": "Video Analytics",
+          "icon": "IconDeviceAnalytics",
+          "path": "/sodTerminal/videoAnalytics",
+          "type": "item"
+        },
+        {
+          "title": "TAS",
+          "icon": "IconShield",
+          "type": "submenu",
+          "children": [
+            {
+              "title": "TAS Home",
+              "icon": "IconSmartHome",
+              "path": "/sodTerminal/tasGovernance/tasHome",
+              "type": "item"
+            },
+            {
+              "title": "TAS Overview",
+              "icon": "IconDeviceAnalytics",
+              "path": "/sodTerminal/tasGovernance/tasOverview",
+              "type": "item"
+            },
+          
+            {
+              "title": "TAS Dashboard",
+              "icon": "IconGauge",
+              "path": "/sodTerminal/tasGovernance/dashboard",
+              "type": "item"
+            },
+            {
+
+              "title": "Tank Farm",
+
+              "icon": "IconTruck",
+
+              "path": "/sodTerminal/tasGovernance/TASSupplyChain",
+
+              "type": "item"
+
+            },
+            {
+              "title": "TAS Insights",
+              "icon": "IconDeviceAnalytics",
+              "type": "submenu",
+              "children": [
+                {
+                  "title": "BCU Dosing Alerts",
+                  "icon": "IconBell",
+                  "path": "/sodTerminal/tasGovernance/insights/BCUalerts",
+                  "type": "item"
+                },
+                {
+                  "title": "BAY Analytics",
+                  "icon": "IconDeviceAnalytics",
+                  "path": "/sodTerminal/tasGovernance/insights/analytics",
+                  "type": "item"
+                },
+                {
+                  "title": "BCU Critical Parameter ",
+                  "icon": "IconAlertTriangle",
+                  "path": "/sodTerminal/tasGovernance/insights/bcuCriticalParameter",
+                  "type": "item"
+                }
+              ]
+            },
+            {
+              "title": "Bay Caliberation Module",
+              "icon": "IconRuler",
+              "path": "/sodTerminal/tasGovernance/kFactor",
+              "type": "item"
+            },
+            {
+              "title": "Help Desk Module",
+              "icon": "IconActivity",
+              "path": "/sodTerminal/tasGovernance/equipmentHealthCheck",
+              "type": "item"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Retail Outlet",
+      "icon": "IconGasStation",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "RO Home",
+          "icon": "IconSmartHome",
+          "path": "/retailOutlet/RO-Home",
+          "type": "item"
+        },
+        {
+          "title": "Supply Chain",
+          "icon": "IconSmartHome",
+          "path": "/retailOutlet/SupplyChain",
+          "type": "item"
+        },
+        {
+          "title": "Video Analytics",
+          "icon": "IconDeviceAnalytics",
+          "path": "/retailOutlet/videoAnalytics",
+          "type": "item"
+        },
+        {
+          "title": "Retail Governance",
+          "icon": "IconShield",
+          "type": "submenu",
+          "children": [
+            {
+              "title": "Sanitation Compliance",
+              "icon": "IconShield",
+              "path": "/retailOutlet/retailGovernance",
+              "type": "item"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "LPG",
+      "icon": "IconCylinder",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "LPG Plant",
+          "icon": "IconSmartHome",
+          "path": "/LPG/Home",
+          "type": "item"
+        },
+        {
+          "title": "Pro Dash",
+          "icon": "IconSmartHome",
+          "path": "/LPG/proDash",
+          "type": "item"
+        },
+        {
+          "title": "Consolidated Report",
+          "icon": "TbReportAnalytics",
+          "path": "/LPG/consolidatedReport",
+          "type": "item"
+        },
+        {
+          "title": "LPG Operations",
+          "icon": "IconSmartHome",
+          "path": "/LPG/operations",
+          "type": "item"
+        },
+        {
+          "title": "LPG Analytics",
+          "icon": "IconSmartHome",
+          "path": "/LPG/analytics",
+          "type": "item"
+        },
+        {
+          "title": "LPG Inventory",
+          "icon": "IconBuildingWarehouse",
+          "path": "/LPG/inventory",
+          "type": "item"
+        },
+        {
+          "title": "LPG Settings",
+          "icon": "IconSettings",
+          "path": "/LPG/settings",
+          "type": "item"
+        },
+        {
+          "title": "Supply Chain",
+          "icon": "IconTruck",
+          "type": "submenu",
+          "children": [
+            {
+              "title": "Operations",
+              "icon": "IconSmartHome",
+              "path": "/LPG/supplyChain/operations",
+              "type": "item"
+            },
+            {
+              "title": "Sales",
+              "icon": "IconSmartHome",
+              "path": "/LPG/supplyChain/sales",
+              "type": "item"
+            }
+          ]
+        },
+        {
+          "title": "Video Analytics",
+          "icon": "IconDeviceAnalytics",
+          "path": "/LPG/videoAnalytics",
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "title": "Direct Sales",
+      "icon": "IconDeviceAnalytics",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "VTS Insights",
+          "icon": "IconLayoutDashboard",
+          "path": "/DirectSales/vtsInsights",
+          "type": "item"
+        },
+        {
+          "title": "Supply Chain",
+          "icon": "IconLayoutDashboard",
+          "path": "/DirectSales/supplyChain",
+          "type": "item"
+        },
+        {
+          "title": "I&C Insights",
+          "icon": "IconLayoutDashboard",
+          "path": "/i&c-performance",
+          "type": "item"
+        },
+        {
+          "title": "I&C Campaign",
+          "icon": "IconLayoutDashboard",
+          "path": "/i&c-Insights-SalesArea-Analytics",
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "title": "VA",
+      "icon": "IconDeviceAnalytics",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "VA Home",
+          "icon": "IconSmartHome",
+          "path": "/VA/VAHome",
+          "type": "item"
+        },
+        {
+          "title": "RO Video Analytics",
+          "icon": "IconSmartHome",
+          "path": "/retailOutlet/videoAnalytics",
+          "type": "item"
+        },
+        {
+          "title": "SOD Video Analytics",
+          "icon": "IconSmartHome",
+          "path": "/sodTerminal/videoAnalytics",
+          "type": "item"
+        },
+        {
+          "title": "LPG Video Analytics",
+          "icon": "IconSmartHome",
+          "path": "/LPG/videoAnalytics",
+          "type": "item"
+        } ,
+        {
+          "title": "VA Analytics",
+          "icon": "IconSmartHome",
+          "path": "/VA/VAAnalytics",
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "title": "VTS",
+      "icon": "IconTir",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "VTS ITDG Alert Home",
+          "icon": "IconSmartHome",
+          "path": "/VTS/VTSHome",
+          "type": "item"
+        },
+        {
+          "title": "VTS Governance",
+          "icon": "IconShield",
+          "type": "submenu",
+          "children": [
+            {
+              "title": "VTS Dashboard",
+              "icon": "IconLayoutDashboard",
+              "path": "/governance/vts/dashboard",
+              "type": "item"
+            },
+            {
+              "title": "VTS Insights",
+              "icon": "IconLayoutDashboard",
+              "path": "/governance/vts/insights",
+              "type": "item"
+            },
+            {
+              "title": "Compliance",
+              "icon": "IconLayoutDashboard",
+              "path": "/governance/vts/compliance",
+              "type": "item"
+            },
+            {
+              "title": "VTS Unblocking",
+              "icon": "IconLayoutDashboard",
+              "path": "/governance/vts/analytics",
+              "type": "item"
+            },
+            {
+              "title": "VTS Live",
+              "icon": "IconLayoutDashboard",
+              "path": "/governance/vts/live",
+              "type": "item"
+            },
+            {
+              "title": "Admin Module",
+              "icon": "IconLayoutDashboard",
+              "path": "/governance/vts/module",
+              "type": "item"
+            },
+            {
+              "title": "Risk Score",
+              "icon": "IconLayoutDashboard",
+              "path": "/governance/vts/score",
+              "type": "item"
+            }
+          ]
+        },
+        {
+          "title": "Alert Manager",
+          "icon": "IconDeviceAnalytics",
+          "path": "/VTS/AlertManager",
+          "type": "item"
+        },
+        {
+          "title": "Device Manager",
+          "icon": "IconDeviceAnalytics",
+          "path": "/VTS/DeviceManager",
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "title": "Pipeline",
+      "icon": "IconRoute",
+      "path": "/dnc/home/wall/pipeline",
+      "type": "item"
+    },
+    {
+      "title": "CEMS",
+      "icon": "IconDeviceAnalytics",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "CEMS Dashboard",
+          "icon": "IconLayoutDashboard",
+          "path": "/cems/dashboard",
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "title": "Ticketing",
+      "icon": "IconTicket",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "Ticketing Dashboard",
+          "icon": "IconTicket",
+          "path": "/settings/tickets2",
+          "type": "item"
+        },             
+        {
+          "title": "PM Orders",
+          "icon": "IconTicket",
+          "path": "/settings/tickets-table",
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "title": "Settings",
+      "icon": "IconSettings",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "Users",
+          "icon": "IconUsers",
+          "path": "/settings/users",
+          "type": "item"
+        },
+        {
+          "title": "Roles",
+          "icon": "IconUserCog",
+          "path": "/settings/roles",
+          "type": "item"
+        },
+        {
+          "title": "Locations",
+          "icon": "IconMapPin",
+          "path": "/settings/locations",
+          "type": "item"
+        },
+        {
+          "title": "RO Esc Matrix ",
+          "icon": "IconLayoutDashboard",
+          "path": "/settings/ROEscMatrix",
+          "type": "item"
+        }
+        ,
+        {
+          
+              "title": "Emails Dashboard",
+              "icon": "IconMail",
+              "path": "/settings/emails",
+              "type": "item"
+       
+        }
+      ]
+    },
+    {
+      "title": "Natural Gas",
+      "icon": "IconFlame",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "NGC Analytics",
+          "icon": "IconLayoutDashboard",
+          "path": "/naturalGas/ngc-mis/analytics/executive-summary",
+          "type": "item"
+        },
+        {
+          "title": "NGC Progress MIS",
+          "icon": "IconReportAnalytics",
+          "path": "/naturalGas/ngc-mis/mis",
+          "type": "item"
+        }
+      ]
+    },
+    {
+      "title": "Audit log",
+      "icon": "IconFileSearch",
+      "type": "submenu",
+      "children": [
+        {
+          "title": "Login audit",
+          "icon": "IconLogin",
+          "path": "/auditlog/loginAudit",
+          "type": "item"
+        },
+        {
+          "title": "System audit",
+          "icon": "IconAlertSquareRounded",
+          "path": "/auditlog/systemAudit",
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}

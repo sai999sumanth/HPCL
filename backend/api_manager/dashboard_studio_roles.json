@@ -1,0 +1,1181 @@
+{
+    "allowRemoteResourceManagement": true,
+    "policyEnforcementMode": "ENFORCING",
+    "decisionStrategy": "AFFIRMATIVE",
+    "resources": [
+        {
+            "name": "charts",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "Charts",
+            "attributes": {},
+            "uris": [
+                "/api/charts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_tables"
+                },
+                {
+                    "name": "get_columns"
+                },
+                {
+                    "name": "get_unique_values"
+                },
+                {
+                    "name": "drill_down_data"
+                },
+                {
+                    "name": "dashboard_charts"
+                },
+                {
+                    "name": "get_dashboard_chart_form"
+                },
+                {
+                    "name": "get_distinct_values"
+                },
+                {
+                    "name": "get_product_values"
+                },
+                {
+                    "name": "generate_dynamic_chart_query"
+                },
+                {
+                    "name": "save_charts"
+                },
+                {
+                    "name": "get_time_range"
+                },
+                {
+                    "name": "get_auto_complete_text"
+                },
+                {
+                    "name": "connection_vault_routing"
+                },
+                {
+                    "name": "get_creds_details"
+                },
+                {
+                    "name": "get_schema"
+                },
+                {
+                    "name": "generate_vis_data"
+                },
+                {
+                    "name": "enable_cross_filter"
+                },
+                {
+                    "name": "generate_embedded_url"
+                },
+                {
+                    "name": "previous_present_month_sales"
+                },
+                {
+                    "name": "sales_drop_down"
+                },
+                {
+                    "name": "previous_present_month_sales_by_product"
+                },
+                {
+                    "name": "previous_present_month_amount_litres"
+                }
+            ]
+        },
+        {
+            "name": "charts_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "Charts_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/charts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_tables"
+                },
+                {
+                    "name": "get_columns"
+                },
+                {
+                    "name": "get_unique_values"
+                },
+                {
+                    "name": "get_dashboard_chart_form"
+                },
+                {
+                    "name": "get_distinct_values"
+                },
+                {
+                    "name": "get_product_values"
+                },
+                {
+                    "name": "get_time_range"
+                },
+                {
+                    "name": "get_auto_complete_text"
+                },
+                {
+                    "name": "get_creds_details"
+                },
+                {
+                    "name": "get_schema"
+                }
+            ]
+        },
+        {
+            "name": "charts_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "Charts_admin",
+            "attributes": {},
+            "uris": [
+                "/api/charts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_tables"
+                },
+                {
+                    "name": "get_columns"
+                },
+                {
+                    "name": "get_unique_values"
+                },
+                {
+                    "name": "drill_down_data"
+                },
+                {
+                    "name": "dashboard_charts"
+                },
+                {
+                    "name": "get_dashboard_chart_form"
+                },
+                {
+                    "name": "get_distinct_values"
+                },
+                {
+                    "name": "get_product_values"
+                },
+                {
+                    "name": "generate_dynamic_chart_query"
+                },
+                {
+                    "name": "save_charts"
+                },
+                {
+                    "name": "get_time_range"
+                },
+                {
+                    "name": "get_auto_complete_text"
+                },
+                {
+                    "name": "connection_vault_routing"
+                },
+                {
+                    "name": "get_creds_details"
+                },
+                {
+                    "name": "get_schema"
+                },
+                {
+                    "name": "generate_vis_data"
+                },
+                {
+                    "name": "enable_cross_filter"
+                },
+                {
+                    "name": "generate_embedded_url"
+                },
+                {
+                    "name": "previous_present_month_sales"
+                },
+                {
+                    "name": "sales_drop_down"
+                },
+                {
+                    "name": "previous_present_month_sales_by_product"
+                },
+                {
+                    "name": "previous_present_month_amount_litres"
+                }
+            ]
+        },
+        {
+            "name": "dashboards",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "DashBoards",
+            "attributes": {},
+            "uris": [
+                "/api/dashboards/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "save_dashboards"
+                },
+                {
+                    "name": "get_dashboard_details"
+                },
+                {
+                    "name": "get_dashboard_groups"
+                },
+                {
+                    "name": "get_dashboard_uri"
+                }
+            ]
+        },
+        {
+            "name": "dashboards_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "DashBoards_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/dashboards/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_dashboard_details"
+                },
+                {
+                    "name": "get_dashboard_groups"
+                },
+                {
+                    "name": "get_dashboard_uri"
+                }
+            ]
+        },
+        {
+            "name": "dashboards_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "DashBoards_admin",
+            "attributes": {},
+            "uris": [
+                "/api/dashboards/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "save_dashboards"
+                },
+                {
+                    "name": "get_dashboard_details"
+                },
+                {
+                    "name": "get_dashboard_groups"
+                },
+                {
+                    "name": "get_dashboard_uri"
+                }
+            ]
+        },
+        {
+            "name": "groups",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "Groups",
+            "attributes": {},
+            "uris": [
+                "/api/groups/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "groups_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "Groups_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/groups/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "groups_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "Groups_admin",
+            "attributes": {},
+            "uris": [
+                "/api/groups/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "dashboardgroups",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "DashboardGroups",
+            "attributes": {},
+            "uris": [
+                "/api/dashboardgroups/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "update_dashboard_groups"
+                },
+                {
+                    "name": "update_dashboard_group_order"
+                }
+            ]
+        },
+        {
+            "name": "dashboardgroups_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "DashboardGroups_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/dashboardgroups/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "dashboardgroups_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "DashboardGroups_admin",
+            "attributes": {},
+            "uris": [
+                "/api/dashboardgroups/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "update_dashboard_groups"
+                },
+                {
+                    "name": "update_dashboard_group_order"
+                }
+            ]
+        },
+        {
+            "name": "aitexts",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "AITexts",
+            "attributes": {},
+            "uris": [
+                "/api/aitexts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "aitexts_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "AITexts_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/aitexts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "aitexts_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "AITexts_admin",
+            "attributes": {},
+            "uris": [
+                "/api/aitexts/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "solarpanelcleaning",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPanelCleaning",
+            "attributes": {},
+            "uris": [
+                "/api/solarpanelcleaning/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_solar_dashboard_summary"
+                }
+            ]
+        },
+        {
+            "name": "solarpanelcleaning_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPanelCleaning_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/solarpanelcleaning/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_solar_dashboard_summary"
+                }
+            ]
+        },
+        {
+            "name": "solarpanelcleaning_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPanelCleaning_admin",
+            "attributes": {},
+            "uris": [
+                "/api/solarpanelcleaning/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "get_solar_dashboard_summary"
+                }
+            ]
+        },
+        {
+            "name": "solarpanelwetdrycleaning",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPanelWetDryCleaning",
+            "attributes": {},
+            "uris": [
+                "/api/solarpanelwetdrycleaning/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "create_solar_panel_cleaning_record"
+                },
+                {
+                    "name": "get_last_cleaning_date"
+                },
+                {
+                    "name": "get_panel_status"
+                },
+                {
+                    "name": "get_pending_completed_counts"
+                },
+                {
+                    "name": "get_all_dry_wet_cleaning_records"
+                }
+            ]
+        },
+        {
+            "name": "solarpanelwetdrycleaning_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPanelWetDryCleaning_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/solarpanelwetdrycleaning/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "get_last_cleaning_date"
+                },
+                {
+                    "name": "get_panel_status"
+                },
+                {
+                    "name": "get_pending_completed_counts"
+                },
+                {
+                    "name": "get_all_dry_wet_cleaning_records"
+                }
+            ]
+        },
+        {
+            "name": "solarpanelwetdrycleaning_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPanelWetDryCleaning_admin",
+            "attributes": {},
+            "uris": [
+                "/api/solarpanelwetdrycleaning/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "create_solar_panel_cleaning_record"
+                },
+                {
+                    "name": "get_last_cleaning_date"
+                },
+                {
+                    "name": "get_panel_status"
+                },
+                {
+                    "name": "get_pending_completed_counts"
+                },
+                {
+                    "name": "get_all_dry_wet_cleaning_records"
+                }
+            ]
+        },
+        {
+            "name": "historicsolarpanelwetdrycleaningcreate",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "HistoricSolarPanelWetDryCleaningCreate",
+            "attributes": {},
+            "uris": [
+                "/api/historicsolarpanelwetdrycleaningcreate/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "historicsolarpanelwetdrycleaningcreate_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "HistoricSolarPanelWetDryCleaningCreate_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/historicsolarpanelwetdrycleaningcreate/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "historicsolarpanelwetdrycleaningcreate_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "HistoricSolarPanelWetDryCleaningCreate_admin",
+            "attributes": {},
+            "uris": [
+                "/api/historicsolarpanelwetdrycleaningcreate/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "solargenerationsummary",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "SolarGenerationSummary",
+            "attributes": {},
+            "uris": [
+                "/api/solargenerationsummary/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "solargenerationsummary_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "SolarGenerationSummary_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/solargenerationsummary/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "solargenerationsummary_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "SolarGenerationSummary_admin",
+            "attributes": {},
+            "uris": [
+                "/api/solargenerationsummary/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "solaroutagesummary",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "SolarOutageSummary",
+            "attributes": {},
+            "uris": [
+                "/api/solaroutagesummary/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "solaroutagesummary_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "SolarOutageSummary_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/solaroutagesummary/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "solaroutagesummary_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "SolarOutageSummary_admin",
+            "attributes": {},
+            "uris": [
+                "/api/solaroutagesummary/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                }
+            ]
+        },
+        {
+            "name": "solarplantcapacity",
+            "type": "all",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPlantCapacity",
+            "attributes": {},
+            "uris": [
+                "/api/solarplantcapacity/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "upload_solar_plant_capacity"
+                }
+            ]
+        },
+        {
+            "name": "solarplantcapacity_readOnly",
+            "type": "readOnly",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPlantCapacity_readOnly",
+            "attributes": {},
+            "uris": [
+                "/api/solarplantcapacity/*"
+            ],
+            "scopes": [
+                {
+                    "name": "read"
+                }
+            ]
+        },
+        {
+            "name": "solarplantcapacity_admin",
+            "type": "admin",
+            "ownerManagedAccess": false,
+            "displayName": "SolarPlantCapacity_admin",
+            "attributes": {},
+            "uris": [
+                "/api/solarplantcapacity/*"
+            ],
+            "scopes": [
+                {
+                    "name": "create"
+                },
+                {
+                    "name": "update"
+                },
+                {
+                    "name": "read"
+                },
+                {
+                    "name": "delete"
+                },
+                {
+                    "name": "upload_solar_plant_capacity"
+                }
+            ]
+        }
+    ],
+    "policies": [
+        {
+            "name": "superAdminPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"superAdmin\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "superAdminPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "all",
+                "applyPolicies": "[\"superAdminPolicy\"]"
+            }
+        },
+        {
+            "name": "readOnlyPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"readOnly\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "readOnlyPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "readOnly",
+                "applyPolicies": "[\"readOnlyPolicy\"]"
+            }
+        },
+        {
+            "name": "adminPolicy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "roles": "[{\"id\":\"admin\",\"required\":false}]"
+            }
+        },
+        {
+            "name": "adminPermission",
+            "type": "resource",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+                "defaultResourceType": "admin",
+                "applyPolicies": "[\"adminPolicy\"]"
+            }
+        }
+    ],
+    "scopes": [
+        {
+            "name": "create",
+            "displayName": "create"
+        },
+        {
+            "name": "update",
+            "displayName": "update"
+        },
+        {
+            "name": "read",
+            "displayName": "read"
+        },
+        {
+            "name": "delete",
+            "displayName": "delete"
+        },
+        {
+            "name": "get_tables",
+            "displayName": "get_tables"
+        },
+        {
+            "name": "get_columns",
+            "displayName": "get_columns"
+        },
+        {
+            "name": "get_unique_values",
+            "displayName": "get_unique_values"
+        },
+        {
+            "name": "drill_down_data",
+            "displayName": "drill_down_data"
+        },
+        {
+            "name": "dashboard_charts",
+            "displayName": "dashboard_charts"
+        },
+        {
+            "name": "get_dashboard_chart_form",
+            "displayName": "get_dashboard_chart_form"
+        },
+        {
+            "name": "get_distinct_values",
+            "displayName": "get_distinct_values"
+        },
+        {
+            "name": "get_product_values",
+            "displayName": "get_product_values"
+        },
+        {
+            "name": "generate_dynamic_chart_query",
+            "displayName": "generate_dynamic_chart_query"
+        },
+        {
+            "name": "save_charts",
+            "displayName": "save_charts"
+        },
+        {
+            "name": "get_time_range",
+            "displayName": "get_time_range"
+        },
+        {
+            "name": "get_auto_complete_text",
+            "displayName": "get_auto_complete_text"
+        },
+        {
+            "name": "connection_vault_routing",
+            "displayName": "connection_vault_routing"
+        },
+        {
+            "name": "get_creds_details",
+            "displayName": "get_creds_details"
+        },
+        {
+            "name": "get_schema",
+            "displayName": "get_schema"
+        },
+        {
+            "name": "generate_vis_data",
+            "displayName": "generate_vis_data"
+        },
+        {
+            "name": "enable_cross_filter",
+            "displayName": "enable_cross_filter"
+        },
+        {
+            "name": "generate_embedded_url",
+            "displayName": "generate_embedded_url"
+        },
+        {
+            "name": "previous_present_month_sales",
+            "displayName": "previous_present_month_sales"
+        },
+        {
+            "name": "sales_drop_down",
+            "displayName": "sales_drop_down"
+        },
+        {
+            "name": "previous_present_month_sales_by_product",
+            "displayName": "previous_present_month_sales_by_product"
+        },
+        {
+            "name": "previous_present_month_amount_litres",
+            "displayName": "previous_present_month_amount_litres"
+        },
+        {
+            "name": "save_dashboards",
+            "displayName": "save_dashboards"
+        },
+        {
+            "name": "get_dashboard_details",
+            "displayName": "get_dashboard_details"
+        },
+        {
+            "name": "get_dashboard_groups",
+            "displayName": "get_dashboard_groups"
+        },
+        {
+            "name": "get_dashboard_uri",
+            "displayName": "get_dashboard_uri"
+        },
+        {
+            "name": "update_dashboard_groups",
+            "displayName": "update_dashboard_groups"
+        },
+        {
+            "name": "update_dashboard_group_order",
+            "displayName": "update_dashboard_group_order"
+        },
+        {
+            "name": "get_solar_dashboard_summary",
+            "displayName": "get_solar_dashboard_summary"
+        },
+        {
+            "name": "create_solar_panel_cleaning_record",
+            "displayName": "create_solar_panel_cleaning_record"
+        },
+        {
+            "name": "get_last_cleaning_date",
+            "displayName": "get_last_cleaning_date"
+        },
+        {
+            "name": "get_panel_status",
+            "displayName": "get_panel_status"
+        },
+        {
+            "name": "get_pending_completed_counts",
+            "displayName": "get_pending_completed_counts"
+        },
+        {
+            "name": "get_all_dry_wet_cleaning_records",
+            "displayName": "get_all_dry_wet_cleaning_records"
+        },
+        {
+            "name": "upload_solar_plant_capacity",
+            "displayName": "upload_solar_plant_capacity"
+        }
+    ]
+}

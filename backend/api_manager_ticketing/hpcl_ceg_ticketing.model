@@ -1,0 +1,467 @@
+Enum BusinessUnit str {
+    TAS='TAS'
+    LPG='LPG'
+    RO='RO'
+    RDI='RDI'
+    CP='CP'
+    CDCMS='CDCMS'
+    ALL='ALL'
+}
+
+Enum Status str {
+    Open='Open'
+    Close='Close'
+    Pending='Pending'
+}
+
+Enum State str {
+    Open='Open'
+    Reassigned='Reassigned'
+    Escalated ='Escalated'
+    UpdatedByInitiator='Updated By Initiator'
+    ReturnedByOcc='Returned By Occ'
+    ReviewedByOcc ='Reviewed By Occ'
+}
+
+Enum Severity str {
+    Critical='Critical'
+    High='High'
+    Medium='Medium'
+    Low='Low'
+}
+
+
+Enum Assignee str {
+    NovexSupport='NovexSupport'
+    TechSupport='TechSupport'
+}
+
+Model Ticket_History internal {
+    description optional str
+    processed_time optional str
+    allocated_time optional str
+    action_msg optional str
+    action_type optional str
+    created_by optional str
+}
+    
+Model Merge_History internal {
+    ticket_id optional str 
+    merge_ticket_id list str
+    comment optional str
+    processed_time optional str
+    allocated_time optional str
+    action_msg optional str
+    action_type optional str
+}
+
+
+Enum TicketType str{
+    Open = 'TicketRaised'
+    Reassigned = 'TicketReassigned'
+    Escalated ='TicketEscalated'
+    UpdatedByInitiator='TicketOnCompleted'
+    ReturnedByOcc='TicketReOpen'
+    ReviewedByOcc ='TicketResolved'
+
+}
+
+Enum ContextType str{
+    Hpcl = 'Hpcl'
+    Recon = 'Recon'
+    DataValidation = 'DataValidation'
+    
+
+}
+
+Model TruckInfo internal {
+    truck_number str
+    bu optional str
+    sap_id optional str
+    location_name optional str
+    zone optional str
+    region optional str
+}
+
+Model CommentHistory internal {
+    updated_by optional str
+    updated_time optional str
+    ticket_msg optional str
+    comments optional str
+}
+
+Model CreatedHistory internal {
+    updated_by optional str
+    updated_time optional str
+    action optional str 
+    category optional str
+    sub_category optional str
+}
+
+Model Ticketing {
+    ticket_name str
+    ticket_id index_field unique_field str
+    alert_id index_field optional str
+    bu BusinessUnit
+    alert_section optional str
+    sop_id optional str
+    sap_id index_field unique_field list str
+    location_name index_field optional list str
+    zone index_field optional list str
+    region optional str
+    ticket_status index_field Status
+    ticket_state index_field State
+    start_date optional datetime
+    end_date optional datetime
+    summary str
+    description str
+    ticket_severity Severity
+    assignee optional Assignee
+    reporter optional str
+    ticket_history optional list Ticket_History
+    merge_history optional list Merge_History
+    linked_alert_id optional list str
+    interlock_name optional list str
+    comment optional str
+    file_attachment optional list str
+    file_attachment_name optional str
+    file_attachment_id optional str
+    comment_text optional str
+    comment_id optional str
+    comment_attachment_path optional str
+    context optional str
+    merge_status optional str
+    parent_id optional str
+    subtask_id optional list str
+    ticket_end_date optional datetime
+    truck_no optional list str
+    ticket_section optional str //page from where ticket was created
+    category optional list str
+    sub_category optional list str
+    remarks optional str 
+    reason optional str
+    auto_ticket_close optional str
+    assignee_name optional list str
+    assignee_mail optional list str
+    escalation_level index_field optional str
+    comment_history optional list CommentHistory
+    employee_id index_field optional list str
+    re_assingee_employee_id index_field optional list str
+    re_assingee_mail optional list str
+    reassigne_due_date optional str
+    employee_role optional list str
+    order_id optional list str
+
+    Action=> get_ticket {
+        ticket_id str
+    }
+
+    Action=> create_ticket {
+        bu str
+        alert_section optional str
+        sop_id optional str
+        sap_id list str
+        location_name list str
+        zone optional list str
+        region optional str
+        alert_type optional list str
+        assignee optional Assignee
+        summary str
+        description str
+        ticket_state State
+        ticket_severity Severity
+        comment optional str
+        start_date datetime
+        file_attachment optional list str
+        file_attachment_name optional str
+        file_attachment_id optional str
+        linked_alert_id optional list str
+        parent_id optional str
+        subtask_id optional list str
+        ticket_end_date optional datetime
+        truck_no optional list str
+        ticket_section optional str
+        category optional list str
+        sub_category optional list str
+        remarks optional str 
+        reason optional str
+        auto_ticket_close optional str  //Configure whether a ticket should be automatically closed when the alert is closed, or remain open irrespective of the alert status.
+        assignee_name optional list str
+        assignee_mail optional list str
+        reporter optional str
+        escalation_level optional str
+        comment_history optional list CommentHistory
+        employee_id optional list str
+        employee_role optional list str
+        order_id optional list str
+    }
+
+    Action=> close_ticket {
+        close_id str
+        end_date datetime
+    }
+
+    Action=> update_ticket {
+        bu optional str
+        sap_id optional list str
+        sop_id optional str
+        location_name optional list str
+        zone optional list str
+        alert_section optional str
+        alert_type optional list str
+        assignee optional str
+        summary optional str
+        description optional str
+        ticket_state optional str
+        ticket_severity optional str
+        comment optional str
+        update_id str
+        linked_alert_id optional list str
+        parent_id optional str
+        subtask_id optional list str
+        truck_no optional list str
+        ticket_section optional str
+        category optional list str
+        sub_category optional list str
+        remarks optional str 
+        reason optional str
+        auto_ticket_close optional str  //Configure whether a ticket should be automatically closed when the alert is closed, or remain open irrespective of the alert status.
+        assignee_name optional list str
+        assignee_mail optional list str
+        reporter optional str
+        comment_history optional list CommentHistory
+        re_assingee_employee_id optional list str
+        re_assingee_mail optional list str     
+        reassigne_due_date optional str
+        ticket_end_date optional datetime
+    }
+
+    Action=> merge_ticket {
+        ticket_id  str
+        merge_ticket_id optional list str
+        comment optional str
+        merge_status optional str
+        truck_no optional list str
+        ticket_section optional str
+    }
+
+    Action=> delete_ticket {
+        delete_id str
+    }
+
+    Action=> attach_file {
+        ticket_id optional str
+        tid optional str
+        file_path optional str
+    }
+
+    Action=> delete_file_attachment {
+       
+        ticket_id str
+       
+    }
+
+    Action=> download_file_attachment {
+        ticket_id str
+        file_attachment_name optional str
+    }
+
+    Action=> update_assignee {
+        ticket_id str
+        assignee_name  optional list str
+        assignee_mail optional list str
+    }
+    
+    Action=> update_reporter {
+        ticket_id str
+        reporter str
+    }
+
+    Action=> update_priority {
+        ticket_id str
+        ticket_priority str
+    }
+
+    Action=> add_comment_to_ticket {
+        ticket_id str
+        comment_text str 
+    }
+
+    Action=> edit_comment {
+        ticket_id str
+        comment_id str
+        existing_comment_text str
+        new_comment str
+    }
+
+    Action=> delete_comment {
+        ticket_id str
+        comment_id str
+        existing_comment_text str
+    }
+
+    Action=> edit_description {
+        ticket_id str
+        new_description str
+    }
+    
+    Action=> delete_description {
+        ticket_id str
+        delete_existing_desctiption str
+    }
+
+    Action=> attach_file_to_comment {
+        ticket_id str
+        comment_id str
+        file_path optional str
+        
+    }
+
+    Action=> delete_file_from_comment {
+        ticket_id str
+        comment_id str
+        file_path optional str
+    }
+
+    Action=> get_location_data {
+        bu list str
+        zone optional list str
+        region optional list str
+        sales_area optional list str
+        sap_id optional list str
+    }
+
+    Action=> vts_block_trucks {
+        ticket_id str 
+        block_days optional int
+        remarks optional str 
+        reason optional str
+        check_ticket_close optional bool
+        truck_info list TruckInfo
+
+    }
+
+    Action=> process_escalations {
+    }
+
+    Action=> pm_orders {
+        planning_plant optional list str
+        start_date optional str
+        end_date optional str
+        search optional str
+        data_required bool
+        skip optional int
+        limit optional int
+    }
+
+    Action=> pm_orders_weekly {
+        planning_plant optional list str
+        start_date optional str
+        end_date optional str
+        search optional str
+        data_required bool
+        segment_type optional str
+        skip optional int
+        limit optional int
+    }
+
+    Action=> run_alert_closer {
+    }
+
+
+    Config=> {
+        crud_operations='read'
+        search_fields='bu,sap_id,location_name,zone,ticket_id'
+    }
+}
+
+
+Model TicketComment {
+    ticket_id index_field str
+    created_by index_field str
+    content str
+    documents optional list str
+    update_history optional list str
+
+    Action=> add_comment_to_ticket {
+        ticket_id str
+        content str
+        documents optional list str
+    }
+
+    Action=> edit_comment {
+        ticket_id str
+        content str
+        comment_id str
+        documents optional list str
+
+    }
+
+    Action=> delete_comment {
+        ticket_id str
+        comment_id str
+
+    }
+
+    Action=> attach_file_to_comment {
+        ticket_id str
+        comment_id str
+        file_path optional str
+
+    }
+
+    Action=> download_attachment {
+        ticket_id str
+        file_attachment_name optional str
+    }
+
+}
+
+Model TicketUserMails {
+    level optional str
+    sap_id index_field optional str
+    role index_field str
+    location_name index_field optional str
+    zone index_field optional str
+    employee_name optional str
+    email_id optional str
+    employee_id optional str
+
+    Action=> get_ticket_mails {
+        sap_id optional list str
+        zone list str
+        category str
+    }
+
+    Config=> {
+        crud_operations='read'
+    }
+}
+
+Model AlertCategoryMaster {
+
+    category optional list str
+    sub_category optional list str
+    status optional str
+    created_on optional datetime
+    updated_on optional datetime
+    created_by optional str  
+    created_history optional list CreatedHistory
+
+    Action=> add_category {
+        category str
+    }
+
+    Action=> add_sub_category {
+        sub_category str
+    }
+
+    Action=> delete_category {
+        category str
+    }
+
+    Action=> delete_sub_category {
+        sub_category str
+    }
+
+}

@@ -1,0 +1,57 @@
+{
+  "VA_SCORE": {
+    "name": "VA Score",
+    "weightage": 30,
+    "rules": [
+      {
+        "name": "VA Portal",
+        "model": "va_portal",
+        "weightage": 100
+      }
+    ]
+  },
+
+  "NOZZLE_SALES_PATTERN": {
+    "name": "Nozzle Sales (30d) Pattern & Sales Loss",
+    "weightage": 30,
+    "rules": [
+      {
+        "name": "Nozzle sales last 30 days pattern",
+        "model": "nozzle_sales_30d_pattern",
+        "weightage": 50,
+        "time_window_days": 30
+      },
+      {
+        "name": "Nozzle 30d sales vs sales loss",
+        "model": "nozzle_vs_sales_loss",
+        "weightage": 50,
+        "time_window_days": 30
+      }
+    ]
+  },
+
+  "DRYOUT_PATTERNS": {
+    "name": "Dryout Patterns",
+    "weightage": 40,
+    "rules": [
+      {
+        "name": "Dryout Frequency (Last 30 Days)",
+        "model": "dryout_frequency_30d",
+        "weightage": 30,
+        "time_window_days": 30
+      },
+      {
+        "name": "Sales Loss due to Dryout (Last 30 Days)",
+        "model": "dryout_sales_loss_30d",
+        "weightage": 40,
+        "time_window_days": 30
+      },
+      {
+        "name": "Max Dryout Days (Last 30 Days)",
+        "model": "max_dryout_days_30d",
+        "weightage": 30,
+        "time_window_days": 30
+      }
+    ]
+  }
+}

@@ -1,0 +1,466 @@
+{
+  "ruleChain": {
+    "name": "Fire Water Levels",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "additionalInfo": {
+      "description": "Fire Fighting Pressure"
+    }
+  },
+  "metadata": {
+    "version": 3,
+    "firstNodeIndex": 0,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "add",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "tenantId": "tenantid",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId"
+          },
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 327,
+          "layoutY": 22
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "FW Tank2",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"])\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Water Levels in Tanks\";\n    details[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"]+\"Tank3\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"raw_data\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP004\";\n}\nreturn details;",
+          "alarmType": "Tank2 Low level"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 654,
+          "layoutY": 476
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Tank2",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (Number(msg[\"Radar Guage Tag1\"]) !== -99 && Number(msg[\"Radar Guage Tag1\"]) < Number(metadata[\"ss_Radar Guage Tag1\"])) {\n    return true;\n}\nreturn false;"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 353,
+          "layoutY": 453
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "FW Tank2",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nif (metadata[\"additionalInfo\"] != undefined) {\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Water Levels in Tanks\";\ndetails[\"additionalInfo\"][\"message\"] = \"Water volume in the Tank2 is below threshold\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP004\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = \"Tank2\"+\"-\"+metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Tank2 Low level",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 652,
+          "layoutY": 405
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Adding Server Scope Attributes",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "SAPID",
+            "deviceType",
+            "requiredqty",
+            "Radar Guage Tag",
+            "Radar Guage Tag2",
+            "Radar Guage Tag1"
+          ],
+          "latestTsKeyNames": [
+            "Radar Guage Tag",
+            "Radar Guage Tag1",
+            "Radar Guage Tag2"
+          ],
+          "getLatestValueWithTs": false,
+          "fetchTo": "METADATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 646,
+          "layoutY": 21
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Tank3",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (Number(msg[\"Radar Guage Tag2\"]) !== -99 && Number(msg[\"Radar Guage Tag2\"]) < Number(metadata[\"ss_Radar Guage Tag2\"])) {\n    return true;\n}\nreturn false;"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 353,
+          "layoutY": 594
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "FW Tank1",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nif (metadata[\"additionalInfo\"] != undefined) {\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Water Levels in Tanks\";\ndetails[\"additionalInfo\"][\"message\"] = \"Water volume in Tank1 is below the threshold\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP004\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = \"Tank1\"+\"-\"+metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "Tank1 Low level",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 655,
+          "layoutY": 272
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "clear alarm",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"])\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Water Levels in Tanks\";\n    details[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"raw_data\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP004\";\n}\nreturn details;",
+          "alarmType": "Combined water volume below threshold"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 656,
+          "layoutY": 207
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "FW Tank3",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"])\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Water Levels in Tanks\";\n    details[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"]+\"Tank4\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"staticData\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP004\";\n}\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "Tank3 Low level"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 660,
+          "layoutY": 626
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Create Alarm",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nif (metadata[\"additionalInfo\"] != undefined) {\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Water Levels in Tanks\";\ndetails[\"additionalInfo\"][\"message\"] = \"Combined water volume in the tank is below threshold\";\n//details[\"additionalInfo\"][\"message\"] = \"Water Level in Tanks less than 4 hours - Combined water volume in the tank is \" + String(msg[\"Radar Guage Tag\"] + msg[\"Radar Guage Tag1\"] + msg[\"Radar Guage Tag2\"]) +\"KL\" + metadata(\"ss_requiredqty\");\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP004\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Combined water volume below threshold",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 652,
+          "layoutY": 153
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "localhost",
+          "port": 5672,
+          "virtualHost": "/hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1132,
+          "layoutY": 355
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Tank1",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (Number(msg[\"Radar Guage Tag\"]) !== -99 && Number(msg[\"Radar Guage Tag\"]) < Number(metadata[\"ss_Radar Guage Tag\"])) {\n    return true;\n}\nreturn false;"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 356,
+          "layoutY": 308
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "check Fire Water Level",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"Fire Water Tank\"){\n    return true\n}\nreturn false"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 78,
+          "layoutY": 282
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "FW Tank3",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n}\nif (metadata[\"additionalInfo\"] != undefined) {\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\n}\nelse {\n    additionalinfo = {};\n}\ndetails[\"additionalInfo\"] = additionalinfo;\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Water Levels in Tanks\";\ndetails[\"additionalInfo\"][\"message\"] = \"Water volume in the Tank3 is below threshold\";\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP004\";\ndetails['additionalInfo']['device_id'] = metadata['deviceId']\ndetails['additionalInfo']['device_name'] = \"Tank3\"+\"-\"+metadata['originatorName']\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"]\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "useMessageAlarmData": false,
+          "overwriteAlarmDetails": null,
+          "alarmType": "Tank3 Low level",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": [],
+          "propagateToOwner": null,
+          "propagateToTenant": null,
+          "dynamicSeverity": null
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 653,
+          "layoutY": 548
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "FW Tank1",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "alarmDetailsBuildJs": "var details = {};\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"])\nif (metadata.prevAlarmDetails) {\n    details = JSON.parse(metadata.prevAlarmDetails);\n    details[\"additionalInfo\"] = additionalinfo;\n    details[\"additionalInfo\"][\"interlock_name\"] = \"Healthiness of Fire Water Levels in Tanks\";\n    details[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"]+\"Tank2\";\n    details[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_sapid\"];\n    details[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\n    details[\"additionalInfo\"][\"staticData\"] = {\"alertingModel\": \"fillingOperation\"};\n    details[\"additionalInfo\"][\"sop_id\"] = \"SOP004\";\n}\nreturn details;",
+          "alarmDetailsBuildTbel": null,
+          "alarmType": "Tank1 Low level"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 654,
+          "layoutY": 339
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "check Fire Water Level",
+        "debugMode": true,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "jsScript": "var radarValues = [Number(msg[\"Radar Guage Tag\"]),Number(msg[\"Radar Guage Tag1\"]),Number(msg[\"Radar Guage Tag2\"])];\n\nmetadata[\"debug_radarValues\"] = radarValues;\n\nvar radarSum = radarValues.filter(value => value !== -99).reduce((acc, value) => acc + value, 0);\n\nmetadata[\"debug_radarSum\"] = radarSum;\n\nvar requiredQty = Number(metadata[\"ss_requiredqty\"]);\nmetadata[\"debug_requiredQty\"] = requiredQty;\n\nif (radarSum < requiredQty) {\n    return true;\n}\nreturn false;"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 356,
+          "layoutY": 194
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 10,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 1,
+        "type": "False"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 10,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 12,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 8,
+        "type": "False"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 13,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 10,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 10,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 10,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 10,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 6,
+        "type": "True"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 14,
+        "type": "False"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 11,
+        "type": "True"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 15,
+        "type": "True"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 10,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 10,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 7,
+        "type": "False"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 9,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

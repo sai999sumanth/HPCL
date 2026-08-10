@@ -1,0 +1,10 @@
+{
+    "opcua_server_url": "opc.tcp://apples-MacBook-Air.local:53530/OPCUA/SimulationServer",
+    "thingsboard_url": "http://localhost:9090/api/v1/{device_token}/telemetry",
+    "device_token": "mdqZmjfcqYp0b2k3vai4",
+    "polling_interval": 10,
+    "log_debug": true,
+    "variables": {
+      "tag C":"ns=3;i=1008"
+    }
+  }

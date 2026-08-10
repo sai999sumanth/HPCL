@@ -1,0 +1,28 @@
+{%- set symbol = " = " -%}
+{%- if input.postgres_schema is defined and input.postgres_schema -%}
+{%- set symbol = ": " -%}
+{%- endif -%}
+{%- if input.name != 'id' -%}
+{{input.name}}{{symbol}}{%- if input.postgres_schema is defined and input.postgres_schema -%}Mapped[{%- endif -%}
+{% if input.simpletype -%}
+   {{input.simpletype.render()}}
+{%- else -%}
+    {%- if input.optional -%}
+        typing.Optional[
+    {%- endif -%}
+        {%- if input.list -%}
+        typing.List[
+    {%- endif -%}
+    {% if input.model_or_enum.__class__.__name__ == 'Enum'%}{{input.parent.fbase or input.parent.parent.fbase}}_enum.{% endif %}{{ input.model_or_enum.name}}{% if input.model_or_enum.is_internal %}Create{% endif %}{% if input.ref %}{{input.parent.name}}Ref{% endif %}
+    {%- if input.list -%}
+        ]
+    {%- endif -%}
+
+    {%- if input.optional -%}
+        ]
+    {%- endif -%}
+{%- endif -%}
+{%- if input.postgres_schema is defined and input.postgres_schema -%}
+] = mapped_column("{{input.name}}", {{input.simpletype.sqlalchemy_name}}, index={{input.index_field}}, nullable={{input.optional}}, default={{input.default}})
+{%- endif -%}
+{%- endif -%}

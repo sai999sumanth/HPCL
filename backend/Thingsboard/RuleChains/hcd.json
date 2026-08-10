@@ -1,0 +1,471 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "HCD",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 10,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 430,
+          "layoutY": 422
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "HCD 40%",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"HCD 40 % ALARM\"] != undefined && (msg[\"HCD 40 % ALARM\"] != metadata[\"ss_HCD 40 % ALARM\"])){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 715,
+          "layoutY": 387
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "HCD's Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCD_40% LEL activated\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP005\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"HCD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"HCD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "General Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 715,
+          "layoutY": 442
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "HCD's Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCD_40% LEL activated\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP005\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"HCD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"HCD\";\r\nreturn details;",
+          "alarmType": "General Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 421,
+          "layoutY": 690
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "HCD Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"HCD MAINTENANCE\"] != undefined && (msg[\"HCD MAINTENANCE\"] != metadata[\"ss_HCD MAINTENANCE\"])){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 415,
+          "layoutY": 514
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "HCD Fault",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"HCD FAULT\"] != undefined && (msg[\"HCD FAULT\"] != metadata[\"ss_HCD FAULT\"])){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 729,
+          "layoutY": 667
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "HCD Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCD_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP014\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"HCD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"HCD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "HCD Maintenance",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 731,
+          "layoutY": 732
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "HCD Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCD_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP014\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"HCD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"HCD\";\r\nreturn details;",
+          "alarmType": "HCD Maintenance"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 725,
+          "layoutY": 498
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "HCD Fault",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCD_Fault activated\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP016\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"HCD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"HCD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "HCD Fault",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 729,
+          "layoutY": 577
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "HCD Fault",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCD_Fault activated\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP016\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"HCD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"HCD\";\r\nreturn details;",
+          "alarmType": "HCD Fault"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 86,
+          "layoutY": 402
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "TelemetryFilter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg[\"HCD FAULT\"] = metadata[\"HCD FAULT\"]\nmsg[\"HCD MAINTENANCE\"] = metadata[\"HCD MAINTENANCE\"]\nmsg[\"HCD 40 % ALARM\"] = metadata[\"HCD 40 % ALARM\"]\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 284,
+          "layoutY": 147
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 740,
+          "layoutY": 129
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Scope Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "BU",
+            "SAPID",
+            "plantlocation",
+            "plantlocationid",
+            "HCD 20 % ALARM",
+            "HCD 40 % ALARM",
+            "HCD FAULT",
+            "HCD MAINTENANCE"
+          ],
+          "latestTsKeyNames": [
+            "HCD 20 % ALARM",
+            "HCD 40 % ALARM",
+            "HCD FAULT",
+            "HCD MAINTENANCE"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 494,
+          "layoutY": 73
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Type Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"HCD\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 425,
+          "layoutY": 310
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "HCD 20%",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"HCD 20 % ALARM\"] != undefined && (msg[\"HCD 20 % ALARM\"] != metadata[\"ss_HCD 20 % ALARM\"])){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 158,
+          "layoutY": 1289
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "HCD Proof Test",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"HCD 20 % ALARM\"] != undefined && (msg[\"HCD 20 % ALARM\"] != metadata[\"ss_HCD 20 % ALARM\"]) && (msg[\"HCD 20 % ALARM\"] != \"-99\")){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 707,
+          "layoutY": 268
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "HCD's Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCD_20% LEL activated\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP005\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"HCD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"HCD\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "General Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 709,
+          "layoutY": 332
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "HCD's Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCD_20% LEL activated\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP005\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"HCD\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"HCD\";\r\nreturn details;",
+          "alarmType": "General Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 437,
+          "layoutY": 1226
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "HCD's Proof Test Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCDS(Audio visual alarm in control room)\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP005\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['verify_proof_test'] = \"True\";\r\ndetails['additionalInfo']['raw_data'] = msg_data;\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "General Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 465,
+          "layoutY": 1370
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "HCD's Proof Test Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"HCDS(Audio visual alarm in control room)\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP005\";\r\ndetails['additionalInfo']['verify_proof_test'] = \"True\";\r\nreturn details;",
+          "alarmType": "General Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1073,
+          "layoutY": 531
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_hcd_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": true,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "False"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 19,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 19,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 6,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 8,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 19,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 19,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 19,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 19,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 13,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 12,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 9,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 11,
+        "type": "True"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 15,
+        "type": "True"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 16,
+        "type": "False"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 17,
+        "type": "True"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 18,
+        "type": "False"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 19,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 19,
+        "type": "Cleared"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

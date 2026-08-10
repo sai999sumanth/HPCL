@@ -1,0 +1,14 @@
+[Unit]
+Description=CEG Vendor Ingest API Service %I
+
+[Service]
+Type=simple
+# Another Type option: forking
+WorkingDirectory=/opt/ceg/algo/vendor_ingestion_api
+ExecStart=/bin/bash -c 'export PORT=%i;unbuffer /opt/ceg/venv/bin/python -m urdhva_base >> /var/log/ceg_sys_logs/ceg_vendor_ingestion_api.log 2>&1'
+Restart=always
+RestartSec=30s
+# Other Restart options: or always, on-abort, etc
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Loss of Communication Alert</title>
+</head>
+<body style="margin:0; padding:0; background-color:#ffffff; color:#222222; font-family:Arial, Helvetica, sans-serif;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse; background-color:#ffffff;">
+        <tr>
+            <td align="center" style="padding:24px 20px;">
+                <table role="presentation" width="680" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse; width:680px; max-width:100%; background-color:#f8f9fd;">
+                    <tr>
+                        <td style="font-size:13px; line-height:18px; color:#222222; padding:28px 0 24px 0; text-align:center;">
+                            --------------------------------------------------------------------------------------------------------------------------------
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:16px; line-height:24px; font-weight:700; color:#111111; padding:0 34px 28px 34px; text-align:center;">
+                            ** This is a system-generated notification from the NOVEX**
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:16px; line-height:24px; color:#222222; padding:0 34px 26px 34px; text-align:left;">
+                            Dear Sir/Madam,
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:16px; line-height:24px; color:#222222; padding:0 34px 26px 34px; text-align:left;">
+                            A loss of communication has been detected between NOVEX and TAS
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:16px; line-height:24px; color:#222222; padding:0 34px 48px 34px; text-align:left;">
+                            <strong>Location:</strong> {{ location_name or plant_location }}<br>
+                            <strong>Communication Lost At:</strong> {{ date_time }}<br>
+                            <strong>Reason:</strong>
+                            {% if asset_name in ["OPC DA connection failed", "Data receiving connection failed"] %}
+                                {{ asset_name }}
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:16px; line-height:26px; color:#222222; padding:0 34px 28px 34px; text-align:left;">
+                            As communication with the source system is currently unavailable, real-time monitoring and data updates from the concerned location may be impacted until connectivity is restored.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:16px; line-height:26px; color:#222222; padding:0 34px 42px 34px; text-align:left;">
+                            Appropriate corrective action may be initiated to restore normal communication.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

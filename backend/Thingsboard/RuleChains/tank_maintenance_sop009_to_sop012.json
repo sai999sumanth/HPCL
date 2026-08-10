@@ -1,0 +1,1010 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Tank Maintenance SOP009 to SOP012",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 42,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 324,
+          "layoutY": 1052
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "MOV IL1",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"MOV MAINTENANCE IL1\"] != undefined && msg[\"MOV MAINTENANCE IL1\"] != metadata[\"ss_MOV MAINTENANCE IL1\"]){ \n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 325,
+          "layoutY": 1149
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "MOV IL2",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"MOV MAINTENANCE IL2\"] != undefined && msg[\"MOV MAINTENANCE IL2\"] != metadata[\"ss_MOV MAINTENANCE IL2\"]){ \n    return true\n}\nreturn false\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 327,
+          "layoutY": 1351
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "MOV REC",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"MOV MAINTENANCE REC\"] != undefined && msg[\"MOV MAINTENANCE REC\"] != metadata[\"ss_MOV MAINTENANCE REC\"]){ \n    return true\n}\nreturn false\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 326,
+          "layoutY": 561
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ROSOV IL2",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"ROSOV MAINTENANCE IL2\"] != undefined && msg[\"ROSOV MAINTENANCE IL2\"] != metadata[\"ss_ROSOV MAINTENANCE IL2\"]){\n    return true\n}\n\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 328,
+          "layoutY": 759
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ROSOV REC",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"ROSOV MAINTENANCE REC\"] != undefined && msg[\"ROSOV MAINTENANCE REC\"] != metadata[\"ss_ROSOV MAINTENANCE REC\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 654,
+          "layoutY": 1230
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "MOV OL",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"MOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP043\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV OL\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "MOV OL",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 655,
+          "layoutY": 1279
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "MOV OL",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"MOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP043\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV OL\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\r\nreturn details;\r\n",
+          "alarmType": "MOV OL"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 646,
+          "layoutY": 789
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "ROSOV REC",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ROSOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV REC\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\r\nreturn details;\r\n",
+          "alarmType": "ROSOV REC"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 641,
+          "layoutY": 550
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "ROSOV IL2",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "\r\nvar details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\n\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ROSOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV IL2\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "ROSOV IL2",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 643,
+          "layoutY": 645
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "ROSOV OL",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\n\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ROSOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV OL\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "ROSOV OL",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 371,
+          "layoutY": 1593
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "MOV Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "for (var key in msg) {\n    if (key.startsWith(\"ROSOV\"))  {\n        if (msg[key] != metadata[\"ss_\" + key])\n            return true;\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 650,
+          "layoutY": 1081
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "MOV IL1",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"MOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP043\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV IL1\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\r\nreturn details;\r\n",
+          "alarmType": "MOV IL1"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 327,
+          "layoutY": 961
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Tank Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"TANK MAINTENANCE\"] != undefined && (msg[\"TANK MAINTENANCE\"] != metadata[\"ss_TANK MAINTENANCE\"])){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 646,
+          "layoutY": 837
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "RimSeal Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\n\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Rim Seal system_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP008\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"RIMSEAL\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"RIMSEAL\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "RimSeal Maintenance",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1167,
+          "layoutY": 793
+        },
+        "type": "org.thingsboard.rule.engine.rabbitmq.TbRabbitMqNode",
+        "name": "CEG Alert Publisher",
+        "debugMode": true,
+        "configuration": {
+          "exchangeNamePattern": "",
+          "routingKeyPattern": "ceg_tb_listener",
+          "messageProperties": "PERSISTENT_BASIC",
+          "host": "10.90.38.167",
+          "port": 5672,
+          "virtualHost": "hpcl_ceg",
+          "username": "hpcl_ceg",
+          "password": "algo#ceg@4321",
+          "automaticRecoveryEnabled": false,
+          "connectionTimeout": 60000,
+          "handshakeTimeout": 10000,
+          "clientProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 638,
+          "layoutY": 501
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "ROSOV IL1",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "\r\nvar details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ROSOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV IL1\";\r\nreturn details;",
+          "alarmType": "ROSOV IL1"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 633,
+          "layoutY": 359
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "RADAR Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\n// if (details.additionalInfo \r\n//     && details.additionalInfo.device_id === metadata.deviceId\r\n//     && details.additionalInfo.interlock_name === \"Secondary Radar_Under Maintenance\") {\r\n//     return details; // Prevent duplicate\r\n// }\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Secondary Radar_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP012\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"RADAR\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"RADAR\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "RADAR Maintenance",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 632,
+          "layoutY": 311
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "VFT Maintenance Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"VFT_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP011\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"VFT\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"VFT\";\r\n\r\nreturn details;",
+          "alarmType": "VFT Maintenance Alarm"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 325,
+          "layoutY": 295
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "VFT MAINTENANCE",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"LEVEL SWITCH MAINTENANCE\"] != undefined && (msg[\"LEVEL SWITCH MAINTENANCE\"] != metadata[\"ss_LEVEL SWITCH MAINTENANCE\"])){\r\n     return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 326,
+          "layoutY": 1243
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "MOV OL",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"MOV MAINTENANCE OL\"] != undefined && msg[\"MOV MAINTENANCE OL\"] != metadata[\"ss_MOV MAINTENANCE IL1\"]){ \n    return true\n}\nreturn false\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 327,
+          "layoutY": 460
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ROSOV IL1",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"ROSOV MAINTENANCE IL1\"] != undefined && msg[\"ROSOV MAINTENANCE IL1\"] != metadata[\"ss_ROSOV MAINTENANCE IL1\"]){\n    return true\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 655,
+          "layoutY": 1330
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "MOV REC",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"MOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP043\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV REC\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "MOV REC",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 656,
+          "layoutY": 1379
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "MOV REC",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"MOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP043\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV REC\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\r\nreturn details;\r\n",
+          "alarmType": "MOV REC"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 651,
+          "layoutY": 1131
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "MOV IL2",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"MOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP043\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV IL2\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "MOV IL2",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 645,
+          "layoutY": 743
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "ROSOV REC",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ROSOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV REC\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "ROSOV REC",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 650,
+          "layoutY": 937
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "Tank Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tank_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP009\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Tank\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Tank\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "Tank Maintenance",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 634,
+          "layoutY": 406
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "RADAR Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Secondary Radar_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP012\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"RADAR\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"RADAR\";\r\nreturn details;",
+          "alarmType": "RADAR Maintenance"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 637,
+          "layoutY": 455
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "ROSOV IL1",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\n// if (details.additionalInfo \r\n//     && details.additionalInfo.device_id === metadata.deviceId\r\n//     && details.additionalInfo.interlock_name === \"ROSOV_Under Maintenance\") {\r\n//     return details; // Prevent duplicate\r\n// }\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ROSOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV IL1\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "ROSOV IL1",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 513,
+          "layoutY": 22
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Device Type Filter",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata[\"deviceType\"] == \"Tank Maintenance\"){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 330,
+          "layoutY": 378
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "RADAR MAINTENANCE",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"RADAR MAINTENANCE\"] != undefined && (msg[\"RADAR MAINTENANCE\"] != metadata[\"ss_RADAR MAINTENANCE\"])){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 326,
+          "layoutY": 657
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ROISOV OL",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"ROSOV MAINTENANCE OL\"] != undefined && msg[\"ROSOV MAINTENANCE OL\"] != metadata[\"ss_ROSOV MAINTENANCE OL\"]){\n    return true\n}\nreturn false\n"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 652,
+          "layoutY": 1180
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "MOV IL2",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"MOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP043\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV IL2\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\r\nreturn details;\r\n",
+          "alarmType": "MOV IL2"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 649,
+          "layoutY": 885
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "RimSeal Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Rim Seal system_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP008\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"RIMSEAL\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"RIMSEAL\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\nreturn details;",
+          "alarmType": "RimSeal Maintenance"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 633,
+          "layoutY": 263
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "VFT Maintenance Alarm",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\n// if (details.additionalInfo \r\n//     && details.additionalInfo.device_id === metadata.deviceId\r\n//     && details.additionalInfo.interlock_name === \"VFT_Under Maintenance\") {\r\n//     return details; // Prevent duplicate\r\n// }\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"VFT_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP011\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"VFT\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"VFT\";\r\nreturn details;",
+          "useMessageAlarmData": false,
+          "alarmType": "VFT Maintenance Alarm",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 669,
+          "layoutY": 121
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Server Scope Attributes",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "SAPID",
+            "BU",
+            "plantlocation",
+            "plantlocationid",
+            "LEVEL SWITCH MAINTENANCE",
+            "RADAR MAINTENANCE",
+            "ROSOV MAINTENANCE OL",
+            "RIM SEAL MAINTENANCE STATUS",
+            "TANK MAINTENANCE",
+            "MOV MAINTENANCE IL1",
+            "ROSOV MAINTENANCE IL1",
+            "MOV MAINTENANCE OL"
+          ],
+          "latestTsKeyNames": [
+            "LEVEL SWITCH MAINTENANCE",
+            "RADAR MAINTENANCE",
+            "ROSOV MAINTENANCE OL",
+            "RIM SEAL MAINTENANCE STATUS",
+            "TANK MAINTENANCE",
+            "MOV MAINTENANCE IL1",
+            "ROSOV MAINTENANCE IL1",
+            "MOV MAINTENANCE OL"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 642,
+          "layoutY": 596
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "ROSOV IL2",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ROSOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV IL2\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\r\nreturn details;\r\n",
+          "alarmType": "ROSOV IL2"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 644,
+          "layoutY": 691
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "ROSOV OL",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"ROSOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP010\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"ROSOV OL\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"ROSOV\";\r\nreturn details;\r\n",
+          "alarmType": "ROSOV OL"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 649,
+          "layoutY": 1032
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateAlarmNode",
+        "name": "MOV IL1",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\n// if (details.additionalInfo \r\n//     && details.additionalInfo.device_id === metadata.deviceId\r\n//     && details.additionalInfo.interlock_name === \"MOV_Under Maintenance\") {\r\n//     return details; // Prevent duplicate\r\n// }\r\nvar msg_data = msg\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"MOV_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"device_id\"] = metadata[\"deviceId\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP043\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Medium\";\r\ndetails['additionalInfo']['device_id'] = metadata['deviceId'];\r\ndetails['additionalInfo']['device_name'] = metadata['originatorName'];\r\ndetails['additionalInfo']['device_type'] = metadata[\"deviceType\"];\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"MOV IL1\";\r\ndetails['additionalInfo']['customData'] = msg_data\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"MOV\";\r\nreturn details;\r\n",
+          "useMessageAlarmData": false,
+          "alarmType": "MOV IL1",
+          "severity": "CRITICAL",
+          "propagate": false,
+          "relationTypes": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 327,
+          "layoutY": 869
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "RimSeal Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (msg[\"RIM SEAL MAINTENANCE STATUS\"] != undefined && (msg[\"RIM SEAL MAINTENANCE STATUS\"] != metadata[\"ss_RIM SEAL MAINTENANCE STATUS\"])){\r\n    return true\r\n}\r\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 648,
+          "layoutY": 984
+        },
+        "type": "org.thingsboard.rule.engine.action.TbClearAlarmNode",
+        "name": "Tank Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "alarmDetailsBuildJs": "var details = {};\r\nif (metadata.prevAlarmDetails) {\r\n    details = JSON.parse(metadata.prevAlarmDetails);\r\n}\r\nvar additionalinfo = JSON.parse(metadata[\"additionalInfo\"]);\r\ndetails[\"additionalInfo\"] = additionalinfo;\r\ndetails[\"additionalInfo\"][\"interlock_name\"] = \"Tank_Under Maintenance\";\r\ndetails[\"additionalInfo\"][\"unit_name\"] = metadata[\"deviceName\"];\r\ndetails[\"additionalInfo\"][\"plantlocation\"] = metadata[\"ss_plantlocation\"];\r\ndetails[\"additionalInfo\"][\"plantlocationid\"] = metadata[\"ss_plantlocationid\"];\r\ndetails[\"additionalInfo\"][\"sap_id\"] = metadata[\"ss_SAPID\"];\r\ndetails[\"additionalInfo\"][\"bu\"] = metadata[\"ss_BU\"];\r\ndetails[\"additionalInfo\"][\"sop_id\"] = \"SOP009\";\r\ndetails[\"additionalInfo\"][\"alert_category\"] = \"Safety\";\r\ndetails[\"additionalInfo\"][\"severity\"] = \"Critical\";\r\ndetails[\"additionalInfo\"][\"Sensor_Type\"] = \"Tank\";\r\ndetails[\"additionalInfo\"][\"Sensor_Name\"] = \"Tank\";\r\ndetails['additionalInfo']['device_name'] = additionalinfo['unit_name'];\r\nreturn details;",
+          "alarmType": "Tank Maintenance"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 374,
+          "layoutY": 1640
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "ROSOV Maintenance",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "for (var key in msg) {\n    if (key.startsWith(\"ROSOV\"))  {\n        if (msg[key] != metadata[\"ss_\" + key])\n            return true;\n    }\n}\nreturn false"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 28,
+          "layoutY": 413
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "TelimetryCheck",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg['LEVEL SWITCH MAINTENANCE'] = metadata['LEVEL SWITCH MAINTENANCE']\nmsg['RADAR MAINTENANCE'] = metadata['RADAR MAINTENANCE']\nmsg['ROSOV MAINTENANCE IL1'] = metadata['ROSOV MAINTENANCE IL1']\nmsg['MOV MAINTENANCE IL1'] = metadata['MOV MAINTENANCE IL1']\nmsg['ROSOV MAINTENANCE OL'] = metadata['ROSOV MAINTENANCE OL']\nmsg['RIM SEAL MAINTENANCE STATUS'] = metadata['RIM SEAL MAINTENANCE STATUS']\nmsg['TANK MAINTENANCE'] = metadata['TANK MAINTENANCE']\nmsg['MOV MAINTENANCE OL'] = metadata['MOV MAINTENANCE OL']\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 280,
+          "layoutY": 89
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Server Fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "additionalInfo": "additionalInfo",
+            "id": "deviceId",
+            "tenantId": "tenantid"
+          }
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 11,
+        "type": "False"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 37,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 23,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 31,
+        "type": "False"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 21,
+        "type": "True"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 22,
+        "type": "False"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 35,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 7,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 24,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 25,
+        "type": "True"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 39,
+        "type": "False"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 33,
+        "type": "True"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 17,
+        "type": "False"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 6,
+        "type": "False"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 27,
+        "type": "True"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 15,
+        "type": "False"
+      },
+      {
+        "fromIndex": 21,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 22,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 23,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 24,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 26,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 27,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 28,
+        "toIndex": 34,
+        "type": "True"
+      },
+      {
+        "fromIndex": 29,
+        "toIndex": 16,
+        "type": "True"
+      },
+      {
+        "fromIndex": 29,
+        "toIndex": 26,
+        "type": "False"
+      },
+      {
+        "fromIndex": 30,
+        "toIndex": 9,
+        "type": "True"
+      },
+      {
+        "fromIndex": 30,
+        "toIndex": 36,
+        "type": "False"
+      },
+      {
+        "fromIndex": 31,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 32,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 33,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 34,
+        "toIndex": 41,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 35,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 36,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 37,
+        "toIndex": 14,
+        "type": "Created"
+      },
+      {
+        "fromIndex": 38,
+        "toIndex": 13,
+        "type": "True"
+      },
+      {
+        "fromIndex": 38,
+        "toIndex": 32,
+        "type": "False"
+      },
+      {
+        "fromIndex": 39,
+        "toIndex": 14,
+        "type": "Cleared"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 18,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 29,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 38,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 12,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 20,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 30,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 19,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 41,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 42,
+        "toIndex": 28,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

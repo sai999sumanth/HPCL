@@ -1,0 +1,62 @@
+[
+    {
+      "type": "multi-select",
+      "placeholder": "Please select zone",
+      "label": "Zone",
+      "key": "zone",
+      "options": [
+        {
+          "label": "NWZ",
+          "value": "nwz"
+        },
+        {
+          "label": "NZ",
+          "value": "nz"
+        },
+        {
+          "label": "SZ",
+          "value": "sz"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "placeholder": "Please select city",
+      "label": "City",
+      "key": "city",
+      "options": [
+        {
+          "label": "Bng",
+          "value": "bng"
+        },
+        {
+          "label": "Mum",
+          "value": "mum"
+        },
+        {
+          "label": "Pune",
+          "value": "pune"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "placeholder": "Please select region",
+      "label": "Region",
+      "key": "region",
+      "options": [
+        {
+          "label": "Bng",
+          "value": "bng"
+        },
+        {
+          "label": "Mum",
+          "value": "mum"
+        },
+        {
+          "label": "Pune",
+          "value": "pune"
+        }
+      ]
+    }
+  ]

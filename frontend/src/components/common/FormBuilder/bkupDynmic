@@ -1,0 +1,413 @@
+import React, { useState, useEffect } from "react";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../../@/components/ui/alert";
+import { Checkbox } from "../../../@/components/ui/checkbox";
+import { Input } from "../../../@/components/ui/input";
+import { Label } from "../../../@/components/ui/label";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "../../../@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../@/components/ui/select";
+import { Switch } from "../../../@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+} from "../../../@/components/ui/alert-dialog";
+// import { FancyMultiSelect } from '../../../@/components/ui/_multi-select';
+import axios from "axios";
+import { Skeleton } from "../../../@/components/ui/skeleton";
+import MultipleSelector, {
+  Option,
+} from "../../../@/components/ui/multi-select";
+interface FormField {
+  name: string;
+  label: string;
+  type: "text" | "select" | "radio" | "checkbox" | "switch" | "multi-select";
+  placeholder?: string;
+  key: string;
+  api: string;
+  required_keys?: string[];
+  params: {
+    method: string;
+    query: Record<string, string>;
+    request_body: {
+      name: string;
+      action: string;
+      params: {
+        creds: Record<string, unknown>;
+        data: {
+          connection_name: string;
+          schema_name: string;
+        };
+      };
+    };
+    parameters: string;
+  };
+  display_value: string;
+  callback?: boolean;
+  validators: {
+    required: boolean;
+  };
+  options: {
+    value: string;
+    label: string;
+    display_name?: string;
+    id?: string;
+  }[];
+  visible: boolean;
+  depends_on?: string[];
+  ifDepends?: {
+    dependKeys: string[];
+    dependValues: string[];
+    condition: "equal" | "notEqual";
+  };
+}
+
+interface DynamicFormProps {
+  children: FormField[];
+  onFormDataChange?: (formData: any) => void;
+  initialData?: any;
+  formValues?: any;
+}
+
+const DynamicForm: React.FC<DynamicFormProps> = ({
+  children,
+  onFormDataChange,
+  initialData,
+  formValues,
+}: any) => {
+  const [formData, setFormData] = useState<any>(initialData);
+  const [formFields, setFormFields] = useState<FormField[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [loadingFields, setLoadingFields] = useState<Record<string, boolean>>(
+    {}
+  );
+  const [clonedFormData, setClonedFormData] = useState<Record<string, any>>({});
+  const [isTriggered, setIsTriggered] = React.useState(false);
+
+  useEffect(() => {
+    console.log("children", children);
+    // Fetch form fields from the provided JSON data
+    setFormFields(children);
+  }, []);
+
+  useEffect(() => {
+    // Set the initial form data
+    console.log("initialData", initialData);
+    setFormData(initialData);
+  }, [initialData]);
+
+  useEffect(() => {
+    if (onFormDataChange) {
+      onFormDataChange(formData);
+    }
+  }, [formData, onFormDataChange]);
+
+  useEffect(() => {
+    console.log("formValues", formValues);
+    if(Object.keys(formValues).length > 0) {
+      formFields.map((obj) => fetchApiDataForField(obj, formValues[obj.key]))
+    }
+  }, [formValues]);
+
+  const handleFieldChange = (field: FormField, value: any) => {
+    // setFormData((prevData) => ({
+    // ...prevData,
+    // [field.key]: value,
+    // }));
+
+    const updatedFormData = { ...formData, [field.key]: value };
+    setFormData(updatedFormData);
+
+    onFormDataChange(updatedFormData);
+
+    setClonedFormData((prevData) => {
+      const updatedData = {
+        ...prevData,
+        [field.key]: value,
+      };
+      // Perform any additional operations here if needed
+      console.log("Updated data:", updatedData);
+      return updatedData;
+    });
+  };
+
+  const handleMultiSelectChange = (field: FormField, values: string[]) => {
+    handleFieldChange(field, values);
+  };
+
+  const fetchApiDataForField = async (field: FormField, value?: any) => {
+    if (!field.api) return;
+
+    if (field.options.length === 0) {
+      setLoadingFields((prev) => ({ ...prev, [field.key]: true }));
+    }
+    try {
+      let apiParams = field.params;
+
+      // Dynamically update request params if the field depends on another
+      if (value && field.depends_on) {
+        apiParams = {
+          ...apiParams,
+          request_body: {
+            ...apiParams.request_body,
+            params: {
+              ...apiParams.request_body.params,
+              data: {
+                ...apiParams.request_body.params.data,
+                [field.depends_on[0]]: clonedFormData[field.depends_on[0]], // value // e.g., setting connection_name or schema_name
+              },
+            },
+          },
+        };
+      }
+
+      let params = {};
+      if (Object.keys(apiParams?.query).length > 0) {
+        params = new URLSearchParams(apiParams.query);
+      } else {
+        params = new URLSearchParams({
+          name: apiParams.request_body.name,
+          action: apiParams.request_body.action,
+        });
+      }
+
+      let data: any = {};
+      if (apiParams?.request_body?.params?.data) {
+        data = apiParams?.request_body?.params?.data;
+        Object.keys(apiParams?.request_body?.params.data).map((key: any) => {
+          data[key] = Object.keys(clonedFormData).length > 0 ? clonedFormData[key] : formValues[key];
+        });
+      }
+
+      const response = await axios({
+        method: apiParams.method,
+        url: `https://react.datafusion.algofusiontech.com/api${field.api}`,
+        params: params,
+        data: apiParams?.request_body?.params,
+      });
+
+      console.log("connection data", response);
+
+      // Assuming the API response contains data in the expected structure
+      const fetchedOptions = response.data["data"].map((item: any) => ({
+        value: item?.id || item, // item[field.display_value] || item.id,
+        label: item[field.display_value] || item,
+      }));
+
+      setFormFields((prevFields) =>
+        prevFields.map((f) =>
+          f.key === field.key ? { ...f, options: fetchedOptions } : f
+        )
+      );
+
+      console.log("fetchedOptions", fetchedOptions);
+    } catch (error) {
+      console.error(`Error fetching data for field ${field.label}:`, error);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent default form submission
+    // Validate form data and perform any necessary actions
+    const invalidFields = formFields.filter((field) => {
+      return (
+        field.validators.required &&
+        (!formData[field.key] ||
+          (Array.isArray(formData[field.key]) &&
+            formData[field.key].length === 0))
+      );
+    });
+
+    if (invalidFields.length > 0) {
+      setAlertMessage(
+        `Please fill in the following required fields: ${invalidFields
+          .map((f) => f.label)
+          .join(", ")}`
+      );
+      setShowAlert(true);
+    } else {
+      console.log("Form data:", formData);
+      // Perform further actions with the form data
+      setAlertMessage("Form submitted successfully!");
+      setShowAlert(true);
+    }
+  };
+
+  const renderField = (field: FormField) => {
+    if (!field.visible) return null;
+    const isLoading = loadingFields[field.key] && field.options.length === 0;
+
+    const fieldValue = formData[field.key] || "";
+
+    switch (field.type) {
+      case "text":
+        return (
+          <div className="mb-4">
+            <Label htmlFor={field.key}>{field.label}</Label>
+            <Input
+              id={field.key}
+              placeholder={field.placeholder}
+              value={fieldValue}
+              onChange={(e) => handleFieldChange(field, e.target.value)}
+            />
+          </div>
+        );
+      case "select":
+        return (
+          <div className="mb-4">
+            <Label htmlFor={field.key}>{field.label}</Label>
+            <Select
+              value={fieldValue}
+              onOpenChange={() => {
+                if (field.options.length === 0) {
+                  fetchApiDataForField(field);
+                }
+              }}
+              onValueChange={(value) => handleFieldChange(field, value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={field.placeholder} />
+              </SelectTrigger>
+              <SelectContent>
+                {isLoading
+                  ? Array.from({ length: 3 }).map((_, index) => (
+                      <SelectItem key={index} value={`loading-${index}`}>
+                        <Skeleton className="h-4 w-[300px]" />
+                      </SelectItem>
+                    ))
+                  : field?.options.map((option) => (
+                    <SelectItem
+                      key={option?.value}
+                      value={
+                        typeof option?.value === "number"
+                          ? JSON.stringify(option?.value)
+                          : option?.value || option?.id
+                      }
+                      textValue={option?.label}
+                    >
+                      {option?.label ? option?.label : option?.display_name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+        );
+      case "radio":
+        return (
+          <div className="mb-4">
+            <Label>{field.label}</Label>
+            <RadioGroup
+              onValueChange={(value) => handleFieldChange(field, value)}
+            >
+              {field.options.map((option) => (
+                <div key={option.value} className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value={option.value}
+                    id={`${field.key}-${option.value}`}
+                  />
+                  <Label htmlFor={`${field.key}-${option.value}`}>
+                    {option.label}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+        );
+      case "checkbox":
+        return (
+          <div className="mb-4">
+            <Checkbox
+              checked={formData[field.key] || false}
+              onCheckedChange={(e) => handleFieldChange(field, e)}
+              id={field.key}
+            >
+              {field.label}
+            </Checkbox>
+            <label
+              htmlFor={field.key}
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Accept terms and conditions
+            </label>
+          </div>
+        );
+      case "switch":
+        return (
+          <div className="mb-4">
+            <Label htmlFor={field.key}>{field.label}</Label>
+            <Switch
+              id={field.key}
+              checked={formData[field.key] || false}
+              onCheckedChange={(checked) => handleFieldChange(field, checked)}
+            />
+          </div>
+        );
+      case "multi-select":
+        return (
+          <div className="mb-4">
+            <Label htmlFor={field.key}>{field.label}</Label>
+            <MultipleSelector
+              options={field.options}
+              onSearch={async (value) => {
+                fetchApiDataForField(field, value);
+                return field.options;
+              }}
+              triggerSearchOnFocus
+              maxSelected={3}
+              onChange={(selected) => handleFieldChange(field, selected)}
+              placeholder="Select columns..."
+              emptyIndicator={
+                <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                  no results found.
+                </p>
+              }
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const renderFieldsInGrid = () => {
+    return (
+      <div className="grid grid-cols-2 gap-4">
+        {formFields?.map((field, index) => (
+          <div key={field.key} className={index % 2 === 0 && index === formFields.length - 1 ? "col-span-2" : ""}>
+            {renderField(field)}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className="p-1">
+      <form onSubmit={handleSubmit}>
+        {renderFieldsInGrid()}
+      </form>
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+        {/* <Alert>
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>
+            Please fill in all required fields.
+          </AlertDescription>
+        </Alert> */}
+      </AlertDialog>
+    </div>
+  );
+};
+
+export default DynamicForm;

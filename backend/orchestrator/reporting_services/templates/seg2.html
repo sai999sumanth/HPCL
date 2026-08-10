@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/astha/Downloads/novex_daily_email%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Yesterday - Sales Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #003366;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 8px;
+            padding-right: 8px;
+            /* Optionally, reduce font size for even more compact rows: */
+            font-size: 12px;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+            /* width: 500px; */
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+        .openAlert th{
+            width: 300px;
+        }
+        .logo { margin: 15px 0; }
+    </style>
+</head>
+
+<body>
+    <h2>Novex Today - Daily Report: Retail</h2>
+    <p><strong>Date:</strong> {{today_date}} | <strong>Day:</strong> {{today_week}}</p>
+    <hr>
+    <h3>Retail Summary</Summary></h3>
+    <h4>1. Retail Sales Performance (MS/HSD)</h4>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Product Group</th>
+                <th colspan="2">Day's Sales</th>
+                <th colspan="2">Month's Cumulative Sales Till Date</th>
+                <th colspan="2">Projected</th>
+                <th colspan="2">Year Cumulative Sales Till Date</th>
+            </tr>
+            <tr>
+                <th>Current</th>
+                <th>% Growth</th>
+                <th>Current</th>
+                <th>% Growth</th>
+                <th>Projected</th>
+                <th>% Growth</th>
+                <th>Current</th>
+                <th>% Growth</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in retail_sales %}
+            <tr>
+                <td>{{ row['Product Group'] }}</td>
+                <td>{{ row["Day's Sales (Current)"] }}</td>
+                <td class="growth">{{ row["% Growth (Day)"] }}%</td>
+                <td>{{ row["Month's Cumulative Sales Till Date (Current)"] }}</td>
+                <td class="growth">{{ row["% Growth (Month MTD)"] }}%</td>
+                <td>{{ row["Projected Sales for The Month"] }}</td>
+                <td class="growth">{{ row["% Growth (Full Month)"] }}%</td>
+                <td>{{ row["Year Cumulative Sales Till Date (Current)"] }}</td>
+                <td class="growth">{{ row["% Growth (Year YTD)"] }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>1.1. Last 30 days trend of estimated nozzle sales (MS/HSD) in TMT</h5>
+    <h6>Connected Sites on {{yesterday_date}} [{{nozzle_sales_sync_time}}] - {{nozzel_previous_day[0]['count']}} [{{nozzle_sales_percentage}}% of 25160 which is the Total no of Retail Outlets as on 30th June 2026]</h6>
+    <div class="logo">
+        <img src="cid:nozzel_sales_chart", alt="Daily Product Wise Nozzle Sales (in TMT)" width="1000" height="auto">
+    </div>
+    <h5>1.2. Daily Zone Wise & Product Wise Nozzle Sales</h5>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Zone</th>
+                <th rowspan="2">Connected Sites</th>
+                <th colspan="2">Product Name(in TMT)</th>
+            </tr>
+            <tr>
+                <th>MS (all variants)</th>
+                <th>HSD (all variants)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in daily_zone_product_nozzle_sales %}
+            <tr>
+                <td>{{ row['zone']}}</td>
+                <td>{{ row['connected_sites']}}</td>
+                <td>{{ row['MS_volume(TMT)'] }}</td>
+                <td>{{ row['HSD_volume(TMT)'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>1.3. Retail Outlet Partial Dryout (MS/HSD):</h5>
+    <table>
+        <tbody><tr>
+            <th>Date</th>
+            <th>Dryout</th>
+            <th>Indent not raised</th>
+            <th>Indent raised</th>
+        </tr>
+        <tr>
+            <td style="color: darkgreen;">{{today}} {{report_generated_time}}</td>
+            <td>{{dry_out['dry_out']}}</td>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out['indent_raised']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>1.4. Indent Not Raised - Breakup By Sales (MS/HSD):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th>Volume (> 50KLPM)</th>
+            <th>Low Volume (< 50KLPM)</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['Volume(>50KLPM)']}}</td>
+            <td>{{dry_out_details['Low Volume(<50KLPM)']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>1.5. Indent Not Raised - Breakup By Dryout Days (MS/HSD):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th><2 Days</th>
+            <th>3 to 7 Days</th>
+            <th>8 to 15 Days</th>
+            <th>>15 Days</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['<2 Days']}}</td>
+            <td>{{dry_out_details['3 to 7 Days']}}</td>
+            <td>{{dry_out_details['8 to 15 Days']}}</td>
+            <td>{{dry_out_details['> 15 Days']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>1.6. Indent Not Raised - TAR Analysis (MS/HSD):</h5>
+    <table>
+        <tbody><tr>
+            <th>Indent not raised</th>
+            <th>< 25 Rs Lakhs</th>
+            <th>25 to 50 Rs lakhs</th>
+            <th>50 to 75 Rs Lakhs</th>
+            <th>> 75 Rs Lakhs</th>
+        </tr>
+        <tr>
+            <td>{{dry_out['indent_not_raised']}}</td>
+            <td>{{dry_out_details['0 to 25 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['25 to 50 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['50 to 75 Rs Lakhs']}}</td>
+            <td>{{dry_out_details['> 75 Rs Lakhs']}}</td>
+        </tr>
+    </tbody></table>
+    <h5>1.7. Last 30 days trend of Partial Dryout (MS/HSD)</h5>
+    <div class="logo">
+        <img src="cid:last_30_days_dry_out_trends" alt="Last 30 Days Dry Out Trends" width="1000" height="auto">
+    </div>
+    <h5>1.8. Zone wise Date wise Listing of Partial Dry outs</h5>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Zone wise ROs</th>
+
+                {% for col in zone_columns[1:] %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                {% for col in zone_columns[1:] %}
+                    <th>{{ zone_totals[col] }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in zone_daily %}
+            <tr>
+                <td>{{ row[zone_columns[0]] }}</td>
+
+                {% for col in zone_columns[1:] %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>1.9. Monthly Loss of Sales due to Partial Dry-outs</h5>
+    <div class="logo">
+        <img src="cid:dry_out_lost" alt="HP Pay Logo" width="1000" height="auto">
+    </div>
+    <h5>1.10. Location/Depo wise dry out details</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in supply_terminal_query_ro_count_df.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in supply_terminal_query_ro_count_df.to_dict(orient='records') %}
+            <tr>
+                {% for col in supply_terminal_query_ro_count_df.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<script>
+    window.onload = function () {
+        document.querySelectorAll(".growth").forEach(td => {
+            let value = td.textContent.trim(); // Get text inside the <td>
+            let number = parseFloat(value); // Convert to number
+
+            if (!isNaN(number)) { // Check if it’s a valid number
+                if (number > 0) {
+                    td.classList.add("positive"); // Green for positive
+                } else if (number < 0) {
+                    td.classList.add("negative"); // Red for negative
+                }
+            }
+        });
+    };
+</script>
+
+</body></html>

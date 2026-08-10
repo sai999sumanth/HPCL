@@ -1,0 +1,18 @@
+{%- if input.parent.optional -%}
+    typing.Optional[
+{%- endif -%}
+    {%- if input.parent.list -%}
+    typing.List[
+{%- endif -%}
+    {% block datatype %}{% endblock %}
+{%- if input.parent.list -%}
+    ]
+{%- endif -%}
+
+{%- if input.parent.optional -%}
+    ]
+{%- endif -%}
+{%- if input.parent.postgres_schema is undefined or input.parent.postgres_schema != true -%}
+{%- if input.has_params() or input.parent.default is not none %} = pydantic.Field({%if input.parent.default is not none %}{{input.parent.default}}, {% endif %}{%- block constraints -%}{%- endblock -%}){%- elif input.parent.optional and input.has_params() is not false and input.parent.default is none%} | None = None {%- endif %}
+{%- endif -%}
+{%- if input.parent.optional and (input.parent.postgres_schema is undefined or input.parent.postgres_schema is false) and input.has_params() is false and input.parent.default is none %} | None = {%- if input.parent.default is not none %}{{input.parent.default}}{%- else %} None{%- endif %}{%- endif %}

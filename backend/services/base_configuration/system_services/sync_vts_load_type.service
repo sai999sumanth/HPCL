@@ -1,0 +1,15 @@
+
+[Unit]
+Description=Sync VTS Load Type
+
+[Service]
+Type=simple
+# Another Type option: forking
+WorkingDirectory=/opt/ceg/algo/api_manager
+ExecStart=/bin/bash -c 'unbuffer /opt/ceg/venv/bin/python /opt/ceg/algo/orchestrator/alerting/listener/sync_vts_load_type.py > /var/log/ceg_sys_logs/sync_vts_load_type.log 2>&1'
+Restart=always
+RestartSec=30s
+# Other Restart options: or always, on-abort, etc
+
+[Install]
+WantedBy=multi-user.target

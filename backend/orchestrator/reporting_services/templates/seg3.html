@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/astha/Downloads/novex_daily_email%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novex Yesterday - Sales Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #003366;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 8px;
+            padding-right: 8px;
+            /* Optionally, reduce font size for even more compact rows: */
+            font-size: 12px;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+            /* width: 500px; */
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+        .openAlert th{
+            width: 300px;
+        }
+        .logo { margin: 15px 0; }
+        .alerts {
+            background-color: rgb(255, 255, 0);
+            color: black;
+        }
+        .packed {
+            width: 18%;
+        }
+        table.small-table {
+            width: auto;
+            min-width: 220px;
+            max-width: 300px;
+        }
+        table.small-table th,
+        table.small-table td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Novex Today - Daily Report</h2>
+    <p><strong>Date:</strong> {{today_date}} | <strong>Day:</strong> {{today_week}}</p>
+    <hr>
+    <h4>1. LPG Operations Summary</h4>
+    <h5>1.1 Average score for all LPG Plants – { {{lpg_avg_score_resp}} }, (Refer attachment for Day wise trend)</h5>
+    <h5>1.2 Monthly Average of Plant Score</h5>
+    <div class="logo">
+        <img src="cid:monthly_score_path" alt="Monthly Average of Plant Score" width="1000" height="auto">
+    </div>
+    <h5>1.3 Top 3 LPG plants based on performance score ({{present_month}})</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in lpg_top_data.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in lpg_top_data.to_dict(orient='records') %}
+            <tr>
+                {% for col in lpg_top_data.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>1.4 Bottom 3 LPG plants based on performance score ({{present_month}})</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in lpg_bottom_data.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in lpg_bottom_data.to_dict(orient='records') %}
+            <tr>
+                {% for col in lpg_bottom_data.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>1.5 Plant wise Average Score from Month start</h5>
+    <div class="logo">
+        <img src="cid:plant_wise_score_path" alt="Monthly Average of Plant Score" width="1000" height="auto">
+    </div>
+    <h5>1.6 Open Alert Summary ({{present_month}}),(Refer attachment for Plant wise breakup)</h5>
+        <div class="openAlert">
+            <table>
+                <tbody>
+                <tr>
+                    <th class="alerts" >SBU</th>
+                    <th class="alerts">Alert Category</th>
+                    <th class="alerts">OPEN ALERTS: Critical</th>
+                    <th class="alerts">OPEN ALERTS: High</th>
+                    <th class="alerts">TOTAL OPEN ALERTS</th>
+                    <th class="alerts">OVERALL OPEN ALERTS(Since Go live)</th>
+                </tr>
+                <tr>
+                    <td rowspan="2">LPG</td>
+                    <td>Video Analytics</td>
+                    <td>{{va_critical_lpg}}</td>
+                    <td>{{va_high_lpg}}</td>
+                    <td>{{va_total_lpg}}</td>
+                    <td>{{va_total_fy_lpg}}</td>
+                </tr>
+                <tr>
+                    <td>Production Quality</td>
+                    <td>{{pq_critical_lpg}}</td>
+                    <td>{{pq_high_lpg}}</td>
+                    <td>{{pq_total_lpg}}</td>
+                    <td>{{pq_total_fy_lpg}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <h5>1.7 LPG VTS Governance ({{present_month}})</h5>
+    <h6>1.7.1 ITDG Alert Summary</h6>
+    <h6>BULK LPG</h6>
+        <table>
+            <thead>
+                <tr>
+                    <th>TTs Blocked by Novex</th>
+                    <th>TTs Manually Unblocked</th>
+                    <th>TTs unblocked as per ITDG</th>
+                    <th>TTs currently under Block</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ lpg_blocked_data_resp.TTs_Blocked_by_Novex_LPG }}</td>
+                    <td>{{ lpg_blocked_data_resp.TTs_Manually_Unblocked_LPG }}</td>
+                    <td>{{ lpg_blocked_data_resp.TTs_Auto_Unblocked_LPG }}</td>
+                    <td>{{ lpg_blocked_data_resp.TTs_currently_under_Block_LPG }}</td>
+                </tr>
+            </tbody>
+        </table>
+    <h6>PACKED LPG</h6>
+        <table class="small-table">
+            <thead>
+                <tr>
+                    <th class="packed">TT Alerts generated by Novex</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ lpg_blocked_packed_resp.tt_alerts_generated_by_novex }}</td>
+                </tr>
+            </tbody>
+        </table>
+    <h6>1.7.2 ITDG Alert Break Up</h6>
+    <table>
+        <thead>
+            <tr>
+                {% for col in lpg_blocked_data_resp_violation.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in lpg_blocked_data_resp_violation.to_dict(orient='records') %}
+            <tr>
+                {% for col in lpg_blocked_data_resp_violation.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4>2 LPG Sales Backlog Summary</h4>
+    <h5>2.1 Zone Wise Aging Analysis of Cylinder Backlog</h5>
+    <table>
+        <thead>
+            <tr>
+                {% for col in zone_wise_cylinder_count_df.columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in zone_wise_cylinder_count_df.to_dict(orient='records') %}
+            <tr>
+                {% for col in zone_wise_cylinder_count_df.columns %}
+                    <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<script>
+    window.onload = function () {
+        document.querySelectorAll(".growth").forEach(td => {
+            let value = td.textContent.trim(); // Get text inside the <td>
+            let number = parseFloat(value); // Convert to number
+
+            if (!isNaN(number)) { // Check if it’s a valid number
+                if (number > 0) {
+                    td.classList.add("positive"); // Green for positive
+                } else if (number < 0) {
+                    td.classList.add("negative"); // Red for negative
+                }
+            }
+        });
+    };
+</script>
+
+</body></html>

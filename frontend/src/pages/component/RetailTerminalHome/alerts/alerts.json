@@ -1,0 +1,517 @@
+{
+    "summary": {
+      "previousMonth": {
+        "totalAlerts": 399,
+        "closed": 198,
+        "open": 156,
+        "surpassed": 45
+      },
+      "presentMonth": {
+        "totalAlerts": 494,
+        "closed": 245,
+        "open": 182,
+        "surpassed": 67
+      }
+    },
+
+
+    "presentMonthAlerts": {
+
+        
+    "openAlerts": {
+      "total": 494,
+      "byPriority": {
+        "critical": {
+          "count": 82,
+          "percentage": 45
+        },
+        "medium": {
+          "count": 60,
+          "percentage": 33
+        },
+        "low": {
+          "count": 40,
+          "percentage": 22
+        }
+      }
+    },
+    "closedAlerts": {
+      "total": 399,
+      "byPriority": {
+        "critical": {
+          "count": 48,
+          "percentage": 24
+        },
+        "medium": {
+          "count": 70,
+          "percentage": 35
+        },
+        "low": {
+          "count": 80,
+          "percentage": 41
+        }
+      }
+    }
+    },
+
+
+    "cloudProviders": {
+      "aws": {
+        "cost": 12500,
+        "totalAlerts": 45,
+        "open": 30,
+        "closed": 15
+      },
+      "azure": {
+        "cost": 7200,
+        "totalAlerts": 20,
+        "open": 15,
+        "closed": 5
+      },
+      "gcp": {
+        "cost": 8300,
+        "totalAlerts": 25,
+        "open": 18,
+        "closed": 7
+      },
+      "oci": {
+        "cost": 4500,
+        "totalAlerts": 10,
+        "open": 7,
+        "closed": 3
+      }
+    },
+
+    "totalMetrics": {
+        "cost": 216.66,
+        "savings": 169.93,
+        "realized": 172.65,
+        "suppressed": 100.83
+      },
+      "timeSeriesData": [
+        {
+          "name": "Recommendation - unused_ip",
+          "cost": 229.3,
+          "savings": 222.2,
+          "realized": 386.1,
+          "suppressed": 80
+        },
+        {
+          "name": "Recommendation - reduce_vcpus",
+          "cost": 180.5,
+          "savings": 160.4,
+          "realized": 175.2,
+          "suppressed": 90.3
+        },
+        {
+          "name": "Resource - ApiGateways",
+          "cost": 200.6,
+          "savings": 150.8,
+          "realized": 160.4,
+          "suppressed": 95.2
+        },
+        {
+          "name": "Resource - NatGateways",
+          "cost": 210.4,
+          "savings": 165.2,
+          "realized": 155.6,
+          "suppressed": 98.7
+        },
+        {
+          "name": "Region - US West",
+          "cost": 225.8,
+          "savings": 175.3,
+          "realized": 168.9,
+          "suppressed": 110.5
+        },
+        {
+          "name": "Region - Asia Pacific",
+          "cost": 252.7,
+          "savings": 145.7,
+          "realized": 189.8,
+          "suppressed": 130.2
+        }
+      ],
+
+    "metadata": {
+      "dateRanges": [
+        { "label": "0-30 days", "value": "0-30", "color": "#36B37E" },
+        { "label": "31-60 days", "value": "31-60", "color": "#FFAB00" },
+        { "label": "61-90 days", "value": "61-90", "color": "#FF5630" },
+        { "label": "90+ days", "value": "90-plus", "color": "#FF0000" }
+      ],
+      "recommendationTypes": [
+        "ALL",
+        "RECOMMENDATION 1",
+        "RECOMMENDATION 2",
+        "RECOMMENDATION 3",
+        "RECOMMENDATION 4"
+      ],
+      "regions": [
+        "US West",
+        "US East",
+        "Asia Pacific",
+        "Europe"
+      ],
+      "resourceTypes": [
+        "API_GATEWAY",
+        "NAT_GATEWAY",
+        "EC2",
+        "RDS"
+      ]
+    },
+    "timeSeriesdata": {
+      "0-30": {
+        "totalMetrics": {
+          "cost": 216.66,
+          "savings": 169.93,
+          "realized": 172.65,
+          "suppressed": 100.83
+        },
+        "data": [
+          {
+            "name": "Recommendation - unused_ip",
+            "cost": 229.3,
+            "savings": 222.2,
+            "realized": 386.1,
+            "suppressed": 80,
+            "type": "recommendation",
+            "details": {
+              "resourceCount": 15,
+              "priority": "HIGH",
+              "status": "ACTIVE",
+              "category": "RECOMMENDATION 1"
+            }
+          },
+          {
+            "name": "Recommendation - reduce_vcpus",
+            "cost": 180.5,
+            "savings": 160.4,
+            "realized": 175.2,
+            "suppressed": 90.3,
+            "type": "recommendation",
+            "details": {
+              "resourceCount": 8,
+              "priority": "MEDIUM",
+              "status": "ACTIVE",
+              "category": "RECOMMENDATION 2"
+            }
+          },
+          {
+            "name": "Resource - ApiGateways",
+            "cost": 200.6,
+            "savings": 150.8,
+            "realized": 160.4,
+            "suppressed": 95.2,
+            "type": "resource",
+            "details": {
+              "serviceType": "API_GATEWAY",
+              "count": 12,
+              "region": "US West"
+            }
+          },
+          {
+            "name": "Resource - NatGateways",
+            "cost": 210.4,
+            "savings": 165.2,
+            "realized": 155.6,
+            "suppressed": 98.7,
+            "type": "resource",
+            "details": {
+              "serviceType": "NAT_GATEWAY",
+              "count": 6,
+              "region": "Asia Pacific"
+            }
+          },
+          {
+            "name": "Region - US West",
+            "cost": 225.8,
+            "savings": 175.3,
+            "realized": 168.9,
+            "suppressed": 110.5,
+            "type": "region",
+            "details": {
+              "regionCode": "us-west-1",
+              "resourceCount": 45
+            }
+          },
+          {
+            "name": "Region - Asia Pacific",
+            "cost": 252.7,
+            "savings": 145.7,
+            "realized": 189.8,
+            "suppressed": 130.2,
+            "type": "region",
+            "details": {
+              "regionCode": "ap-southeast-1",
+              "resourceCount": 38
+            }
+          }
+        ]
+      },
+      "31-60": {
+        "totalMetrics": {
+          "cost": 245.88,
+          "savings": 182.45,
+          "realized": 165.32,
+          "suppressed": 95.67
+        },
+        "data": [
+          {
+            "name": "Recommendation - unused_ip",
+            "cost": 245.6,
+            "savings": 215.8,
+            "realized": 375.2,
+            "suppressed": 85,
+            "type": "recommendation",
+            "details": {
+              "resourceCount": 18,
+              "priority": "HIGH",
+              "status": "ACTIVE",
+              "category": "RECOMMENDATION 1"
+            }
+          },
+          {
+            "name": "Recommendation - reduce_vcpus",
+            "cost": 195.2,
+            "savings": 170.6,
+            "realized": 168.4,
+            "suppressed": 88.5,
+            "type": "recommendation",
+            "details": {
+              "resourceCount": 10,
+              "priority": "MEDIUM",
+              "status": "ACTIVE",
+              "category": "RECOMMENDATION 2"
+            }
+          },
+          {
+            "name": "Resource - ApiGateways",
+            "cost": 215.8,
+            "savings": 162.4,
+            "realized": 155.8,
+            "suppressed": 92.6,
+            "type": "resource",
+            "details": {
+              "serviceType": "API_GATEWAY",
+              "count": 14,
+              "region": "US West"
+            }
+          },
+          {
+            "name": "Resource - NatGateways",
+            "cost": 225.6,
+            "savings": 172.8,
+            "realized": 150.2,
+            "suppressed": 96.4,
+            "type": "resource",
+            "details": {
+              "serviceType": "NAT_GATEWAY",
+              "count": 7,
+              "region": "Asia Pacific"
+            }
+          },
+          {
+            "name": "Region - US West",
+            "cost": 238.4,
+            "savings": 182.6,
+            "realized": 162.5,
+            "suppressed": 108.2,
+            "type": "region",
+            "details": {
+              "regionCode": "us-west-1",
+              "resourceCount": 48
+            }
+          },
+          {
+            "name": "Region - Asia Pacific",
+            "cost": 265.8,
+            "savings": 152.4,
+            "realized": 182.6,
+            "suppressed": 125.8,
+            "type": "region",
+            "details": {
+              "regionCode": "ap-southeast-1",
+              "resourceCount": 42
+            }
+          }
+        ]
+      },
+      "61-90": {
+        "totalMetrics": {
+          "cost": 268.92,
+          "savings": 195.76,
+          "realized": 158.90,
+          "suppressed": 89.45
+        },
+        "data": [
+          {
+            "name": "Recommendation - unused_ip",
+            "cost": 262.4,
+            "savings": 208.6,
+            "realized": 364.8,
+            "suppressed": 90,
+            "type": "recommendation",
+            "details": {
+              "resourceCount": 20,
+              "priority": "HIGH",
+              "status": "ACTIVE",
+              "category": "RECOMMENDATION 1"
+            }
+          },
+          {
+            "name": "Recommendation - reduce_vcpus",
+            "cost": 210.8,
+            "savings": 180.2,
+            "realized": 162.6,
+            "suppressed": 86.8,
+            "type": "recommendation",
+            "details": {
+              "resourceCount": 12,
+              "priority": "MEDIUM",
+              "status": "ACTIVE",
+              "category": "RECOMMENDATION 2"
+            }
+          },
+          {
+            "name": "Resource - ApiGateways",
+            "cost": 230.4,
+            "savings": 174.6,
+            "realized": 148.2,
+            "suppressed": 90.4,
+            "type": "resource",
+            "details": {
+              "serviceType": "API_GATEWAY",
+              "count": 16,
+              "region": "US West"
+            }
+          },
+          {
+            "name": "Resource - NatGateways",
+            "cost": 242.2,
+            "savings": 180.4,
+            "realized": 144.8,
+            "suppressed": 94.2,
+            "type": "resource",
+            "details": {
+              "serviceType": "NAT_GATEWAY",
+              "count": 8,
+              "region": "Asia Pacific"
+            }
+          },
+          {
+            "name": "Region - US West",
+            "cost": 252.6,
+            "savings": 190.2,
+            "realized": 156.4,
+            "suppressed": 105.8,
+            "type": "region",
+            "details": {
+              "regionCode": "us-west-1",
+              "resourceCount": 52
+            }
+          },
+          {
+            "name": "Region - Asia Pacific",
+            "cost": 278.4,
+            "savings": 158.8,
+            "realized": 176.4,
+            "suppressed": 122.4,
+            "type": "region",
+            "details": {
+              "regionCode": "ap-southeast-1",
+              "resourceCount": 45
+            }
+          }
+        ]
+      },
+      "90-plus": {
+        "totalMetrics": {
+          "cost": 285.45,
+          "savings": 205.34,
+          "realized": 152.67,
+          "suppressed": 84.23
+        },
+        "data": [
+          {
+            "name": "Recommendation - unused_ip",
+            "cost": 278.9,
+            "savings": 201.4,
+            "realized": 354.2,
+            "suppressed": 95,
+            "type": "recommendation",
+            "details": {
+              "resourceCount": 22,
+              "priority": "HIGH",
+              "status": "ACTIVE",
+              "category": "RECOMMENDATION 1"
+            }
+          },
+          {
+            "name": "Recommendation - reduce_vcpus",
+            "cost": 225.4,
+            "savings": 188.6,
+            "realized": 156.8,
+            "suppressed": 84.2,
+            "type": "recommendation",
+            "details": {
+              "resourceCount": 14,
+              "priority": "MEDIUM",
+              "status": "ACTIVE",
+              "category": "RECOMMENDATION 2"
+            }
+          },
+          {
+            "name": "Resource - ApiGateways",
+            "cost": 245.8,
+            "savings": 185.2,
+            "realized": 142.6,
+            "suppressed": 88.4,
+            "type": "resource",
+            "details": {
+              "serviceType": "API_GATEWAY",
+              "count": 18,
+              "region": "US West"
+            }
+          },
+          {
+            "name": "Resource - NatGateways",
+            "cost": 258.6,
+            "savings": 188.2,
+            "realized": 138.4,
+            "suppressed": 92.6,
+            "type": "resource",
+            "details": {
+              "serviceType": "NAT_GATEWAY",
+              "count": 9,
+              "region": "Asia Pacific"
+            }
+          },
+          {
+            "name": "Region - US West",
+            "cost": 268.4,
+            "savings": 198.6,
+            "realized": 150.2,
+            "suppressed": 102.4,
+            "type": "region",
+            "details": {
+              "regionCode": "us-west-1",
+              "resourceCount": 55
+            }
+          },
+          {
+            "name": "Region - Asia Pacific",
+            "cost": 292.6,
+            "savings": 164.2,
+            "realized": 170.8,
+            "suppressed": 118.6,
+            "type": "region",
+            "details": {
+              "regionCode": "ap-southeast-1",
+              "resourceCount": 48
+            }
+          }
+        ]
+      }
+    }
+  }

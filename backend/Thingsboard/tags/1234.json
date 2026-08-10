@@ -1,0 +1,19 @@
+{
+    "components": [
+        {
+            "deviceKey": "OnwYMaomRsVoZ6DAyqOw",
+            "entityDescr": "power esd",
+            "entityId": "221fdba0-a637-11ef-b5e6-6160ba8389b4",
+            "entitySensors": [
+                {
+                    "TagPath": "/ASSESTS/ESD/ESD18.PV",
+                    "sensorType": "POWER SWITCH STATUS"
+                }
+            ],
+            "entityType": "ESD"
+        }
+    ],
+    "siteid":"1234",
+    "sitename": "Budge Budge",
+    "type":"TAS"
+}

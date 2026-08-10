@@ -1,0 +1,530 @@
+Enum BusinessUnit str {
+    RO='RO'
+    TAS='TAS'
+    LPG='LPG'
+    RDI='RDI'
+    CP='CP'
+}
+
+Enum AlertStatus str {
+    Open='Open'
+    Close='Close'
+    InProgress='InProgress'
+    Cancel='Cancel'
+    OnHold='OnHold'
+}
+
+Model GeoCordinates internal {
+    latitude str
+    longitude str
+}
+
+Model vtsData internal {
+    vendor_id str
+    location_id str
+    location_type str
+    tl_number str
+    report_duration str
+    scheduled_trip_start_datetime optional datetime
+    scheduled_trip_end_datetime optional datetime
+    total_trips optional int
+    stoppage_violations_count optional int
+    route_deviation_count optional int
+    speed_violation_count optional int
+    main_supply_removal_count optional int
+    night_driving_count optional int
+    no_halt_zone_count optional int
+    device_offline_count optional int
+    device_tamper_count optional int
+    continuous_driving_count optional int
+    approved_by optional str
+    invoice_number optional str
+    tt_type optional str
+    data_reprocessed optional bool
+    destination_code optional str
+    destination_name optional str
+}
+
+Model VtsEventData internal {
+    vendor_id str
+    location_id str
+    location_type str
+    tt_number str
+    event_id str
+    report_duration optional str    
+    event_start_time optional datetime
+    event_end_time optional datetime  
+    event_start_location optional str
+    event_end_location optional str  
+    coordinates optional GeoCordinates
+    distance optional str
+    total_trips optional int
+    stoppage_violations_count optional int
+    route_deviation_count optional int
+    speed_violation_count optional int
+    main_supply_removal_count optional int
+    night_driving_count optional int
+    no_halt_zone_count optional int
+    device_offline_count optional int
+    device_tamper_count optional int
+    continuous_driving_count optional int
+    approved_by optional str
+    invoice_number optional str
+    tt_type optional str
+    transporter optional str
+    data_reprocessed optional bool
+    is_valid optional bool
+    unique_id optional int
+    alert optional str
+}
+
+Model VtsTripData internal {
+    vendor_id str
+    location_id str
+    location_type str
+    tt_number str
+    trip_start_time optional datetime
+    trip_end_time optional datetime
+    distance optional str
+    tt_type optional str
+    invoice_number optional str
+    transporter optional str
+}
+
+Model vtsDataUpdated internal {
+    alert_id str
+    zone optional str
+    location_name optional str
+    terminal_code optional str
+    trip_status optional str
+    truck_regno str
+    violation_type str
+    threshold_limit optional str
+    unit optional str
+    min_violation_count optional str
+    max_violation_count optional str
+    trip_alert_count optional str
+    violation_count optional str
+    shortage_in_trip optional str
+    cumulative_duration optional str
+    trip_type optional str
+    active optional str
+    approval_status optional str
+    start_location optional str
+    end_location optional str
+    distance optional str
+    duration optional str
+    from_date optional str
+    to_date optional str
+    latitude optional str
+    longitude optional str
+    endlatitude optional str
+    endlongitude optional str
+}
+
+Model vtsBlockedTruckOld internal {
+    alert_id str
+    alert_type str
+    action_type optional str
+    category optional str
+    rca_reason optional str
+    remarks optional str
+    truck_regno optional str
+    without_shortage_count optional str
+    with_shortage_count optional str
+    first_blocked_days optional str
+    second_blocked_days optional str
+    third_blocked_days optional str
+    active optional bool
+    approval_status optional str
+    blocked_datetime optional str
+    unblocked_datetime optional str
+}
+
+Model VtsTripNotClosed internal {
+    violation_type optional str
+    event_date optional datetime
+    zone optional str
+    location_code optional str
+    destination_code optional str
+    location_type optional str
+    tt_type optional str
+    tt_number optional str
+    transporter_id optional str
+    transporter_name optional str
+    invoice_no optional str
+    trip_id optional str
+    load_no optional str
+    route_no optional str
+    driver_name optional str
+    scheduled_datetime optional datetime
+    scheduled_end_datetime optional datetime
+    vehicle_latitude optional float
+    vehicle_longitude optional float
+    vehicle_location optional str
+    
+}
+
+Model VtsTripWithoutRoute internal {
+    violation_type optional str
+    event_date optional datetime
+    zone optional str
+    location_code optional str
+    destination_code optional str
+    location_type optional str
+    tt_type optional str
+    tt_number optional str
+    transporter_id optional str
+    transporter_name optional str
+    invoice_no optional str
+    trip_id optional str
+    load_no optional str
+    driver_name optional str
+    scheduled_datetime optional datetime
+    scheduled_end_datetime optional datetime
+
+}
+
+Model VtsRouteTwoKm internal {
+    violation_type optional str
+    event_start_datetime optional datetime
+    event_end_datetime optional datetime
+    zone optional str
+    location_code optional str
+    destination_code optional str
+    location_type optional str
+    tt_type optional str
+    tt_number optional str
+    transporter_id optional str
+    transporter_name optional str
+    invoice_no optional str
+    trip_id optional str
+    load_no optional str
+    route_no optional str
+    driver_name optional str
+    scheduled_datetime optional datetime
+    scheduled_end_datetime optional datetime
+    vehicle_latitude optional float
+    vehicle_longitude optional float
+    vehicle_location optional str
+
+}
+
+Model VtsUnauthStoppage internal {
+
+    violation_type optional str
+    event_date optional datetime
+    zone optional str
+    location_code optional str
+    destination_code optional str
+    location_type optional str
+    tt_type optional str
+    tt_number optional str
+    transporter_id optional str
+    transporter_name optional str
+    invoice_no optional str
+    trip_id optional str
+    load_no optional str
+    driver_name optional str
+    scheduled_datetime optional datetime
+    vehicle_latitude optional float
+    vehicle_longitude optional float
+    vehicle_location optional str
+
+}
+
+Model vtsBlockedTruck internal {
+    tt_no optional str
+    location_name optional str
+    transporter_name optional str
+    transporter_code optional str
+    vehicle_blocked_desc optional str
+    vehicle_blocked_start_date optional str
+    vehicle_blocked_end_date optional str
+    vehicle_blocked_instance_no optional str
+    vehicle_blocked_instance_type optional str
+    alert_type optional str
+}
+
+Model OngoingTripsVts crud_disable {
+     Action=> trip_not_closed {
+        data list VtsTripNotClosed
+    }
+
+    Action=> trip_without_route {
+        data list VtsTripWithoutRoute
+    }
+
+    Action=> route_deviation_more_than_two_km {
+        data list VtsRouteTwoKm
+    }
+
+    Action=> trip_unauthorised_stoppage {
+        data list VtsUnauthStoppage
+    }
+}
+
+Model VTS crud_disable {
+    Action=> ingest_data {
+        data list vtsData
+    }
+    Action=> ingest_event_data {
+        data list VtsEventData
+    }
+    Action=> ingest_trip_data {
+        data list VtsEventData
+    }
+
+    Action=> ingest_data_blocked_trucks {
+        vendor_id str
+        location_id str
+        location_type optional BusinessUnit
+        data list vtsBlockedTruck
+    }
+
+    Action=> ingest_data_un_blocked_trucks {
+        vendor_id str
+        location_id str
+        location_type optional BusinessUnit
+        data list vtsBlockedTruck
+
+    }   
+    
+}
+
+Model vaData internal {
+    alert_id optional str
+    alert_timestamp optional str
+    alert_type str
+    alert_description optional str
+    device_id str
+    video_url optional str
+}
+
+Model vaScore internal {
+    overall_score optional str
+}
+
+Model VA_RO_Cleanliness_Master internal {
+    ROCode str
+    ROName optional str
+    Zone optional str
+    Region optional str
+    SalesArea optional str
+}
+
+Model VA_RO_Cleanliness_Master_Status internal {
+    ROCode str
+    ROName optional str
+    Zone optional str
+    Region optional str
+    SalesArea optional str
+    UploadDone bool
+}
+
+Model VA crud_disable {
+    Action=> ingest_data {
+        vendor_id str
+        location_id str
+        location_type optional BusinessUnit
+        data optional list vaData
+    }
+
+    Action=> ingest_data_score {
+        vendor_id str
+        location_id str
+        location_type optional BusinessUnit
+        data list vaScore
+    }
+
+    Action=> ingest_data_close {
+        alert_id str
+        status str
+        acknowledged_by str
+        closed_at str
+        action_description optional str
+        action_code optional str
+        action_reason optional str
+        action_category optional str
+    }
+
+    Action=> ro_no_video_upload_list {
+        data list VA_RO_Cleanliness_Master
+    }
+
+    Action=> ro_no_video_upload_list_status {
+        data list VA_RO_Cleanliness_Master_Status
+    }
+}
+
+Model productsDetails internal {
+    prod_code optional str
+    uom optional str
+    qty optional str
+}
+
+Model crisData internal {
+    interlock_type str
+    interlock_description optional str
+    device_name str
+    device_id optional str
+    severity optional str
+    alarm_id str
+    tank_id optional str
+    nozzle_id optional str
+    pump_no optional str
+    occurrence_date optional str
+    closure_date optional str
+    indent_no optional str
+    products optional list productsDetails
+}
+
+Model CRIS crud_disable {
+    Action=> ingest_data {
+        vendor_name str
+        vendor_id str
+        location_id str
+        ro_code str
+        location_type optional BusinessUnit
+        data optional list crisData
+    }
+
+    Action=> api_ack {
+        req_no str
+        applied_on str
+    }
+
+}
+
+Model IMS crud_disable {
+    Action=> ingest_data {
+        vendor_id str
+        location_id str
+        location_type optional BusinessUnit
+    }
+}
+
+Model emlockData internal {
+    location_id str
+    location_type optional BusinessUnit
+    vehicle_number str
+    violation_type str
+    initiated_date str
+    approved_date optional str
+    approved_by optional str
+}
+
+Model emlockVendorData internal {
+    location_type str
+    emlock_exception_id str
+    terminal_code str
+    truck_number str
+    exception_type str
+    ro_code optional str
+    created_datetime str
+}
+
+Model EMLock crud_disable {
+    Action=> ingest_data {
+        vendor_id str
+        data optional list emlockVendorData
+    }
+}
+
+Model TasListener crud_disable {
+    Action=> get_data {
+        input_data dict
+    }
+}
+
+
+Model TasAgentCommStatus {
+
+    sap_id  str
+    status optional str
+    message optional str
+    opcda_status optional str
+    data_receiving_status optional str
+    configuration_healthy optional str
+    last_opc_failure optional str
+    last_rabbit_failure optional str
+    location_name optional str
+
+}
+
+
+Model TAS_Location_Listener crud_disable {
+    Action=> get_agent_service_status {
+        sap_id  str
+        status optional str
+        message optional str
+    }
+
+    Action=> get_agent_comm_status {
+        sap_id  str
+        status optional str
+        message optional str
+        opcda_status optional str
+        data_receiving_status optional str
+        configuration_healthy optional str
+        last_opc_failure optional str
+        last_rabbit_failure optional str
+        
+    }
+}
+
+Model emlockStatusData internal {
+    event_id str
+    vendor_id str
+    location_type str
+    emlock_exception_id optional str
+    terminal_code optional str
+    truck_number optional str
+    swipein_l1 optional bool
+    swipein_l2 optional bool
+    swipeout_l1 optional bool
+    swipeout_l2 optional bool
+    l1_id optional str
+    l2_id optional str
+    created_date optional datetime
+    invoice_number optional str
+}
+
+Model EMLockStatus crud_disable {
+    Action=> ingest_data {
+        vendor_id str
+        event_id str
+        data optional list emlockStatusData
+    }
+}
+
+Model HyperLocalZoneSummary internal {
+    zone str
+    rating float
+}
+
+Model ReviewsSentiment internal {
+    zone str
+    sales_area str
+    region str
+    store_code str
+    store_name str
+    reviewer_name str
+    rating float
+    review_comment str
+    tone_type str
+    review_date datetime
+    rank int
+}
+
+Model HyperLocal crud_disable {
+    Action=> ingest_data {
+        report_date date
+        total_reviews int
+        positive_reviews int
+        negative_reviews int
+        neutral_reviews int
+        zone_summary list HyperLocalZoneSummary
+        sentiment_of_reviews list ReviewsSentiment
+    }
+}
