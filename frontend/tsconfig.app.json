@@ -12,10 +12,6 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
