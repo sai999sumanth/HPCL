@@ -9,8 +9,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  # ghcr.io requires lowercase image names; github.repository can contain
-  # uppercase letters (your repo is "vatsav466/Helenwick"), so we normalize.
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -32,10 +30,6 @@ jobs:
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
 
-      # FIX: use the auto-generated GITHUB_TOKEN instead of a PAT.
-      # It already has packages:write via the job's `permissions:` block above,
-      # never expires mid-project, and needs zero manual scope configuration.
-      # This removes both the "Password required" and "403 Forbidden" push errors.
       - name: Login to GHCR
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
@@ -67,10 +61,17 @@ jobs:
     needs: build-and-push
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
+    # environment: production   # <-- uncomment + set this if DEPLOY_* secrets live under an Environment, not repo-level
     permissions:
       contents: read
       packages: read
     steps:
+      - name: Verify deploy secrets are present
+        run: |
+          [ -n "${{ secrets.DEPLOY_HOST }}" ] && echo "DEPLOY_HOST: set" || echo "DEPLOY_HOST: MISSING"
+          [ -n "${{ secrets.DEPLOY_USER }}" ] && echo "DEPLOY_USER: set" || echo "DEPLOY_USER: MISSING"
+          [ -n "${{ secrets.DEPLOY_PASSWORD }}" ] && echo "DEPLOY_PASSWORD: set" || echo "DEPLOY_PASSWORD: MISSING"
+
       - name: Deploy
         uses: appleboy/ssh-action@v1.0.3
         env:
@@ -83,11 +84,11 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           password: ${{ secrets.DEPLOY_PASSWORD }}
           port: 22
+          debug: true
           envs: ALG_ENV_CONTENTS,GH_TOKEN,GH_ACTOR,IMAGE
           script: |
             set -e
 
-            # FIX: same GITHUB_TOKEN as the build job — read:packages is enough to pull.
             echo "${GH_TOKEN}" | sudo docker login ghcr.io \
               -u "${GH_ACTOR}" \
               --password-stdin
@@ -98,18 +99,9 @@ jobs:
             sudo mkdir -p /opt/digitaltwin_images
             sudo mkdir -p /opt/novex/secrets
 
-            # .alg_env is never baked into the image or committed to git.
-            # It's delivered here from the ALG_ENV_CONTENTS GitHub secret and
-            # mounted read-only, matching how docker-compose.yml does it locally.
             echo "${ALG_ENV_CONTENTS}" | sudo tee /opt/novex/secrets/.alg_env > /dev/null
             sudo chmod 600 /opt/novex/secrets/.alg_env
 
-            # Standard bridge networking with explicit port publishing —
-            # matches docker-compose.yml exactly. --network host is NOT
-            # required: Redis runs inside the container (see supervisord.conf,
-            # which self-starts its own instance if none is already up), and
-            # the api process listens on 0.0.0.0:8002 so it's reachable
-            # through the published port either way.
             sudo docker run -d \
               --name app-container \
               --restart unless-stopped \
@@ -120,7 +112,6 @@ jobs:
               -v /opt/digitaltwin_images:/opt/digitaltwin_images \
               ${IMAGE}:latest
 
-            # ── Phase 1: wait for nginx/frontend (quick — nginx starts in ~5s) ──
             echo "Waiting for nginx/frontend to start..."
             for i in $(seq 1 10); do
               STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/ || echo "000")
@@ -132,23 +123,14 @@ jobs:
               sleep 3
               if [ "$i" -eq 10 ]; then
                 echo "Frontend failed to start (last HTTP status: $STATUS)."
-                echo "--- Checking if frontend files exist in container ---"
-                sudo docker exec app-container ls -la /usr/share/nginx/html || echo "Path /usr/share/nginx/html not found in container"
-                echo "--- nginx config test ---"
+                sudo docker exec app-container ls -la /usr/share/nginx/html || true
                 sudo docker exec app-container nginx -t || true
-                echo "--- supervisord process status ---"
                 sudo docker exec app-container supervisorctl status || true
-                echo "--- Full container logs ---"
                 sudo docker logs app-container
                 exit 1
               fi
             done
 
-            # ── Phase 2: wait for FastAPI backend (cold start can take 2+ minutes) ──
-            # The old loop checked only the frontend (/), which returns 200 the
-            # moment nginx is up — long before uvicorn finishes importing ~80
-            # modules. It then immediately checked /docs and failed because the
-            # API wasn't ready yet. Now we poll /api/health with 40 retries (200s).
             echo "Waiting for FastAPI backend (cold start can take 2+ minutes)..."
             for i in $(seq 1 40); do
               STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/api/health || echo "000")
@@ -160,13 +142,9 @@ jobs:
               sleep 5
               if [ "$i" -eq 40 ]; then
                 echo "API failed to start (last HTTP status: $STATUS)."
-                echo "--- supervisord process status ---"
                 sudo docker exec app-container supervisorctl status || true
-                echo "--- api process log tail ---"
                 sudo docker exec app-container tail -n 150 /var/log/api.log || true
-                echo "--- nginx error log tail ---"
                 sudo docker exec app-container tail -n 50 /var/log/nginx_error.log || true
-                echo "--- Full container logs ---"
                 sudo docker logs app-container
                 exit 1
               fi
