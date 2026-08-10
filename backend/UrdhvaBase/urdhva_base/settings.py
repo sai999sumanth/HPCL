@@ -48,6 +48,11 @@ class Settings(BaseSettings):
         "redis": ["redis://localhost:6379"],
     }
 
+    # Connection selector config used by utilities/connection_mapping.py.
+    # Maps a logical DB name to a connection key, and the key to credential metadata.
+    db_connection_config: Dict[str, str] = {}
+    db_connection_mapping: Dict[str, Dict[str, str]] = {}
+
     # ── Session / cookie ──────────────────────────────────────────────────────
     cookie_name: str = "ceg_session"
     session_httponly: bool = True
