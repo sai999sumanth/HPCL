@@ -191,6 +191,67 @@ def _load_routers(app: FastAPI):
     logger.info(f"Router discovery: {loaded} loaded, {errors} skipped")
 
 
+def _route_exists(path: str, methods: set) -> bool:
+    """Return True if the app already has a route matching path + methods."""
+    for route in app.routes:
+        if getattr(route, "path", None) == path:
+            route_methods = set(getattr(route, "methods", set()))
+            if methods.issubset(route_methods):
+                return True
+    return False
+
+
+def _log_registered_routes():
+    """Log every registered route so 404s are easy to diagnose from the logs."""
+    routes = []
+    for route in app.routes:
+        path = getattr(route, "path", None)
+        methods = getattr(route, "methods", set())
+        if path and methods:
+            routes.append(f"{','.join(sorted(methods))} {path}")
+    logger.info("Registered routes:\n  " + "\n  ".join(sorted(routes)))
+
+
+# ── Fallback login route ─────────────────────────────────────────────────────
+# Auto-discovery loads users_actions.py and registers /api/users/login. If that
+# file fails to import (missing env, broken dependency, etc.), login returns
+# 404 even though the rest of the app appears healthy. This fallback keeps the
+# login endpoint alive and surfaces the real import error in the response/logs.
+if not _route_exists("/api/users/login", {"POST"}):
+    logger.warning(
+        "users_actions router did not register /api/users/login; enabling fallback login route"
+    )
+
+    @app.post("/api/users/login", tags=["Users"])
+    async def fallback_users_login(request: Request, data: dict):
+        try:
+            import authenticator.authentication_manager_ad as auth_manager
+
+            status, resp, user_info = await auth_manager.AuthenticationManager.login(
+                data.get("username"), data.get("password"), data.get("login_type")
+            )
+            if not status:
+                return JSONResponse({"status": False, "msg": resp}, 401)
+
+            response = JSONResponse(
+                {"status": True, "msg": "Logged in Successfully"}, 200
+            )
+            response.set_cookie(
+                urdhva_base.settings.cookie_name,
+                resp,
+                httponly=urdhva_base.settings.session_httponly,
+                secure=urdhva_base.settings.session_secure,
+                samesite=urdhva_base.settings.session_same_site,
+            )
+            return response
+        except Exception as exc:
+            logger.exception("Fallback login route failed")
+            return JSONResponse(
+                {"status": False, "msg": f"Login service unavailable: {exc}"},
+                503,
+            )
+
+
 # ── Startup ───────────────────────────────────────────────────────────────────
 @app.on_event("startup")
 async def on_startup():
@@ -211,9 +272,11 @@ async def on_startup():
     except Exception as exc:
         logger.warning(f"Redis warm-up failed (non-fatal): {exc}")
 
+    _log_registered_routes()
     logger.info("Startup complete")
 
 
 # ── Load routers at import time ───────────────────────────────────────────────
 # (Runs when uvicorn imports this module, which is after sys.path is set.)
 _load_routers(app)
+_log_registered_routes()

@@ -162,6 +162,18 @@ jobs:
               echo "Swagger endpoint reachable (HTTP $DOCS_STATUS)"
             fi
 
+            echo "Checking login route registration…"
+            LOGIN_ROUTE_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/api/users/login || echo "000")
+            echo "Login route responded with HTTP $LOGIN_ROUTE_STATUS"
+            # 404 means users_actions.py failed to import during router discovery.
+            # 401/422 are acceptable because the route exists but auth/validation failed.
+            if [ "$LOGIN_ROUTE_STATUS" = "404" ]; then
+              echo "Login route is missing — users_actions router did not load."
+              sudo docker exec app-container supervisorctl status || true
+              sudo docker exec app-container tail -n 150 /var/log/api.log || true
+              exit 1
+            fi
+
             echo "Checking API proxy…"
             API_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/api/ || echo "000")
             echo "API endpoint responded with HTTP $API_STATUS"
