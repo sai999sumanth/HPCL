@@ -140,6 +140,55 @@ class Settings(BaseSettings):
 
     # ── Camunda BPMN engine ───────────────────────────────────────────────────
     camunda_url: str = "http://localhost:8082"
+    camunda_url_config: Dict[str, Dict[str, Any]] = {}
+    camunda_url_va_config: Dict[str, Dict[str, Any]] = {}
+    camunda_configuration: Dict[str, Any] = {}
+    camunda_default_config: Dict[str, Any] = {}
+
+    # ── Cache gateway ─────────────────────────────────────────────────────────
+    cache_gateway_host: str = "localhost"
+    cache_gateway_port: int = 8003
+
+    # ── MinIO / S3-compatible object storage ──────────────────────────────────
+    minio_endpoint: str = ""
+    minio_access_key: str = ""
+    minio_secret_key: str = ""
+    minio_bucket: str = ""
+    minio_secure: bool = False
+
+    # ── RabbitMQ ──────────────────────────────────────────────────────────────
+    rabbitmq_host: str = "localhost"
+    rabbitmq_port: int = 5672
+    rabbitmq_username: str = ""
+    rabbitmq_password: str = ""
+    rabbitmq_queue: str = ""
+    rabbitmq_vhost: str = "/"
+    rabbitmq_auto_ack: bool = True
+
+    # ── SMTP ──────────────────────────────────────────────────────────────────
+    smtp_from_url: str = ""
+    smtp_reply_url: str = ""
+
+    # ── Superset ──────────────────────────────────────────────────────────────
+    superset_internal_url: str = ""
+    superset_external_url: str = ""
+    superset_user: str = ""
+    superset_password: str = ""
+
+    # ── Misc integration URLs ─────────────────────────────────────────────────
+    aot_status_url: str = ""
+    cris_interlock_disable_url: str = ""
+    lpg_publish_url: str = ""
+    lpg_vts_auth_url: str = ""
+    lpg_vts_client_id: str = ""
+    lpg_vts_client_secret_key: str = ""
+    post_to_ims_url: str = ""
+    tas_faulty_camunda_url: str = ""
+    vts_truck_status_url: str = ""
+
+    # ── Novex service account ─────────────────────────────────────────────────
+    novex_user: str = ""
+    novex_password: str = ""
 
     # ── File storage / upload paths ───────────────────────────────────────────
     uploads: str = "/var/log/ceg_sys_logs/uploads"
@@ -158,6 +207,24 @@ class Settings(BaseSettings):
     # ── Misc ──────────────────────────────────────────────────────────────────
     debug: bool = False
     log_level: str = "info"
+
+    # ── Paths / templates ─────────────────────────────────────────────────────
+    base_path: str = ""
+    mft_path: str = ""
+    template_path: str = ""
+    ticketing_attachments: str = ""
+    whatsapp_creds: Dict[str, Any] = {}
+
+    publish_to_test_queue_enabled: bool = False
+
+    def __getattr__(self, name: str) -> Any:
+        """
+        Safety net for the large legacy codebase. Many modules reference settings
+        that are not declared above. Returning None instead of raising
+        AttributeError prevents import-time crashes; the calling code can then
+        handle the missing value gracefully or fail with a clearer message.
+        """
+        return None
 
 
 # Module-level singleton — imported everywhere as `urdhva_base.settings`
