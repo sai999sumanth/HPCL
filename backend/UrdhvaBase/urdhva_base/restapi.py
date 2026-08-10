@@ -217,13 +217,29 @@ def _log_registered_routes():
 # file fails to import (missing env, broken dependency, etc.), login returns
 # 404 even though the rest of the app appears healthy. This fallback keeps the
 # login endpoint alive and surfaces the real import error in the response/logs.
-if not _route_exists("/api/users/login", {"POST"}):
+# It is registered AFTER _load_routers so the real route takes precedence when
+# users_actions.py loads successfully.
+def _register_fallback_login():
+    if _route_exists("/api/users/login", {"POST"}):
+        logger.info("Real /api/users/login route is registered; skipping fallback")
+        return
+
     logger.warning(
         "users_actions router did not register /api/users/login; enabling fallback login route"
     )
 
     @app.post("/api/users/login", tags=["Users"])
     async def fallback_users_login(request: Request, data: dict):
+        # Re-attempt model recovery at request time in case import-time fix failed.
+        if not _ensure_hpcl_ceg_model():
+            return JSONResponse(
+                {
+                    "status": False,
+                    "msg": "Login service unavailable: generated model file did not load",
+                },
+                503,
+            )
+
         try:
             import authenticator.authentication_manager_ad as auth_manager
 
@@ -276,53 +292,67 @@ async def on_startup():
     logger.info("Startup complete")
 
 
-def _ensure_hpcl_ceg_model():
+def _ensure_hpcl_ceg_model() -> bool:
     """
     The generated hpcl_ceg_model.py is large and occasionally ends up empty or
     partially imported in the deployed image (stale cache, truncated copy, etc.).
     This helper guarantees a fresh import and replaces any broken module in
-    sys.modules before the API routers are loaded.
+    sys.modules before the API routers are loaded. Returns True if all required
+    symbols are present.
     """
     required = ("Users", "Users_LoginParams", "Users_Fetch_UsersParams")
-    try:
-        import hpcl_ceg_model
+    model_path = os.path.join(os.getcwd(), "hpcl_ceg_model.py")
 
-        missing = [name for name in required if not hasattr(hpcl_ceg_model, name)]
-        if not missing:
-            logger.info("hpcl_ceg_model loaded successfully")
-            return
+    def _check_module(mod) -> tuple[bool, list[str]]:
+        missing = [name for name in required if not hasattr(mod, name)]
+        return (not missing, missing)
 
+    # First attempt: use a cached module if it is complete.
+    cached = sys.modules.get("hpcl_ceg_model")
+    if cached is not None:
+        ok, missing = _check_module(cached)
+        if ok:
+            logger.info("hpcl_ceg_model cached module is complete")
+            return True
         logger.warning(
-            f"hpcl_ceg_model is missing attributes: {missing}; forcing re-import from file"
+            f"hpcl_ceg_model cached module is missing: {missing}; forcing re-import"
         )
-    except Exception as exc:
-        logger.warning(f"hpcl_ceg_model initial import failed: {exc}; forcing re-import")
 
     # Remove any cached partial/empty module and load directly from disk.
     sys.modules.pop("hpcl_ceg_model", None)
-    model_path = os.path.join(os.getcwd(), "hpcl_ceg_model.py")
+
     if not os.path.exists(model_path):
         logger.error(f"hpcl_ceg_model.py not found at {model_path}")
-        return
+        return False
+
+    file_size = os.path.getsize(model_path)
+    logger.info(f"Loading hpcl_ceg_model.py from {model_path} ({file_size} bytes)")
 
     try:
         spec = importlib.util.spec_from_file_location("hpcl_ceg_model", model_path)
+        if spec is None or spec.loader is None:
+            logger.error(f"Could not create module spec for {model_path}")
+            return False
         mod = importlib.util.module_from_spec(spec)
         sys.modules["hpcl_ceg_model"] = mod
         spec.loader.exec_module(mod)
-        missing = [name for name in required if not hasattr(mod, name)]
-        if missing:
-            logger.error(
-                f"Re-imported hpcl_ceg_model is still missing: {missing}"
-            )
-        else:
-            logger.info("hpcl_ceg_model re-imported successfully from file")
     except Exception as exc:
-        logger.exception(f"Failed to re-import hpcl_ceg_model from {model_path}")
+        logger.exception(f"Failed to execute hpcl_ceg_model from {model_path}")
+        return False
+
+    ok, missing = _check_module(mod)
+    if not ok:
+        logger.error(f"hpcl_ceg_model loaded but still missing: {missing}")
+        return False
+
+    logger.info("hpcl_ceg_model loaded successfully from file")
+    return True
 
 
 # ── Load routers at import time ───────────────────────────────────────────────
 # (Runs when uvicorn imports this module, which is after sys.path is set.)
+# Order matters: load model first, then routers, then fallback if needed.
 _ensure_hpcl_ceg_model()
 _load_routers(app)
+_register_fallback_login()
 _log_registered_routes()

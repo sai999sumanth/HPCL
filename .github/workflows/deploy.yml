@@ -164,12 +164,14 @@ jobs:
             fi
 
             echo "Checking login route registration…"
-            LOGIN_ROUTE_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5378/api/users/login || echo "000")
+            # POST with dummy credentials: real route → 401/422/200; missing route → 404; crashing fallback → 503
+            LOGIN_ROUTE_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:5378/api/users/login -H "Content-Type: application/json" -d '{"username":"deploy-check","password":"deploy-check"}' || echo "000")
             echo "Login route responded with HTTP $LOGIN_ROUTE_STATUS"
             # 404 means users_actions.py failed to import during router discovery.
-            # 401/422 are acceptable because the route exists but auth/validation failed.
-            if [ "$LOGIN_ROUTE_STATUS" = "404" ]; then
-              echo "Login route is missing — users_actions router did not load."
+            # 503 means the fallback route is active but crashing (usually hpcl_ceg_model issue).
+            # 401/422/200 are acceptable because the route exists and processed the request.
+            if [ "$LOGIN_ROUTE_STATUS" = "404" ] || [ "$LOGIN_ROUTE_STATUS" = "503" ]; then
+              echo "Login route is missing or crashing (HTTP $LOGIN_ROUTE_STATUS)."
               sudo docker exec app-container supervisorctl status || true
               sudo docker exec app-container tail -n 150 /var/log/api.log || true
               exit 1
