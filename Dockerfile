@@ -50,6 +50,15 @@ RUN pip install --upgrade pip setuptools wheel \
 # volume mount (see docker-compose.yml / deploy.yml), never baked into the
 # image or committed to git.
 COPY backend/api_manager             /opt/ceg/algo/api_manager
+
+# Verify the generated model file was copied intact and defines the classes the
+# login/auth stack depends on. Catches truncated/cached model files early.
+RUN PYTHONPATH="/opt/ceg/algo:/opt/ceg/algo/api_manager" \
+    python -c "import hpcl_ceg_model; \
+    assert hasattr(hpcl_ceg_model, 'Users'), 'hpcl_ceg_model.Users missing'; \
+    assert hasattr(hpcl_ceg_model, 'Users_LoginParams'), 'hpcl_ceg_model.Users_LoginParams missing'; \
+    print('hpcl_ceg_model sanity check passed')"
+
 COPY backend/authenticator           /opt/ceg/algo/authenticator
 COPY backend/orchestrator            /opt/ceg/algo/orchestrator
 COPY backend/utilities               /opt/ceg/algo/utilities

@@ -54,8 +54,9 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # Clean build: the previous image had a corrupted/truncated hpcl_ceg_model.py
+          # (module had no Users attribute). Disable GHA cache until the model layer is proven clean.
+          no-cache: true
 
   deploy:
     needs: build-and-push
