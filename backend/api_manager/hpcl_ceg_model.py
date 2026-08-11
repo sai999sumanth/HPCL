@@ -23,6 +23,9 @@ class RoleMapperCreate(pydantic.BaseModel):
 
 class RolesSchema(UrdhvaPostgresBase):
     __tablename__ = 'roles'
+    _table_args_ = {"extend_existing": True}
+
+    
     
     name: Mapped[str] = mapped_column("name", String, index=True, nullable=False, default=None, primary_key=False, unique=False)
     status: Mapped[bool] = mapped_column("status", Boolean, index=False, nullable=False, default=None, primary_key=False, unique=False)
@@ -34,6 +37,7 @@ class RolesSchema(UrdhvaPostgresBase):
 
 class RolesCreate(urdhva_base.postgresmodel.BasePostgresModel):
     __tablename__ = 'roles'
+    
     
     name: str
     status: bool
